@@ -1,25 +1,15 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png" />
-    <div>
-      <p>
-        If ViewUI is successfully added to this project, you'll see an
-        <code v-text="'<Button>'"></code>
-        below
-      </p>
-      <Button type="primary">Button</Button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+<template lang='pug'>
+  #app
+    SignIn
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import SignIn from './views/memberSystem/SignIn';
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    SignIn
   }
 };
 </script>
