@@ -7,16 +7,16 @@
 <script>
 // import axios from "axios";
 
-import {  postData} from '@/apis/course.js';
+import { postData } from '@/apis/course.js';
 
 export default {
     name: 'SignIn',
-    data(){
+    data() {
         return {
             posts: []
-        }
+        };
     },
-    mounted(){
+    mounted() {
         // axios
         //     .get('https://jsonplaceholder.typicode.com/posts')
         //     .then((res) => {
@@ -31,17 +31,15 @@ export default {
             title: 'foo',
             userId: 1,
             body: 'bar'
-        }).then((res) => {
+        }).then(res => {
             this.posts = res.data;
-        })
+        });
     }
-}
+};
 </script>
 
 <style scoped>
 .aaa {
-
     text-align: left;
 }
-
 </style>

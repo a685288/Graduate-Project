@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
   #app
     SignIn
 </template>
@@ -7,20 +7,20 @@
 import SignIn from './views/memberSystem/SignIn';
 
 export default {
-  name: "app",
-  components: {
-    SignIn
-  }
+    name: 'app',
+    components: {
+        SignIn
+    }
 };
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
 }
 </style>
