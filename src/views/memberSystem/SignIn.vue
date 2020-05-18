@@ -1,16 +1,19 @@
 <template lang="pug">
-    .aaa
+    #SingIn.SignIn
+        TitleBar
         h1 signinpage
         ul
             li(v-for="(post, index) in posts") {{ post }}
 </template>
 <script>
-// import axios from "axios";
-
+import TitleBar from '@/components/TitleBar.vue';
 import { postData } from '@/apis/course.js';
 
 export default {
     name: 'SignIn',
+    components: {
+        TitleBar
+    },
     data() {
         return {
             posts: []
