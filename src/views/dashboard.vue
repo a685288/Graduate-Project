@@ -1,9 +1,9 @@
 <template lang="pug">
-    
+    h1 dashboard
 </template>
 <script>
 export default {
-    name: 'dashboard'
+    name: 'Dashboard'
 }
 </script>
 

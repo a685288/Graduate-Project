@@ -44,20 +44,10 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
-    },
-    "rules": {
-      "prettier/prettier": [
-        "warn",
-        {
-          "#": "prettier config in here :)",
-          "tabWidth": 2
-        }
-      ]
     }
   },
   "browserslist": [

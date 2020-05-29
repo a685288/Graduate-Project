@@ -6,11 +6,11 @@
             li(v-for="(post, index) in posts") {{ post }}
 </template>
 <script>
-import TitleBar from '@/components/TitleBar.vue';
+import TitleBar from "@/components/TitleBar.vue";
 import { postData } from '@/apis/course.js';
 
 export default {
-    name: 'SignIn',
+    name: "SignIn",
     components: {
         TitleBar
     },
