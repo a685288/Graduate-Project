@@ -1,19 +1,16 @@
 <template lang="pug">
     #SingIn.SignIn
-        TitleBar
         h1 signinpage
         ul
             li(v-for="(post, index) in posts") {{ post }}
 </template>
 <script>
-import TitleBar from "@/components/TitleBar.vue";
+
 import { postData } from '@/apis/course.js';
 
 export default {
     name: "SignIn",
-    components: {
-        TitleBar
-    },
+
     data() {
         return {
             posts: []
