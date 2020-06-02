@@ -1,7 +1,6 @@
 <template lang="pug">
 .dashboard
     HeaderBar
-    h1 dashboard
     router-view
 </template>
 <script>
