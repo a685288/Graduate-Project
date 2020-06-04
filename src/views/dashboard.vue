@@ -1,6 +1,7 @@
 <template lang="pug">
 .dashboard
     HeaderBar
+    h1 jjjj
     router-view
 </template>
 <script>
@@ -11,6 +12,8 @@ export default {
         HeaderBar
     }
 }
+
+
 </script>
 
 <style scoped>
