@@ -1,23 +1,46 @@
+// <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+// <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
 <script>
+import firebase from "../../../firebase.js";
+
 // import { postData } from '@/apis/course.js';
-
 export default {
-    name: "SignIn",
-    data() {
-        return {
-            formDate: {
-                account: '',
-                password: ''
-            },
-            rules:{
-
-            }
-        };
+  name: "SignIn",
+  data() {
+    return {
+    //   formDate: {
+    //     account: "",
+    //     password: ""
+    //   },
+      rules: {}
+    };
+  },
+  methods: {
+    check() {
+      this.$router.push("/dashboard");
     },
-    methods: {
-        check() {
-            this.$router.push('/dashboard');
-        }
+    googlesignin() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function(result) {
+          // 可以獲得 Google 提供 token，token可透過 Google API 獲得其他數據
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+        })
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+        });
+    }
     //     axios
     //         .get('https://jsonplaceholder.typicode.com/posts')
     //         .then((res) => {
@@ -35,39 +58,42 @@ export default {
     //     }).then(res => {
     //         this.posts = res.data;
     //     });
-    }
+  }
 };
 </script>
 
 <template lang="pug">
     .SignIn
-        Card.SignCard
-            Form(ref='formData' :model="formData" :rules="rules")
-                FormItem(label='account' prop='account')
-                    Input(type='text' v-model='account' placeholder='account')
-                FormItem(label='password' prop='password')
-                    Input(type='password' v-model='password' placeholder='password')
-                FormItem
-                    Button.btns(type='primary' @click="check()") Submit
-                    Button.btns(type='' @click="") Sign up
+        Card.SignCard 
+            Button.btns(@click="googlesignin()") Google 登入
+            Button.btns(@click="register()") Google 註冊
+
+            //- Form(ref='formData' :model="formData")
+            //-     FormItem(label='account' prop='account')
+            //-         Input(type='text' v-model='account' placeholder='account')
+            //-     FormItem(label='password' prop='password')
+            //-         Input(type='password' v-model='password' placeholder='password')
+            //-     FormItem
+            //-         Button.btns(type='primary' @click="check()") Submit
+            //-         Button.btns(type='' @click="") Sign up
 
 </template>
 
 <style lang='scss' scoped>
 .SignIn {
-    min-height: 400px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  min-height: 400px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
-.SignCard{
-    margin: 50px;
-    padding: 50px;
-    position: relative;
-    // max-width: 500px;
-    min-width: 500px;
+.SignCard {
+  margin: 50px;
+  padding: 50px;
+  position: relative;
+  // max-width: 500px;
+  min-width: 500px;
 }
 .btns {
-    margin: 10px;
+  margin: 10px;
 }
 </style>
