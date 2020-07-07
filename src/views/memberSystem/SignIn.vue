@@ -1,5 +1,5 @@
-// <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
 
 <script>
 import firebase from "../../../firebase.js";
@@ -9,10 +9,10 @@ export default {
   name: "SignIn",
   data() {
     return {
-    //   formDate: {
-    //     account: "",
-    //     password: ""
-    //   },
+      //   formDate: {
+      //     account: "",
+      //     password: ""
+      //   },
       rules: {}
     };
   },
@@ -40,6 +40,22 @@ export default {
           // The firebase.auth.AuthCredential type that was used.
           var credential = error.credential;
         });
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          // ...
+        } else {
+          // User is signed out.
+          // ...
+        }
+      });
     }
     //     axios
     //         .get('https://jsonplaceholder.typicode.com/posts')
@@ -67,6 +83,7 @@ export default {
         Card.SignCard 
             Button.btns(@click="googlesignin()") Google 登入
             Button.btns(@click="register()") Google 註冊
+            Button.btns(type='primary' @click="check()") Submit
 
             //- Form(ref='formData' :model="formData")
             //-     FormItem(label='account' prop='account')

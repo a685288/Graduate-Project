@@ -2,7 +2,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import SignIn from "../views/memberSystem/SignIn.vue";
-import Dashboard from "../views/Dashboard.vue";
+import Dashboard from "../views/dashboard.vue";
 import myclass from "../views/dashboardPages/Userclass.vue";
 import allclass from "../views/dashboardPages/Allclass.vue";
 
