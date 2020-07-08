@@ -1,9 +1,9 @@
 <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
-
+<script>
+</script>
 <script>
 import firebase from "../../../firebase.js";
-
 // import { postData } from '@/apis/course.js';
 export default {
   name: "SignIn",
@@ -17,19 +17,21 @@ export default {
     };
   },
   methods: {
-    check() {
-      this.$router.push("/dashboard");
+    check: function() {
+      this.$router.push("dashboard");
     },
     googlesignin() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
+        .then(result => {
           // 可以獲得 Google 提供 token，token可透過 Google API 獲得其他數據
           var token = result.credential.accessToken;
           // The signed-in user info.
           var user = result.user;
+          console.log("sign1");
+          this.googlesignin2(user);
         })
         .catch(function(error) {
           // Handle Errors here.
@@ -40,6 +42,10 @@ export default {
           // The firebase.auth.AuthCredential type that was used.
           var credential = error.credential;
         });
+    },
+    googlesignin2(user) {
+      console.log("sign2");
+      // 獲取用戶訊息
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
@@ -50,12 +56,21 @@ export default {
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
           var providerData = user.providerData;
-          // ...
+          console.log("email" + email);
+          // this.realname();
+          // self.$router.push("dashboard");
         } else {
-          // User is signed out.
-          // ...
         }
       });
+      console.log("roruter");
+      this.realname();
+    },
+    realname() {
+      var person = prompt("請輸入您的真實姓名：", "");
+      if (person !== null || person !== "") {
+        console.log("push");
+        this.$router.push("dashboard");
+      }
     }
     //     axios
     //         .get('https://jsonplaceholder.typicode.com/posts')
@@ -80,9 +95,11 @@ export default {
 
 <template lang="pug">
     .SignIn
-        Card.SignCard 
-            Button.btns(@click="googlesignin()") Google 登入
-            Button.btns(@click="register()") Google 註冊
+        Card.SignCard
+            #firebaseui-auth-container
+            #loader(v-if="")
+            Button.btns(@click="googlesignin") Google 登入
+            Button.btns( @click="realname()") Google 註冊
             Button.btns(type='primary' @click="check()") Submit
 
             //- Form(ref='formData' :model="formData")
@@ -93,7 +110,6 @@ export default {
             //-     FormItem
             //-         Button.btns(type='primary' @click="check()") Submit
             //-         Button.btns(type='' @click="") Sign up
-
 </template>
 
 <style lang='scss' scoped>

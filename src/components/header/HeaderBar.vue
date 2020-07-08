@@ -3,8 +3,8 @@
         img(:src=`logo`)
         .Menu
             MenuBar
-            
 </template>
+
 <script>
 import MenuBar from './MenuBar.vue';
 import logo from '@/assets/logo.jpeg';
@@ -24,7 +24,7 @@ export default {
 <style lang='scss' scoped>
 .Header{
     display: flex;
-
+    
     img {
         height: 60px;
     }

@@ -62,7 +62,7 @@ export default {
 </script>
 <template lang="pug">
     #allclass.allclass
-        .left fokgojr
+        .left 
         .right
             Col(v-for="(item, index) in cardData" :key='item.id')
                 Card.card(:boardered='11')

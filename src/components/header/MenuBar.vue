@@ -13,7 +13,6 @@
                 MenuGroup(:title=`barItems.setitem.title`)
                     MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
                     MenuItem(name='3-2') {{ barItems.setitem.logout }}
-            
 </template>
 <script>
 export default {
@@ -30,8 +29,7 @@ export default {
                     logout: `登出`,
                     userinfo:`個人資訊`
                 }
-            }
-           
+            }       
         }
     },
     methods: {
@@ -48,10 +46,8 @@ export default {
                     this.$router.push('/');
                 break;
             }
-            
         }
-    }
-    
+    }   
 }
 </script>
 <style scoped>
