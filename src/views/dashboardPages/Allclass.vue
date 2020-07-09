@@ -1,12 +1,12 @@
-
 <script>
+import LeftBar from '@/components/header/LeftBar.vue';
 import defaultClass from '@/assets/defaultClass.png';
 import topic from '@/assets/topic.png';
 import time from '@/assets/time.png';
 export default {
     name: 'allclass',
     components: {
-        
+        LeftBar
     },
     data() {
         return {
@@ -62,7 +62,7 @@ export default {
 </script>
 <template lang="pug">
     #allclass.allclass
-        .left 
+        LeftBar
         .right
             Col(v-for="(item, index) in cardData" :key='item.id')
                 Card.card(:boardered='11')
@@ -76,21 +76,17 @@ export default {
                         img(:src='time') 
                         |時間（小時）：{{item.time}}
                     .content {{item.content}}
-                        
-
-        
 </template>
+
 <style lang='scss' scoped>
 .allclass {
     display: flex;
     justify-content: center;
     text-align: center;
-    .left {
-        flex: 1;
-    }
     .right {
         display: flex;
-        flex: 3;
+        flex: 7;
+        margin: 50px;
         .card{
             flex: 1;
             margin: 15px;

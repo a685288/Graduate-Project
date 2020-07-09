@@ -57,9 +57,7 @@ export default {
           var uid = user.uid;
           var providerData = user.providerData;
           console.log("email" + email);
-          // this.realname();
-          // self.$router.push("dashboard");
-        } else {
+        } else { 
         }
       });
       console.log("roruter");
