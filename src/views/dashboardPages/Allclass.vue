@@ -80,22 +80,29 @@ export default {
       category: [{}]
     };
   },
-  methods: {}
+  methods: {
+    courseinfo() {
+      console.log("push");
+      this.$router.push("courseinfo");
+      // name: 'courseinfo', params: { userId:  }
+    }
+  }
 };
 </script>
 <template lang="pug">
     .allclass
         LeftBar.leftbar
         .classcard
+            Button(@click="courseinfo()") 課程介紹測試
             Col(v-for="(item, index) in cardData" :key='item.id')
                 Card.card
                     .img
                         img(v-if='item.img != "" ' :src="item.img" )
                         img(v-else :src="defaultClass") 
                     hr.hr
-                    .title {{item.title}} 
+                    .title {{item.title}}
                     .topics
-                        img(:src='topic') 
+                        img(:src='topic')
                         |主題：{{item.topics}}
                     .time
                         img(:src='time') 
@@ -139,15 +146,15 @@ export default {
       }
       .topics,
       .time {
+        line-height: 18px;
+        font-size: 12px;
+        text-align: left;
+        margin: 5px;
         img {
           width: 18px;
           vertical-align: middle;
           margin: 5px;
         }
-        line-height: 18px;
-        font-size: 12px;
-        text-align: left;
-        margin: 5px;
       }
     }
   }

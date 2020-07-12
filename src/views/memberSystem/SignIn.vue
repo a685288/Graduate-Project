@@ -57,7 +57,7 @@ export default {
           var uid = user.uid;
           var providerData = user.providerData;
           console.log("email" + email);
-        } else { 
+        } else {
         }
       });
       console.log("roruter");
@@ -97,7 +97,7 @@ export default {
             #firebaseui-auth-container
             #loader(v-if="")
             Button.btns(@click="googlesignin") Google 登入
-            Button.btns( @click="realname()") Google 註冊
+            Button.btns(@click="realname()") Google 註冊
             Button.btns(type='primary' @click="check()") Submit
 
             //- Form(ref='formData' :model="formData")

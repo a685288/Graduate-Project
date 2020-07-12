@@ -5,7 +5,7 @@
                 | {{ barItems.userClass }}
             MenuItem(name='2')
                 Icon(type="ios-paper")
-                | {{ barItems.onlineClass }} 
+                | {{ barItems.onlineClass }}
             Submenu(name='3')
                 template(slot='title')
                     Icon(type='ios-construct')
@@ -16,42 +16,41 @@
 </template>
 <script>
 export default {
-    name: 'TitleBar',
-    data(){
-        return {
-            theme: 'light',
-            barItems: {
-                onlineClass: `線上課程`,
-                userClass: `我的課程`,
-                setting: `設定`,
-                setitem: {
-                    title: `個人`,
-                    logout: `登出`,
-                    userinfo:`個人資訊`
-                }
-            }       
+  name: "TitleBar",
+  data() {
+    return {
+      theme: "light",
+      barItems: {
+        onlineClass: `線上課程`,
+        userClass: `我的課程`,
+        setting: `設定`,
+        setitem: {
+          title: `個人`,
+          logout: `登出`,
+          userinfo: `個人資訊`
         }
-    },
-    methods: {
-        route(n) {
-            console.log(n);
-            switch (n) {
-                case `1`:
-                    this.$router.push('myclass');
-                break;
-                case `2`:
-                    this.$router.push('allclass');
-                break;
-                default:
-                    this.$router.push('/');
-                break;
-            }
-        }
-    }   
-}
+      }
+    };
+  },
+  methods: {
+    route(n) {
+      console.log(n);
+      switch (n) {
+        case `1`:
+          this.$router.push("myclass");
+          break;
+        case `2`:
+          this.$router.push("allclass");
+          break;
+        default:
+          this.$router.push("/");
+          break;
+      }
+    }
+  }
+};
 </script>
 <style scoped>
-.TitleBar{
-
+.TitleBar {
 }
 </style>
