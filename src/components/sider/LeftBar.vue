@@ -25,7 +25,7 @@ export default {
     margin: 10px;
     width: 90%;
     span {
-      font-size: 16px;
+      font-size: 110%;
     }
   }
 }

@@ -5,7 +5,10 @@ import SignIn from '../views/memberSystem/SignIn.vue';
 import Dashboard from '../views/dashboard.vue';
 import myclass from '../views/dashboardPages/Userclass.vue';
 import allclass from '../views/dashboardPages/Allclass.vue';
-import courseinfo from '../views/dashboardPages/Courseinfo.vue';
+import course from '../views/coursePages/Course.vue';
+import lesson from '../views/coursePages/Lesson.vue';
+import video from '../views/coursePages/Video.vue';
+import exam from '../views/coursePages/Exam.vue';
 
 Vue.use(VueRouter);
 
@@ -18,7 +21,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    redirect: `/dashboard/allclass`,
+    redirect: '/dashboard/allclass',
     component: Dashboard,
     children: [
       {
@@ -30,8 +33,24 @@ const routes = [
         component: allclass,
       },
       {
-        path: 'courseinfo',
-        component: courseinfo,
+        path: 'course',
+        component: course,
+      },
+      {
+        name: 'lesson',
+        path: 'lesson',
+        redirect: '/dashboard/lesson/video',
+        component: lesson,
+        children: [
+          {
+            path: 'video',
+            component: video,
+          },
+          {
+            path: 'exam',
+            component: exam,
+          },
+        ],
       },
     ],
   },

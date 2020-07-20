@@ -51,6 +51,5 @@ export default {
 };
 </script>
 <style scoped>
-.TitleBar {
-}
+
 </style>

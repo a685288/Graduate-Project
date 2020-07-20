@@ -1,19 +1,18 @@
 <script>
 export default {
   name: "coursetopic",
+  components: {},
   prop: {},
   data() {
     return {
       Lessons: [
         {
           id: "1",
-          title: "英文的時間邏輯",
-          url: ""
+          title: "時間邏輯"
         },
         {
           id: "2",
-          title: "萬用句型",
-          url: ""
+          title: "句型"
         }
       ]
     };
@@ -22,18 +21,17 @@ export default {
 </script>
 <template lang="pug">
   .div
-    h1 包含的課程 
+    h1 包含的課程
     .lessons(v-for="(item, index) in Lessons",:key="item.id")
       Card.card 第{{index+1}}課－{{item.title}}
         Icon.icon(type="md-arrow-dropright-circle") 
 </template>
 <style lang='scss' scoped>
-.div { 
+.div {
   background-color: lightgray;
-  padding: 5% 15%;
+  padding: 2% 15%;
   h1 {
-    text-align: left;
-    line-height: 50px;
+    line-height: 120%;
   }
   .card {
     font-size: 20px;
@@ -41,7 +39,10 @@ export default {
     margin: 1%;
     padding: 0% 25%;
     font-weight: bold;
-    .icon{
+    .img {
+      height: 20px;
+    }
+    .icon {
       float: right;
     }
   }

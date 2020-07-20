@@ -1,11 +1,5 @@
-<template lang="pug">
-.dashboard
-    HeaderBar
-    router-view
-</template>
 <script>
 import HeaderBar from '@/components/header/HeaderBar.vue';
-
 export default {
     name: `Dashboard`,
     components: {
@@ -13,7 +7,11 @@ export default {
     }
 }
 </script>
-
+<template lang="pug">
+.dashboard
+    HeaderBar
+    router-view
+</template>
 <style scoped>
 
 </style>

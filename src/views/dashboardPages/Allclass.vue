@@ -83,7 +83,7 @@ export default {
   methods: {
     courseinfo() {
       console.log("push");
-      this.$router.push("courseinfo");
+      this.$router.push("course");
       // name: 'courseinfo', params: { userId:  }
     }
   }
@@ -95,11 +95,12 @@ export default {
         .classcard
             Button(@click="courseinfo()") 課程介紹測試
             Col(v-for="(item, index) in cardData" :key='item.id')
-                Card.card
+                Card.card(@click="courseinfo()")
                     .img
                         img(v-if='item.img != "" ' :src="item.img" )
                         img(v-else :src="defaultClass") 
-                    hr.hr
+                    Divider
+                    //- hr.hr
                     .title {{item.title}}
                     .topics
                         img(:src='topic')
@@ -109,7 +110,6 @@ export default {
                         |時間（小時）：{{item.time}}
                     .content {{item.content}}
 </template>
-
 <style lang='scss' scoped>
 .allclass {
   display: flex;
