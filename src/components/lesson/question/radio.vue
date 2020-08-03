@@ -6,14 +6,12 @@ export default {
 </script>
 <template lang="pug">
 .div
-  RadioGroup(v-model="vertical",vertical)
-    Radio(label="1")
-      Icon(type="social-apple")
-      span Apple
-    Radio(label="2")
-      Icon(type="social-apple")
-      span Apple
+  RadioGroup(vertical)
+    Radio(label="1") 選項A
+    Radio(label="2") 選項B
+    Radio(label="3") 選項A
+    Radio(label="4") 選項B
 </template>
 <style lang="scss" scoped>
 
-</style>
+</style> 

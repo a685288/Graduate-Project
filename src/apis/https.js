@@ -7,11 +7,9 @@ const errorHandel = (status, msg) => {
         case 400:
             tip(msg);
             break;
-
         case 404:
             tip(msg);
             break;
-        
         default:
             tip(msg);
             break;
@@ -19,10 +17,13 @@ const errorHandel = (status, msg) => {
 }
 
 var instance = axios.create({
-    baseURL: '/api/'
-})
+    baseURL: 'http://192.168.0.237:1314'
+});
 
 instance.interceptors.request.use((config) => {
+    config.headers = {
+        'content-type': 'application/x-www-form-urlencoded'
+    }
     return config;
 }, (error) => {
     return Promise.reject(error);

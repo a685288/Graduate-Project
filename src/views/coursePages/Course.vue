@@ -14,7 +14,8 @@ export default {
         {
           title: "英文基礎課",
           intro: "成就你的未來",
-          topic: "13"
+          topic: "13",
+          teacher:'Rudy'
         }
       ]
     };
@@ -27,14 +28,14 @@ export default {
       });
     },
     start() {
-      this.$router.push("lesson");
+      this.$router.push("/dashboard/lesson/video");
     }
   }
 };
 </script>
 <template lang="pug">
   .content
-    .info(v-for="item in course",:key="item.id")
+    .info(v-for="item in course" :key="item.id")
       .left
         h1 {{item.title}}
         h3 {{item.intro}}
@@ -48,7 +49,10 @@ export default {
             span.demo-Circle-inner 80%
         .box
           h3 課程資訊
-          .news        
+          .news
+            img(:src='topic')
+            | 教師：{{item.teacher}} 老師
+            br
             img(:src='topic')
             | 主題：{{item.topic}}
     coursetopic

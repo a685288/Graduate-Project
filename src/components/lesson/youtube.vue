@@ -71,7 +71,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "390",
     width: "640",
-    videoId: "u_8-UIAC_fs",
+    // videoId: "u_8-UIAC_fs",
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -106,8 +106,7 @@ export default {
 </script>
 
 <template lang="pug">
-
-iframe#player(type='text/html', width='640', height='390', frameborder='0')
+  iframe#player(type='text/html', width='640', height='390', frameborder='0')
 </template>
 
 <style lang="scss" scoped>

@@ -1,47 +1,53 @@
 <script>
-import LeftBar from "@/components/sider/LeftBar.vue";
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
-import time from "@/assets/time.png";
+import teacher from "@/assets/teacher.png";
 export default {
   name: "allclass",
-  components: {
-    LeftBar
-  },
   data() {
     return {
+      first: 0,
+      last: 100,
       defaultClass,
       topic,
-      time,
-      results: 13,
+      teacher,
       cardData: [
         {
           id: 1,
-          title: "title1",
-          topics: 5,
-          content: "content1",
+          title: "基礎英文課",
+          topics: 1,
+          content: "基礎英文課，等你來上課",
           time: 5,
           img: ""
         },
         {
           id: 2,
-          title: "title2",
-          topics: 10,
-          content: "content2",
+          title: "進階英文課",
+          topics: 3,
+          content: "程度好嗎?來試試身手吧!",
           time: 5,
           img: ""
         },
         {
-          id: 2,
+          id: 3,
           title: "英文課",
           content: "content2",
-          topics: 15,
+          topics: 9,
           time: 5,
           img:
             "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c6d42972507957.5be9f78763e91.jpg"
         },
         {
-          id: 2,
+          id: 4,
+          title: "title2",
+          content: "content2",
+          topics: 15,
+          time: 4,
+          img:
+            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
+        },
+        {
+          id: 5,
           title: "title2",
           content: "content2",
           topics: 20,
@@ -50,28 +56,19 @@ export default {
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         },
         {
-          id: 2,
+          id: 6,
           title: "title2",
           content: "content2",
-          topics: 20,
+          topics: 27,
           time: 4,
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         },
         {
-          id: 2,
+          id: 7,
           title: "title2",
           content: "content2",
-          topics: 20,
-          time: 4,
-          img:
-            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
-        },
-        {
-          id: 2,
-          title: "title2",
-          content: "content2",
-          topics: 20,
+          topics: 3,
           time: 4,
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
@@ -85,49 +82,90 @@ export default {
       console.log("push");
       this.$router.push("course");
       // name: 'courseinfo', params: { userId:  }
+    },
+    check(x) {
+      if (x == 1) {
+        this.first = 0;
+        this.last = 1;
+      } else if (x == 2) {
+        this.first = 2;
+        this.last = 10;
+      } else if (x == 11) {
+        this.first = 11;
+        this.last = 19;
+      } else if (x == 20) {
+        this.first = 20;
+        this.last = 100;
+      } else {
+        this.first = 0;
+        this.last = 100;
+      }
+      console.log("x"+x);
+      console.log(this.first);
+      console.log(this.last);
     }
   }
 };
 </script>
 <template lang="pug">
-    .allclass
-        LeftBar.leftbar
-        .classcard
-            Button(@click="courseinfo()") 課程介紹測試
-            Col(v-for="(item, index) in cardData" :key='item.id')
-                Card.card(@click="courseinfo()")
-                    .img
-                        img(v-if='item.img != "" ' :src="item.img" )
-                        img(v-else :src="defaultClass") 
-                    Divider
-                    //- hr.hr
-                    .title {{item.title}}
-                    .topics
-                        img(:src='topic')
-                        |主題：{{item.topics}}
-                    .time
-                        img(:src='time') 
-                        |時間（小時）：{{item.time}}
-                    .content {{item.content}}
+  .allclass
+    CheckboxGroup.CheckboxGroup(@on-change="check")
+      h2 課程主題數
+      Checkbox.box(label="1" border)
+        span 小於2章    
+      Checkbox.box(label="2" border)
+        span 2-10章
+      Checkbox.box(label="11" border)
+        span 11-20章
+      Checkbox.box(label="20" border)
+        span 20章以上
+    .classcard
+      Col(v-for="(item, index) in cardData" :key='item.id' )
+        router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }")
+          Card.card
+            .img
+              img(v-if='item.img != "" ' :src="item.img" )
+              img(v-else :src="defaultClass") 
+            Divider.hr
+            .title {{item.title}}
+            .topics
+              img(:src='topic')
+              |主題：{{item.topics}}
+            .time
+              img(:src='teacher') 
+              |授課老師：{{item.time}}
+            .content {{item.content}}
 </template>
 <style lang='scss' scoped>
 .allclass {
   display: flex;
   justify-content: center;
   text-align: center;
-  .leftbar {
+  .CheckboxGroup {
+    padding: 100px;
     flex: 1;
+    h2 {
+      line-height: 200%;
+    }
+    .box {
+      margin: 10px;
+      width: 90%;
+      span {
+        font-size: 110%;
+      }
+    }
   }
   .classcard {
     display: flex;
-    flex: 7;
+    flex: 8;
     margin: 50px;
     flex-wrap: wrap;
     .card {
       flex: 1;
       margin: 15px;
-      width: 250px;
+      width: 240px;
       height: 350px;
+      color: #000000;
       .img {
         height: 110px;
         line-height: 110px;
@@ -135,10 +173,6 @@ export default {
           width: 75px;
           vertical-align: middle;
         }
-      }
-      .hr {
-        border-top: 1px solid #e8eaec;
-        margin: 10px;
       }
       .title {
         font-size: 20px;

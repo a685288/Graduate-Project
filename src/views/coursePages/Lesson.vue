@@ -8,9 +8,9 @@ export default {
 };
 </script>
 <template lang="pug">
-.lesson
-  SideBar.SideBar
-  router-view.content
+  .lesson
+    SideBar.SideBar
+    router-view.content
 </template>
 <style lang="scss" scoped>
 .lesson {

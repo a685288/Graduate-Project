@@ -1,18 +1,18 @@
 <template lang="pug">
-    .TitleBar
-        Menu(mode="horizontal" :theme="theme" active-name="1" @on-select='route')
-            MenuItem(name='1')
-                | {{ barItems.userClass }}
-            MenuItem(name='2')
-                Icon(type="ios-paper")
-                | {{ barItems.onlineClass }}
-            Submenu(name='3')
-                template(slot='title')
-                    Icon(type='ios-construct')
-                    |{{ barItems.setting }}
-                MenuGroup(:title=`barItems.setitem.title`)
-                    MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
-                    MenuItem(name='3-2') {{ barItems.setitem.logout }}
+  .TitleBar
+    Menu(mode="horizontal",:theme="theme",active-name="1",@on-select='route')
+      MenuItem(name='1')
+        | {{ barItems.userClass }}
+      MenuItem(name='2')
+        Icon(type="ios-paper")
+        | {{ barItems.onlineClass }}
+      Submenu(name='3')
+        template(slot='title')
+          Icon(type='ios-construct')
+          |{{ barItems.setting }}
+        MenuGroup(:title=`barItems.setitem.title`)
+          MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
+          MenuItem(name='3-2') {{ barItems.setitem.logout }}
 </template>
 <script>
 export default {
@@ -37,10 +37,10 @@ export default {
       console.log(n);
       switch (n) {
         case `1`:
-          this.$router.push("myclass");
+          this.$router.push("/dashboard/myclass");
           break;
         case `2`:
-          this.$router.push("allclass");
+          this.$router.push("/dashboard/allclass");
           break;
         default:
           this.$router.push("/");

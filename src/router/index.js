@@ -8,7 +8,6 @@ import allclass from '../views/dashboardPages/Allclass.vue';
 import course from '../views/coursePages/Course.vue';
 import lesson from '../views/coursePages/Lesson.vue';
 import video from '../views/coursePages/Video.vue';
-import exam from '../views/coursePages/Exam.vue';
 
 Vue.use(VueRouter);
 
@@ -33,23 +32,19 @@ const routes = [
         component: allclass,
       },
       {
-        path: 'course',
+        path: 'course/:id?',
         component: course,
       },
       {
         name: 'lesson',
         path: 'lesson',
-        redirect: '/dashboard/lesson/video',
+        redirect: '/lesson/video',
         component: lesson,
         children: [
           {
             path: 'video',
             component: video,
-          },
-          {
-            path: 'exam',
-            component: exam,
-          },
+          }
         ],
       },
     ],

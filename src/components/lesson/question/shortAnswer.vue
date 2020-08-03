@@ -6,8 +6,10 @@ export default {
 </script>
 <template lang="pug">
 .div
-  Input(search enter-button="送出")
+  Input(size='large')
 </template>
 <style lang="scss" scoped>
-
+.div{
+  width: 60%;
+}
 </style>
