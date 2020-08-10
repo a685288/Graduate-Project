@@ -7,7 +7,7 @@ import myclass from '../views/dashboardPages/Userclass.vue';
 import allclass from '../views/dashboardPages/Allclass.vue';
 import course from '../views/coursePages/Course.vue';
 import lesson from '../views/coursePages/Lesson.vue';
-import video from '../views/coursePages/Video.vue';
+import exam from '../views/coursePages/Exam.vue';
 
 Vue.use(VueRouter);
 
@@ -38,12 +38,12 @@ const routes = [
       {
         name: 'lesson',
         path: 'lesson',
-        redirect: '/lesson/video',
+        redirect: '/lesson/exam',
         component: lesson,
         children: [
           {
-            path: 'video',
-            component: video,
+            path: 'exam',
+            component: exam,
           }
         ],
       },

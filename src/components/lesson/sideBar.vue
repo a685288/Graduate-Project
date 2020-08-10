@@ -43,7 +43,7 @@ export default {
       | L{{item.id}}－{{item.title}} 
 
   //- Menu(accordion='true' @on-select='route')
-  //-   Submenu(name="0" v-for="item in lessons" :key="item.id")
+  //-   Submenu(name="0" v-for="item in lessons" :key="  item.id")
   //-     template(slot="title")
   //-       Icon(type="ios-paper")
   //-       |

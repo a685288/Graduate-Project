@@ -38,7 +38,7 @@ export default {
         .signInWithPopup(provider)
         .then(res => {
           this.userData.id = String(res.credential.accessToken);
-          console.log("token::" + this.userData.id);
+          console.log("token:" + this.userData.id);
           // var user = res.user;
         })
         .catch(error => {
@@ -48,46 +48,45 @@ export default {
           console.log("error.email" + error.email);
           console.log("error.credential" + error.credential);
         });
-      // this.realname();
+      // this.realname();  
       this.post();
     },
     // realname() {
-    //   // var person = prompt("請輸入您的真實姓名：", "");
-    //   // if (person !== null || person !== "") {
-    //   //   this.userData.name = person;
+    //   var person = prompt("請輸入您的真實姓名：", "");
+    //   if (person !== null || person !== "") {
+    //     this.userData.name = person;
     //     this.post();
-    // }else{
-    //   console.log('請輸入姓名')
-    // }
+    //   } else {
+    //     console.log("請輸入姓名");
+    //   }
     // },
     // getDatta().then((res) => {
     //   this.posts = res.data;
     // })
-    // realname () {
-    //   this.$Modal.confirm({
-    //     render: (h) => {
-    //       return h('Input', {
-    //         props: {
-    //           value: this.value,
-    //           autofocus: true,
-    //           placeholder: 'Please enter your name...'
-    //         },
-    //         on: {
-    //           input: (val) => {
-    //             this.value = this.userData.name;
-    //           }
-    //         }
-    //       })
-    //     }
-    //   })
-    // },
+    realname() {
+      this.$Modal.confirm({
+        render: h => {
+          return h("Input", {
+            props: {
+              value: this.value,
+              autofocus: true,
+              placeholder: "Please enter your name..."
+            },
+            on: {
+              input: val => {
+                this.value = this.userData.name;
+              }
+            }
+          });
+        }
+      });
+    },
     post() {
       console.log("post()");
       console.log(this.userData.id + " ??? " + this.userData.name);
       if (this.userData.id !== null && this.userData.name !== null) {
         postData({
-          token: this.userData.id,
-          name: this.userData.name
+          token: this.userData.id
         }).then(res => {
           this.posts = res.data;
           this.$router.push("dashboard");

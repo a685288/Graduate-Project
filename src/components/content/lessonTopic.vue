@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "coursetopic",
+  name: "lessonTopic",
   components: {},
   prop: {},
   data() {

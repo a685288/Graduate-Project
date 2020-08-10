@@ -6,7 +6,8 @@ export default {
 </script>
 <template lang="pug">
 .div 
-  CheckboxGroup(v-model="border")
+  CheckboxGroup(v-model="border") 最愛吃的水果?
+    br
     Checkbox(label="1") 香蕉
     Checkbox(label="2") 蘋果
     Checkbox(label="3") 鳳梨

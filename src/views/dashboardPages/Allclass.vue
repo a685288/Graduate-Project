@@ -17,7 +17,8 @@ export default {
           title: "基礎英文課",
           topics: 1,
           content: "基礎英文課，等你來上課",
-          time: 5,
+          //學英文沒有捷徑，但是有方法。吉娜英格網站將致力於研發電腦輔助教學的教材，以及有效率的英語學習方法。站長有很多的英語教學創意，透過網路，實現教學理想。吉娜英格網站所有內容，著作權均屬於吉娜英格所有，嚴禁任意拷貝或是散播。我們在此聲明，任何侵權行為，將採取適當之法律行動。
+          teacher: "Abby",
           img: ""
         },
         {
@@ -25,7 +26,7 @@ export default {
           title: "進階英文課",
           topics: 3,
           content: "程度好嗎?來試試身手吧!",
-          time: 5,
+          teacher: "Abby",
           img: ""
         },
         {
@@ -33,7 +34,7 @@ export default {
           title: "英文課",
           content: "content2",
           topics: 9,
-          time: 5,
+          teacher: "Abby",
           img:
             "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c6d42972507957.5be9f78763e91.jpg"
         },
@@ -42,7 +43,7 @@ export default {
           title: "title2",
           content: "content2",
           topics: 15,
-          time: 4,
+          teacher: "Abby",
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         },
@@ -51,7 +52,7 @@ export default {
           title: "title2",
           content: "content2",
           topics: 20,
-          time: 4,
+          teacher: "Abby",
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         },
@@ -60,7 +61,7 @@ export default {
           title: "title2",
           content: "content2",
           topics: 27,
-          time: 4,
+          teacher: "Abby",
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         },
@@ -69,7 +70,7 @@ export default {
           title: "title2",
           content: "content2",
           topics: 3,
-          time: 4,
+          teacher: "Abby",
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         }
@@ -84,6 +85,7 @@ export default {
       // name: 'courseinfo', params: { userId:  }
     },
     check(x) {
+      // checkbox group
       if (x == 1) {
         this.first = 0;
         this.last = 1;
@@ -100,7 +102,7 @@ export default {
         this.first = 0;
         this.last = 100;
       }
-      console.log("x"+x);
+      console.log("x" + x);
       console.log(this.first);
       console.log(this.last);
     }
@@ -120,20 +122,21 @@ export default {
       Checkbox.box(label="20" border)
         span 20章以上
     .classcard
-      Col(v-for="(item, index) in cardData" :key='item.id' )
+      Col(v-for="item in cardData" :key='item.id' )
         router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }")
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )
               img(v-else :src="defaultClass") 
-            Divider.hr
+            
             .title {{item.title}}
             .topics
               img(:src='topic')
               |主題：{{item.topics}}
-            .time
+            .teacher
               img(:src='teacher') 
-              |授課老師：{{item.time}}
+              |授課老師：{{item.teacher}} 老師
+            hr
             .content {{item.content}}
 </template>
 <style lang='scss' scoped>
@@ -166,6 +169,10 @@ export default {
       width: 240px;
       height: 350px;
       color: #000000;
+      hr {
+        size: 1px;
+        color: #e8eaec;
+      }
       .img {
         height: 110px;
         line-height: 110px;
@@ -179,9 +186,9 @@ export default {
         font-weight: bold;
       }
       .topics,
-      .time {
+      .teacher {
         line-height: 18px;
-        font-size: 12px;
+        font-size: 14px;
         text-align: left;
         margin: 5px;
         img {
@@ -189,6 +196,9 @@ export default {
           vertical-align: middle;
           margin: 5px;
         }
+      }
+      .content {
+        margin: 10px 0px;
       }
     }
   }

@@ -1,21 +1,23 @@
 <script>
-import coursetopic from "@/components/content/coursetopic.vue";
+import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
+import teacher from "@/assets/teacher.png";
 
 export default {
   name: "courseinfo",
   components: {
-    coursetopic
+    lessonTopic
   },
   data() {
     return {
       topic,
+      teacher,
       course: [
         {
           title: "英文基礎課",
           intro: "成就你的未來",
           topic: "13",
-          teacher:'Rudy'
+          teacher: "Rudy"
         }
       ]
     };
@@ -28,7 +30,7 @@ export default {
       });
     },
     start() {
-      this.$router.push("/dashboard/lesson/video");
+      this.$router.push("/dashboard/lesson/exam");
     }
   }
 };
@@ -45,17 +47,17 @@ export default {
       .right
         .box
           h3 課程進度
-          i-circle.circle(:percent="80")
-            span.demo-Circle-inner 80%
+          i-circle.circle(:percent="50")
+            span.demo-Circle-inner 50%
         .box
           h3 課程資訊
           .news
             img(:src='topic')
-            | 教師：{{item.teacher}} 老師
-            br
-            img(:src='topic')
             | 主題：{{item.topic}}
-    coursetopic
+            br
+            img(:src='teacher') 
+            | 授課老師：{{item.teacher}} 老師
+    lessonTopic
 </template>
 <style lang="scss" scoped>
 .content {
@@ -106,17 +108,16 @@ export default {
         .circle {
           margin: 10%;
         }
-        
         h3 {
           line-height: 150%;
         }
         .news {
           margin: 5%;
           img {
-          width: 18px;
-          vertical-align: middle;
-          margin: 5px;
-        }
+            width: 18px;
+            vertical-align: middle;
+            margin: 10px 0px;
+          }
         }
       }
     }
