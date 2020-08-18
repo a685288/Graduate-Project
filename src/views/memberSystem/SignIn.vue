@@ -1,6 +1,6 @@
 <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
 <script>
-import { postData } from "@/apis/signin.js";
+import { signIn } from "@/apis/signin.js";
 import firebase from "firebase/app";
 import "firebase";
 
@@ -22,8 +22,7 @@ export default {
   data() {
     return {
       userData: {
-        id: "",
-        name: "qq"
+        id: ""
       }
     };
   },
@@ -39,7 +38,7 @@ export default {
         .then(res => {
           this.userData.id = String(res.credential.accessToken);
           console.log("token:" + this.userData.id);
-          // var user = res.user;
+          // var user = res.use r;
         })
         .catch(error => {
           // var errorCode = error.code;
@@ -85,7 +84,7 @@ export default {
       console.log("post()");
       console.log(this.userData.id + " ??? " + this.userData.name);
       if (this.userData.id !== null && this.userData.name !== null) {
-        postData({
+        signIn({
           token: this.userData.id
         }).then(res => {
           this.posts = res.data;

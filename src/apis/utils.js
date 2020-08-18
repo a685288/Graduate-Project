@@ -2,5 +2,5 @@
 
 
 export const tip = msg => {
-    console.log(msg);
+  console.log(msg);
 }

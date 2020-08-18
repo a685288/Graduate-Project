@@ -2,6 +2,7 @@
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
+// import {allClass} from '@apis/course.js'
 export default {
   name: "allclass",
   data() {
@@ -11,6 +12,16 @@ export default {
       defaultClass,
       topic,
       teacher,
+      class:{
+        id:'',
+        imgUrl:'',
+        topic:'',
+        intro:'',
+        sectionNum:'',
+        type:'',
+        teacherName:'',
+        createAt:''
+      },
       cardData: [
         {
           id: 1,
@@ -75,17 +86,10 @@ export default {
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         }
       ],
-      category: [{}]
     };
   },
   methods: {
-    courseinfo() {
-      console.log("push");
-      this.$router.push("course");
-      // name: 'courseinfo', params: { userId:  }
-    },
-    check(x) {
-      // checkbox group
+    checkBoxGroup(x) {
       if (x == 1) {
         this.first = 0;
         this.last = 1;
@@ -111,7 +115,7 @@ export default {
 </script>
 <template lang="pug">
   .allclass
-    CheckboxGroup.CheckboxGroup(@on-change="check")
+    CheckboxGroup.CheckboxGroup(@on-change="checkBoxGroup")
       h2 課程主題數
       Checkbox.box(label="1" border)
         span 小於2章    
@@ -128,7 +132,6 @@ export default {
             .img
               img(v-if='item.img != "" ' :src="item.img" )
               img(v-else :src="defaultClass") 
-            
             .title {{item.title}}
             .topics
               img(:src='topic')
