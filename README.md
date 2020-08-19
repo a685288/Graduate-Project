@@ -6,10 +6,12 @@
 ##### 學習平台前台
 
 ### 使用技術
-1. Vue
-2. javascript
-3. axios
-4. scss
+1. HTML
+2. CSS
+3. JavaScript
+4. Vue.js
+5. SCSS
+6. axios
 
 ### 製作時間
 2020.5.8-製作中
