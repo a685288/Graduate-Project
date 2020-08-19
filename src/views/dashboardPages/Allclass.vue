@@ -2,7 +2,7 @@
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
-import { getAllClass } from "@apis/course.js";
+import { getAllClass } from "@/apis/course.js";
 export default {
   name: "allclass",
   data() {
@@ -13,12 +13,11 @@ export default {
       topic,
       teacher,
       class: {
-        id: "",
+        classId: "",
         imgUrl: "",
         topic: "",
         intro: "",
         sectionNum: "",
-        type: "",
         teacherName: "",
         createAt: ""
       },
@@ -88,12 +87,13 @@ export default {
       ]
     };
   },
+  mounted() {
+    getAllClass().then(res => {
+      console.log(res.data);
+      console.log(res.data);
+    });
+  },
   methods: {
-    allClass() {
-      getAllClass().then(res => {
-        console.log(res.data.data);
-      });
-    },
     checkBoxGroup(x) {
       if (x == 1) {
         this.first = 0;
