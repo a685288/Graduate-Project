@@ -1,9 +1,15 @@
 <script>
 import myinfo from "@/components/sider/myinfo.vue";
+// import { getMyClass } from "@/apis/course.js";
 export default {
   name: "myclass",
   components: {
     myinfo
+  },
+  methods:{
+    getMyClass(){
+      
+    }
   }
 };
 </script>

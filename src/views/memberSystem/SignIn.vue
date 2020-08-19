@@ -1,9 +1,9 @@
 <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 <script>
-import { signIn } from "@/apis/signin.js";
-import firebase from "firebase/app";
-import "firebase";
-
+// Firebase
 var firebaseConfig = {
   apiKey: "AIzaSyA3X54KKQ_f_QS9PwHdk3gO7N-aQfM6wSg",
   authDomain: "e-learning-4550b.firebaseapp.com",
@@ -14,18 +14,16 @@ var firebaseConfig = {
   appId: "1:458064779443:web:4f2a9cb4881b54f01df8c6",
   measurementId: "G-HMC7V2W4V3"
 };
-// Initialize Firebase
+// 初始化 Firebase
 firebase.initializeApp(firebaseConfig);
-
+firebase.analytics();
+</script>
+<script>
+import { postSignIn } from "@/apis/signin.js";
+import firebase from "firebase/app";
+import "firebase";
 export default {
   name: "SignIn",
-  data() {
-    return {
-      userData: {
-        id: ""
-      }
-    };
-  },
   methods: {
     check() {
       this.$router.push("dashboard");
@@ -35,33 +33,32 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(res => {
-          this.userData.id = String(res.credential.accessToken);
-          console.log("token:" + this.userData.id);
-          // var user = res.use r;
+        .then(function(res) {
+          var token = res.credential.accessToken;
+          console.log(token);
+          firebase
+            .auth()
+            .currentUser.getIdToken(true)
+            .then(function(idToken) {
+              console.log(idToken);
+              // api
+              postSignIn({
+                token: idToken
+              }).then(res => {
+                console.log(res.data.data);
+                this.$router.push("dashboard");
+              });
+            })
+            .catch(function(error) {});
         })
         .catch(error => {
-          // var errorCode = error.code;
-          console.log("error.code" + error.code);
-          console.log("error.message" + error.message);
-          console.log("error.email" + error.email);
-          console.log("error.credential" + error.credential);
+          console.log("error.code:" + error.code);
+          console.log("error.message:" + error.message);
+          console.log("error.email:" + error.email);
+          console.log("error.credential:" + error.credential);
         });
-      // this.realname();  
-      this.post();
     },
-    // realname() {
-    //   var person = prompt("請輸入您的真實姓名：", "");
-    //   if (person !== null || person !== "") {
-    //     this.userData.name = person;
-    //     this.post();
-    //   } else {
-    //     console.log("請輸入姓名");
-    //   }
-    // },
-    // getDatta().then((res) => {
-    //   this.posts = res.data;
-    // })
+    // 目前未用到
     realname() {
       this.$Modal.confirm({
         render: h => {
@@ -79,20 +76,6 @@ export default {
           });
         }
       });
-    },
-    post() {
-      console.log("post()");
-      console.log(this.userData.id + " ??? " + this.userData.name);
-      if (this.userData.id !== null && this.userData.name !== null) {
-        signIn({
-          token: this.userData.id
-        }).then(res => {
-          this.posts = res.data;
-          this.$router.push("dashboard");
-        });
-      } else {
-        console.log("登入失敗");
-      }
     }
   }
 };
@@ -103,7 +86,6 @@ export default {
   Card.SignCard
     #firebaseui-auth-container
       Button(@click.native="googleSignin()") Google 登入
-      //- Button(@click.native="googleSignin()")  {{}}
       Button(type='primary' @click.native="check()") Submit
 </template>
 

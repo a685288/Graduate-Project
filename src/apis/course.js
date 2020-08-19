@@ -8,26 +8,27 @@ import req from './https.js';
  * @return {string} topic
  * @return {string} intro
  * @return {number} sectionNum
- * @return {} type (0/1 公開/非公開)
+ * @return {number} type (0/1 公開/非公開)
  * @return {string} teacherName
  * @return {number} createAt
  */
-export const allClass = () => req('get', 'class');
+export const getAllClass = () => req('get', '/class');
 
 /**我的課程  (已加選課程)
  * GET
- * /client/:id(clientID)  
- * @param {string}  accesstoken
- * @returns {string} id
- * @return {string(base64)} imgUrl
- * @return {string} topic
- * @return {string} intro
- * @return {number} sectionNum
- * @return {} type (0/1 公開/非公開)
- * @return {string} teacherName
- * @return {number} createAt
+ * /client/:id(clientID)
+ * @param   {string}  accesstoken
+ * 
+ * @returns {string}  id
+ * @returns {string(base64)} imgUrl
+ * @returns {string}  topic
+ * @returns {string}  intro
+ * @returns {number}  sectionNum
+ * @returns {number}  type (0/1 公開/非公開)
+ * @returns {string}  teacherName
+ * @returns {number}  createAt
  */
-// export const myClass = ()
+// export const getMyClass = (id) => req('get', '/client/${id}');
 
 /**加選課程
  * PUT
@@ -35,4 +36,4 @@ export const allClass = () => req('get', 'class');
  * @param {string} uid
  * @param {string} classId
  */
-// export const additional =
+// export const postAddclass = (uid, classId) => req('post', '/client/addclass');

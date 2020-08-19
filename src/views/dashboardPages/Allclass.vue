@@ -2,7 +2,7 @@
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
-// import {allClass} from '@apis/course.js'
+import { getAllClass } from "@apis/course.js";
 export default {
   name: "allclass",
   data() {
@@ -12,15 +12,15 @@ export default {
       defaultClass,
       topic,
       teacher,
-      class:{
-        id:'',
-        imgUrl:'',
-        topic:'',
-        intro:'',
-        sectionNum:'',
-        type:'',
-        teacherName:'',
-        createAt:''
+      class: {
+        id: "",
+        imgUrl: "",
+        topic: "",
+        intro: "",
+        sectionNum: "",
+        type: "",
+        teacherName: "",
+        createAt: ""
       },
       cardData: [
         {
@@ -85,10 +85,15 @@ export default {
           img:
             "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         }
-      ],
+      ]
     };
   },
   methods: {
+    allClass() {
+      getAllClass().then(res => {
+        console.log(res.data.data);
+      });
+    },
     checkBoxGroup(x) {
       if (x == 1) {
         this.first = 0;
@@ -127,7 +132,7 @@ export default {
         span 20章以上
     .classcard
       Col(v-for="item in cardData" :key='item.id' )
-        router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }")
+        router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }" )
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )

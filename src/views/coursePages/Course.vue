@@ -2,6 +2,7 @@
 import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
+// import { postAddClass } from "@apis/course.js";
 
 export default {
   name: "courseinfo",
@@ -23,9 +24,9 @@ export default {
     };
   },
   methods: {
-    background(type) {
+    add(type) {
       this.$Message[type]({
-        background: true,
+        // background: true,
         content: "加選課程成功"
       });
     },
@@ -42,7 +43,7 @@ export default {
         h1 {{item.title}}
         h3 {{item.intro}}
         .button(align='center')
-          Button.btn(@click="background('success')") 加入課程
+          Button.btn(@click="add('success')") 加入課程
           Button.btn(@click='start()') 開始上課
       .right
         .box
