@@ -12,15 +12,17 @@ export default {
       defaultClass,
       topic,
       teacher,
-      class: {
-        classId: "",
-        imgUrl: "",
-        topic: "",
-        intro: "",
-        sectionNum: "",
-        teacherName: "",
-        createAt: ""
-      },
+      allClass: [
+        {
+          classId: "123",
+          imgUrl: "url",
+          topic: "0",
+          intro: "0",
+          sectionNum: "0",
+          teacherName: "0",
+          createAt: "0"
+        }
+      ],
       cardData: [
         {
           id: 1,
@@ -30,67 +32,19 @@ export default {
           //學英文沒有捷徑，但是有方法。吉娜英格網站將致力於研發電腦輔助教學的教材，以及有效率的英語學習方法。站長有很多的英語教學創意，透過網路，實現教學理想。吉娜英格網站所有內容，著作權均屬於吉娜英格所有，嚴禁任意拷貝或是散播。我們在此聲明，任何侵權行為，將採取適當之法律行動。
           teacher: "Abby",
           img: ""
-        },
-        {
-          id: 2,
-          title: "進階英文課",
-          topics: 3,
-          content: "程度好嗎?來試試身手吧!",
-          teacher: "Abby",
-          img: ""
-        },
-        {
-          id: 3,
-          title: "英文課",
-          content: "content2",
-          topics: 9,
-          teacher: "Abby",
-          img:
-            "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c6d42972507957.5be9f78763e91.jpg"
-        },
-        {
-          id: 4,
-          title: "title2",
-          content: "content2",
-          topics: 15,
-          teacher: "Abby",
-          img:
-            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
-        },
-        {
-          id: 5,
-          title: "title2",
-          content: "content2",
-          topics: 20,
-          teacher: "Abby",
-          img:
-            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
-        },
-        {
-          id: 6,
-          title: "title2",
-          content: "content2",
-          topics: 27,
-          teacher: "Abby",
-          img:
-            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
-        },
-        {
-          id: 7,
-          title: "title2",
-          content: "content2",
-          topics: 3,
-          teacher: "Abby",
-          img:
-            "https://www.planesandballoons.com/wp-content/uploads/2018/12/large-printable-numbers-1-20-02-255x329.png"
         }
       ]
     };
   },
   mounted() {
     getAllClass().then(res => {
-      console.log(res.data);
-      console.log(res.data);
+      console.log("長度" + res.data.data.length);
+      for (var i = 0; i < res.data.data.length; i++) {
+        console.log("舊"+this.allClass[i])
+        
+        this.allClass[i] = res.data.data[i];
+        console.log("新"+this.allClass[i])
+      }
     });
   },
   methods: {
@@ -131,21 +85,21 @@ export default {
       Checkbox.box(label="20" border)
         span 20章以上
     .classcard
-      Col(v-for="item in cardData" :key='item.id' )
+      Col(v-for="item in allClass" :key='item.id' )
         router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }" )
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )
               img(v-else :src="defaultClass") 
-            .title {{item.title}}
+            .title {{item.topic}}
             .topics
               img(:src='topic')
-              |主題：{{item.topics}}
+              |主題：{{item.sectionNum}}
             .teacher
               img(:src='teacher') 
-              |授課老師：{{item.teacher}} 老師
+              |授課老師：{{item.teacherName}} 老師
             hr
-            .content {{item.content}}
+            .content {{item.intro}}
 </template>
 <style lang='scss' scoped>
 .allclass {
@@ -155,6 +109,7 @@ export default {
   .CheckboxGroup {
     padding: 100px;
     flex: 1;
+    margin: 0px auto;
     h2 {
       line-height: 200%;
     }

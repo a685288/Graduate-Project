@@ -18,7 +18,7 @@ const errorHandel = (status, msg) => {
 };
 
 var instance = axios.create({
-  baseURL: 'https://e42e573acce5.ngrok.io',
+  baseURL: 'https://54104e39e7dd.ngrok.io',
 });
 
 instance.interceptors.request.use(

@@ -1,6 +1,6 @@
 <template lang="pug">
   .TitleBar
-    Menu(mode="horizontal",:theme="theme",active-name="1",@on-select='route')
+    Menu.left(mode="horizontal",:theme="theme",active-name="1",@on-select='route')
       MenuItem(name='1')
         | {{ barItems.userClass }}
       MenuItem(name='2')
@@ -13,6 +13,8 @@
         MenuGroup(:title=`barItems.setitem.title`)
           MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
           MenuItem(name='3-2') {{ barItems.setitem.logout }}
+      .right
+        Input.right(search enter-button @click="search()" placeholder="請輸入課程邀請碼")
 </template>
 <script>
 export default {
@@ -20,9 +22,10 @@ export default {
   data() {
     return {
       theme: "light",
+      value: "",
       barItems: {
-        onlineClass: `線上課程`,
         userClass: `我的課程`,
+        onlineClass: `線上課程`,
         setting: `設定`,
         setitem: {
           title: `個人`,
@@ -46,10 +49,18 @@ export default {
           this.$router.push("/");
           break;
       }
+    },
+    search() {
+      console.log("search()");
+      // console.log(value);
     }
   }
 };
 </script>
 <style scoped>
-
+.right {
+  float: right;
+  padding: 8px;
+  width: 50%;
+}
 </style>

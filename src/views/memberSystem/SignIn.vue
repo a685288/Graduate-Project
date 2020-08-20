@@ -1,4 +1,3 @@
-<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
@@ -17,8 +16,6 @@ var firebaseConfig = {
 // 初始化 Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-</script>
-<script>
 import { postSignIn } from "@/apis/signin.js";
 import firebase from "firebase/app";
 import "firebase";
@@ -34,8 +31,6 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(function(res) {
-          var token = res.credential.accessToken;
-          console.log(token);
           firebase
             .auth()
             .currentUser.getIdToken(true)
@@ -46,6 +41,7 @@ export default {
                 token: idToken
               }).then(res => {
                 console.log(res.data.data);
+                localStorage.setItem(res.data.data)
                 this.$router.push("dashboard");
               });
             })
@@ -86,7 +82,7 @@ export default {
   Card.SignCard
     #firebaseui-auth-container
       Button(@click.native="googleSignin()") Google 登入
-      Button(type='primary' @click.native="check()") Submit
+      Button( @click.native="check()" type='primary') 直接進入網頁
 </template>
 
 <style lang='scss' scoped>
