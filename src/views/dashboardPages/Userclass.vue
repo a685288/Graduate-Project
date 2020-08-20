@@ -7,7 +7,7 @@ export default {
     myinfo
   },
   mounted:{
-
+    
   },
   methods:{
     getMyClass(){

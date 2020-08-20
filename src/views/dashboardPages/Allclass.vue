@@ -16,9 +16,9 @@ export default {
         {
           classId: "123",
           imgUrl: "url",
-          topic: "0",
+          topic: "0",        //主題
           intro: "0",
-          sectionNum: "0",
+          sectionNum: "0",   //主題數
           teacherName: "0",
           createAt: "0"
         }
@@ -41,7 +41,6 @@ export default {
       console.log("長度" + res.data.data.length);
       for (var i = 0; i < res.data.data.length; i++) {
         console.log("舊"+this.allClass[i])
-        
         this.allClass[i] = res.data.data[i];
         console.log("新"+this.allClass[i])
       }
@@ -86,7 +85,7 @@ export default {
         span 20章以上
     .classcard
       Col(v-for="item in allClass" :key='item.id' )
-        router-link(v-if='first<=item.topics&&item.topics<=last' :to="{path: 'course/' + item.id }" )
+        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.id }" )
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )

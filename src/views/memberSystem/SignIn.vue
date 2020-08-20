@@ -35,15 +35,18 @@ export default {
             .auth()
             .currentUser.getIdToken(true)
             .then(function(idToken) {
-              console.log(idToken);
               // api
               postSignIn({
                 token: idToken
               }).then(res => {
-                console.log(res.data.data);
-                localStorage.setItem(res.data.data)
-                this.$router.push("dashboard");
+                localStorage.clear();
+                let uid = res.data.data.id;
+                let accessToken = res.data.data.accessToken;
+                localStorage.setItem("uid", uid);
+                localStorage.setItem("accessToken", accessToken);
+                // this.$router.push("dashboard");
               });
+              
             })
             .catch(function(error) {});
         })
@@ -52,7 +55,9 @@ export default {
           console.log("error.message:" + error.message);
           console.log("error.email:" + error.email);
           console.log("error.credential:" + error.credential);
-        });
+        }).then(()=>{
+          this.$router.push("dashboard");
+        })
     },
     // 目前未用到
     realname() {
@@ -82,7 +87,7 @@ export default {
   Card.SignCard
     #firebaseui-auth-container
       Button(@click.native="googleSignin()") Google 登入
-      Button( @click.native="check()" type='primary') 直接進入網頁
+      Button( @click.native="check()" type='primary') 直接進入網站
 </template>
 
 <style lang='scss' scoped>

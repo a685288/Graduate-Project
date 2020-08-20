@@ -3,14 +3,15 @@ import req from './https.js';
 /** 全部課程
  * GET
  * /class
- * @return {string} id              classID
- * @return {string(base64)} imgUrl
- * @return {string} topic
- * @return {string} intro
- * @return {number} sectionNum
- * @return {number} type (0/1 公開/非公開)
- * @return {string} teacherName
- * @return {number} createAt
+ * @returns {string} classID
+ * @returns {number} createAt
+ * @returns {string(base64)} imgUrl
+ * @returns {string} intro
+ * @returns {number} isOpen (0/1 未開啟/開啟)
+ * @returns {number} sectionNum 主題數
+ * @returns {string} teacherName
+ * @returns {string} topic 課程名稱
+ * @returns {number} type (0/1 公開/非公開)
  */
 export const getAllClass = () => req('get', '/class');
 
@@ -37,3 +38,4 @@ export const getAllClass = () => req('get', '/class');
  * @param {string} classId
  */
 // export const postAddclass = (uid, classId) => req('post', '/client/addclass');
+

@@ -26,7 +26,7 @@ export default {
   methods: {
     add(type) {
       this.$Message[type]({
-        // background: true,
+        background: true,
         content: "加選課程成功"
       });
     },
