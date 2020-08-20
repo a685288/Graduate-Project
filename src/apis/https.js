@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { tip } from './utils.js'; 
 // import router from '../router/index.js';
-import { tip } from './utils.js';
 
 const errorHandel = (status, msg) => {
   switch (status) {
@@ -25,6 +25,7 @@ instance.interceptors.request.use(
   (config) => {
     config.headers = {
       'content-type': 'application/x-www-form-urlencoded',
+      'Authorization':localStorage.uid,
     };
     return config;
   },

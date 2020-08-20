@@ -42,11 +42,9 @@ export default {
                 localStorage.clear();
                 let uid = res.data.data.id;
                 let accessToken = res.data.data.accessToken;
-                localStorage.setItem("uid", uid);
-                localStorage.setItem("accessToken", accessToken);
-                // this.$router.push("dashboard");
+                localStorage.uid = uid;
+                localStorage.accessToken = accessToken;
               });
-              
             })
             .catch(function(error) {});
         })
@@ -55,9 +53,10 @@ export default {
           console.log("error.message:" + error.message);
           console.log("error.email:" + error.email);
           console.log("error.credential:" + error.credential);
-        }).then(()=>{
-          this.$router.push("dashboard");
         })
+        .then(() => {
+          this.$router.push("dashboard");
+        });
     },
     // 目前未用到
     realname() {

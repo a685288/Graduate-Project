@@ -29,6 +29,7 @@ export default {
         background: true,
         content: "加選課程成功"
       });
+      // var putUid = localStorage.uid;
     },
     start() {
       this.$router.push("/dashboard/lesson/exam");
