@@ -1,10 +1,14 @@
 <script>
+import classCard from "@/components/classCard.vue";
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
 import { getAllClass } from "@/apis/course.js";
 export default {
   name: "allclass",
+  components: {
+    classCard
+  },
   data() {
     return {
       first: 0,
@@ -16,9 +20,9 @@ export default {
         {
           classId: "123",
           imgUrl: "url",
-          topic: "0",        //主題
+          topic: "0", //主題
           intro: "0",
-          sectionNum: "0",   //主題數
+          sectionNum: "0", //主題數
           teacherName: "0",
           createAt: "0"
         }
@@ -40,9 +44,9 @@ export default {
     getAllClass().then(res => {
       console.log("長度" + res.data.data.length);
       for (var i = 0; i < res.data.data.length; i++) {
-        console.log("舊"+this.allClass[i])
+        console.log("舊" + this.allClass[i]);
         this.allClass[i] = res.data.data[i];
-        console.log("新"+this.allClass[i])
+        console.log("新" + this.allClass[i]);
       }
     });
   },
@@ -79,13 +83,13 @@ export default {
         span 小於2章    
       Checkbox.box(label="2" border)
         span 2-10章
-      Checkbox.box(label="11" border)
+      Checkbox.box(label="11" border) 
         span 11-20章
       Checkbox.box(label="20" border)
         span 20章以上
-    .classcard
-      Col(v-for="item in allClass" :key='item.id' )
-        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.id }" )
+    .classcard(v-for="item in allClass" :key='item.id' )
+      Col
+        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" )
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )
