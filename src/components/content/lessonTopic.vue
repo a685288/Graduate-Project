@@ -1,4 +1,5 @@
 <script>
+// components
 export default {
   name: "lessonTopic",
   components: {},

@@ -37,7 +37,6 @@ div
     Button.startbtn(type="primary" shape="circle" @click='exam' v-if="btnshow") 開始測驗
   .exam(v-if="show")
     h1 課堂小考
-    
     radio.ques
     radio.ques
     multipleChoice.ques
