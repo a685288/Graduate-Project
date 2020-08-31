@@ -20,7 +20,7 @@ export const getAllClass = () => req('get', '/class');
  * /client/:id(clientID)
  * @param   {string}  accesstoken
  * 
- * @returns {string}  id
+ * @returns {string}  classId      
  * @returns {string(base64)} imgUrl
  * @returns {string}  topic
  * @returns {string}  intro

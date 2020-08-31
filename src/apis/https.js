@@ -25,7 +25,7 @@ instance.interceptors.request.use(
   (config) => {
     config.headers = {
       'content-type': 'application/x-www-form-urlencoded',
-      'Authorization':localStorage.uid,
+      'Authorization':localStorage.accessToken,
     };
     return config;
   },

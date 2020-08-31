@@ -33,7 +33,7 @@ export default {
     },
     postAddClass() {
       console.log("postAddClass");
-      // let uid = localStorage.uid;
+      // let token = localStorage.accessToken;
     },
     start() {
       this.$router.push("/dashboard/lesson/exam");

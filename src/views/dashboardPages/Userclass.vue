@@ -6,19 +6,26 @@ export default {
   components: {
     myinfo
   },
-  mounted:{
+  mounted() {
+    // getMyClass().then(res=>{
+    // })
+  },
+  methods: {
     
   },
-  methods:{
-    getMyClass(){
-      
-    }
+  data() {
+    return {
+      // my: {
+      //   name: "王小明",
+      //   email: "aaa@gmail.com"
+      // }
+    };
   }
 };
 </script>
 <template lang="pug">
 .div
-  myinfo.info
+  myinfo.info(:user='user')
   Tabs.tabs
     TabPane(label='進行中') 進行中的課程
     TabPane(label='已完成') 已完成的課程
