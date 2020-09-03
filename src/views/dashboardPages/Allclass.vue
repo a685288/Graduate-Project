@@ -1,5 +1,6 @@
 <script>
 import classCard from "@/components/classCard.vue";
+import course from "@/components/Course.vue";
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
@@ -7,7 +8,8 @@ import { getAllClass } from "@/apis/course.js";
 export default {
   name: "allclass",
   components: {
-    classCard
+    classCard,
+    course
   },
   data() {
     return {
@@ -25,17 +27,6 @@ export default {
           sectionNum: "0", //主題數
           teacherName: "0",
           createAt: "0"
-        }
-      ],
-      cardData: [
-        {
-          id: 1,
-          title: "基礎英文課",
-          topics: 1,
-          content: "基礎英文課，等你來上課",
-          //學英文沒有捷徑，但是有方法。吉娜英格網站將致力於研發電腦輔助教學的教材，以及有效率的英語學習方法。站長有很多的英語教學創意，透過網路，實現教學理想。吉娜英格網站所有內容，著作權均屬於吉娜英格所有，嚴禁任意拷貝或是散播。我們在此聲明，任何侵權行為，將採取適當之法律行動。
-          teacher: "Abby",
-          img: ""
         }
       ]
     };
@@ -89,7 +80,7 @@ export default {
         span 20章以上
     .classcard(v-for="item in allClass" :key='item.id' )
       Col
-        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" )
+        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" :propsClassId='item.classId' )
           Card.card
             .img
               img(v-if='item.img != "" ' :src="item.img" )

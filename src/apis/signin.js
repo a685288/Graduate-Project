@@ -4,9 +4,8 @@ export const getDatta = () =>
   req('get', 'https://jsonplaceholder.typicode.com/posts');
 
 /** 登入
- * @param {string} idToken
+ * @param {string} token
  * @return {string} accesstoken
- * @return {string} id
  */
 export const postSignIn = (params) => req('post', '/auth/signin', params);
 // signIn({

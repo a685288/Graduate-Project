@@ -1,26 +1,47 @@
 <script>
 import myinfo from "@/components/sider/myinfo.vue";
-// import { getMyClass } from "@/apis/course.js";
+import { getMyClass } from "@/apis/course.js";
 export default {
   name: "myclass",
   components: {
     myinfo
   },
-  mounted() {
-    // getMyClass().then(res=>{
-    // })
-  },
-  methods: {
-    
-  },
   data() {
     return {
-      // my: {
-      //   name: "王小明",
-      //   email: "aaa@gmail.com"
-      // }
+      user: {
+        id: "",
+        email: "",
+        name: ""
+      },
+      class: [
+        {
+          classId: "",
+          imgUrl: "",
+          topic: "",
+          intro: "",
+          sectionNum: "",
+          type: "",
+          teacherName: "",
+          createAt: ""
+        }
+      ]
     };
-  }
+  },
+  mounted() {
+    getMyClass().then(res => {
+      //測res.data.classinfo資料
+      this.id = res.data.ID;
+      this.email = res.data.email;
+      this.name = res.data.name;
+      console.log("長度" + res.data.classinfo.length);
+      for (var i = 0; i < res.data.classinfo.length; i++) {
+        console.log("舊" + this.class[i]);
+        this.class[i] = res.data.classinfo[i];
+        console.log("新" + this.class[i]);
+      }
+    });
+  },
+  methods: {}
 };
 </script>
 <template lang="pug">

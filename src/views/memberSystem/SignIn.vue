@@ -37,7 +37,7 @@ export default {
             .then(function(idToken) {
               // api
               postSignIn({
-                token: idToken
+                token: token
               }).then(res => {
                 localStorage.clear();
                 let uid = res.data.data.id;
