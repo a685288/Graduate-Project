@@ -44,6 +44,7 @@ export default {
                 let accessToken = res.data.data.accessToken;
                 localStorage.uid = uid;
                 localStorage.accessToken = accessToken;
+                localStorage.Token = accessToken;
               });
             })
             .catch(function(error) {});

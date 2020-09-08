@@ -28,17 +28,15 @@ export default {
     };
   },
   mounted() {
-    getMyClass().then(res => {
+    getMyClass(localStorage.getItem("uid"))
+    .then(res => {
+      console.log(res.data);
       //測res.data.classinfo資料
-      this.id = res.data.ID;
-      this.email = res.data.email;
-      this.name = res.data.name;
-      console.log("長度" + res.data.classinfo.length);
-      for (var i = 0; i < res.data.classinfo.length; i++) {
-        console.log("舊" + this.class[i]);
-        this.class[i] = res.data.classinfo[i];
-        console.log("新" + this.class[i]);
-      }
+      this.user.id = res.data.ID;
+      this.user.email = res.data.email;
+      this.user.name = res.data.name;
+      console.log(this.user.id);
+      this.class = res.data.classinfo;
     });
   },
   methods: {}

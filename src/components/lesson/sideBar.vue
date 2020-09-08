@@ -38,7 +38,7 @@ export default {
 </script>
 <template lang="pug">
 .div
-  Menu(:theme='theme3' active-name='1')
+  Menu(active-name='1')
     MenuItem(name='' v-for="item in lessons" :key="item.id")
       | L{{item.id}}－{{item.title}} 
 

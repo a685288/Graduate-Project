@@ -1,16 +1,15 @@
 <script>
-import classCard from "@/components/classCard.vue";
-import course from "@/components/Course.vue";
+// import course from "@/src/views/coursePages/Course.vue";
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
 import { getAllClass } from "@/apis/course.js";
+
 export default {
   name: "allclass",
-  components: {
-    classCard,
-    course
-  },
+  // components:{
+  //   course
+  // },
   data() {
     return {
       first: 0,
@@ -20,25 +19,23 @@ export default {
       teacher,
       allClass: [
         {
-          classId: "123",
-          imgUrl: "url",
-          topic: "0", //主題
-          intro: "0",
-          sectionNum: "0", //主題數
-          teacherName: "0",
-          createAt: "0"
+          classId: "",
+          createAt: "",
+          imgUrl: "",
+          intro: "",
+          isOpen: "",
+          isPublic: "",
+          sectionNum: "",
+          teacherName: "",
+          topic: ""
         }
       ]
     };
   },
   mounted() {
     getAllClass().then(res => {
-      console.log("長度" + res.data.data.length);
-      for (var i = 0; i < res.data.data.length; i++) {
-        console.log("舊" + this.allClass[i]);
-        this.allClass[i] = res.data.data[i];
-        console.log("新" + this.allClass[i]);
-      }
+      console.log(res.data.data);
+      this.allClass = res.data.data;
     });
   },
   methods: {
@@ -59,9 +56,14 @@ export default {
         this.first = 0;
         this.last = 100;
       }
-      console.log("x" + x);
-      console.log(this.first);
-      console.log(this.last);
+      // console.log("x" + x);
+      // console.log(this.first);
+      // console.log(this.last);
+    },
+    getClassId(id) {
+      this.$router.push("course/ ${id}");
+      console.log(id);
+      localStorage.setItem('classId', id)
     }
   }
 };
@@ -78,10 +80,9 @@ export default {
         span 11-20章
       Checkbox.box(label="20" border)
         span 20章以上
-    .classcard(v-for="item in allClass" :key='item.id' )
+    .classcard(v-for="item in allClass" :key='item.classId' )
       Col
-        router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" :propsClassId='item.classId' )
-          Card.card
+          Card.card(v-if='first<=item.sectionNum&&item.sectionNum<=last' @click.native='getClassId(item.classId)')
             .img
               img(v-if='item.img != "" ' :src="item.img" )
               img(v-else :src="defaultClass") 
@@ -94,6 +95,8 @@ export default {
               |授課老師：{{item.teacherName}} 老師
             hr
             .content {{item.intro}}
+                    //- router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" @click.native='getClassId(item.classId)')
+
 </template>
 <style lang='scss' scoped>
 .allclass {

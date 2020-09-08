@@ -2,7 +2,7 @@
 import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
-import { postAddClass } from "@apis/course.js";
+import { postAddClass } from "@/apis/course.js";
 
 export default {
   name: "courseinfo",
@@ -13,7 +13,7 @@ export default {
     return {
       topic,
       teacher,
-      class: [
+      course: [
         {
           title: "英文基礎課",
           intro: "成就你的未來",
@@ -23,30 +23,20 @@ export default {
       ]
     };
   },
-  props:{
-    propsClassId:String,
-  },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     add(type) {
+      console.log("1d");
       this.$Message[type]({
         background: true,
         content: "加選課程成功"
-                // console.log(propsClassId);
-
       });
+      console.log("1d");
       postAddClass({
-        // classId: propsClassId;
-      }).then(res => {
-        localStorage.clear();
-        let uid = res.data.data.id;
-        let accessToken = res.data.data.accessToken;
-        localStorage.uid = uid;
-        localStorage.accessToken = accessToken;
+        uid: localStorage.uid,
+        classId: localStorage.classId
       });
     },
-
     start() {
       this.$router.push("/dashboard/lesson/exam");
     }

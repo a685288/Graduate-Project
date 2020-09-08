@@ -14,7 +14,7 @@
           MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
           MenuItem(name='3-2') {{ barItems.setitem.logout }}
       .right
-        Input.right(search enter-button @click="search()" placeholder="請輸入課程邀請碼")
+        Input.right(search enter-button @click="search(value)" placeholder="請輸入課程邀請碼")
 </template>
 <script>
 export default {
@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     route(n) {
-      console.log(n);
       switch (n) {
         case `1`:
           this.$router.push("/dashboard/myclass");
@@ -50,9 +49,10 @@ export default {
           break;
       }
     },
-    search() {
+    search(x) {
       console.log("search()");
-      // console.log(value);
+      console.log(x)
+      
     }
   }
 };

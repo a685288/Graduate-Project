@@ -19,7 +19,7 @@ export const getAllClass = () => req('get', '/class');
  * GET
  * /client/:id(放uid)
  * @param   {string}  accesstoken  //header
- * @returns {string}  classId      
+ * @returns {string}  classId
  * @returns {string(base64)} imgUrl
  * @returns {string}  topic
  * @returns {string}  intro
@@ -28,12 +28,34 @@ export const getAllClass = () => req('get', '/class');
  * @returns {string}  teacherName
  * @returns {number}  createAt
  */
-export const getMyClass = () => req('get', '/client/${id}');
+export const getMyClass = () => req('get', '/client/${uid}');
 
 /**加選課程
  * PUT
- * /client/addclass      
+ * /client/addclass
+ * @param {string} uid
  * @param {string} classId
  */
-export const postAddClass = (params) => req('post', '/client/addclass',params);
+export const postAddClass = (params) => req('post', '/client/addclass', params);
 
+/**取得測驗內容(不含答案)
+ * GET
+ * /section/${sectionId}/exam
+ * @returns {String} sectionId
+ * @returns {String} title        單元標題
+ * @returns {String} url
+ * @returns {Number} type
+ * @returns {Array } question
+ *   @returns {String} questionId
+ *   @returns {Array} content
+ *   @returns {Array} select
+ * 
+ *   @returns {Number} sort
+ */
+export const getExamContent = () => req('get','/section/5f472ace8d33d47194b8d332/exam')
+
+/**送出答案
+ * GET
+ * /question/answer/:sectionId
+ * @returns r
+*/
