@@ -1,6 +1,6 @@
 <template lang="pug">
   .TitleBar
-    Menu.left(mode="horizontal",:theme="theme",active-name="1",@on-select='route')
+    Menu.left(mode="horizontal" :theme="theme" active-name="1" @on-select='route')
       MenuItem(name='1')
         | {{ barItems.userClass }}
       MenuItem(name='2')

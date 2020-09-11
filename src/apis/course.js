@@ -59,3 +59,9 @@ export const getExamContent = () => req('get','/section/5f472ace8d33d47194b8d332
  * /question/answer/:sectionId
  * @returns r
 */
+
+/**
+ * 搜尋非公開課程 用邀請碼
+ * GET
+ * /invite/:invite
+*/

@@ -1,5 +1,4 @@
 <script>
-// import course from "@/src/views/coursePages/Course.vue";
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
@@ -7,9 +6,6 @@ import { getAllClass } from "@/apis/course.js";
 
 export default {
   name: "allclass",
-  // components:{
-  //   course
-  // },
   data() {
     return {
       first: 0,
@@ -95,8 +91,7 @@ export default {
               |授課老師：{{item.teacherName}} 老師
             hr
             .content {{item.intro}}
-                    //- router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" @click.native='getClassId(item.classId)')
-
+  //- router-link(v-if='first<=item.sectionNum&&item.sectionNum<=last' :to="{path: 'course/' + item.classId }" @click.native='getClassId(item.classId)')
 </template>
 <style lang='scss' scoped>
 .allclass {

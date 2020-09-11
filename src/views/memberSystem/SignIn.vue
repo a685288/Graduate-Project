@@ -16,7 +16,7 @@ var firebaseConfig = {
 // 初始化 Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-import { postSignIn } from "@/apis/signin.js";
+import { postSignIn } from "@/apis/member.js";
 import firebase from "firebase/app";
 import "firebase";
 export default {
@@ -59,25 +59,7 @@ export default {
           this.$router.push("dashboard");
         });
     },
-    // 目前未用到
-    realname() {
-      this.$Modal.confirm({
-        render: h => {
-          return h("Input", {
-            props: {
-              value: this.value,
-              autofocus: true,
-              placeholder: "Please enter your name..."
-            },
-            on: {
-              input: val => {
-                this.value = this.userData.name;
-              }
-            }
-          });
-        }
-      });
-    }
+    
   }
 };
 </script>

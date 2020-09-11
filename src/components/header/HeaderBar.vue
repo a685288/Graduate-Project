@@ -1,8 +1,8 @@
 <template lang="pug">
-    .Header
-        img(:src=`logo`)
-        .Menu
-            MenuBar
+  .Header
+    img(:src='logo')
+    .Menu
+      MenuBar
 </template>
 
 <script>
@@ -23,7 +23,6 @@ export default {
 <style lang='scss' scoped>
 .Header {
   display: flex;
-
   img {
     height: 60px;
   }
