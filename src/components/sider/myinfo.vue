@@ -13,31 +13,40 @@ export default {
   data() {
     return {
       photo,
-      value: ""
+      value: "",
+      str: ""
     };
   },
   methods: {
     editName() {
+      this.str = this.user.name;
       this.$Modal.confirm({
         render: h => {
           return h("Input", {
             props: {
               value: this.value,
               autofocus: true,
-              placeholder: "請輸入你的名字"
+              placeholder: "請輸入你的姓名"
             },
             on: {
               input: () => {
                 this.value = this.user.name;
-                
               }
             }
           });
         }
       });
+      this.updateName();
     },
     updateName() {
-    },
+      if (this.user.name != this.str) {
+        console.log("改變");
+      } else {
+        console.log("無改變");
+      }
+      console.log("ip");
+      console.log(this.user.name);
+    }
   }
 };
 </script>

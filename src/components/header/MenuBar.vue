@@ -14,9 +14,10 @@
           MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
           MenuItem(name='3-2') {{ barItems.setitem.logout }}
       .right
-        Input.right(search enter-button @click="search(value)" placeholder="請輸入課程邀請碼")
+        Input.right(search enter-button @on-search	="search()" v-model="value" placeholder="請輸入課程邀請碼")
 </template>
 <script>
+// import { getNotOpenClass } from "@/apis/course.js";
 export default {
   name: "TitleBar",
   data() {
@@ -49,10 +50,12 @@ export default {
           break;
       }
     },
-    search(x) {
+    search() {
       console.log("search()");
-      console.log(x)
-      
+      console.log(this.value);
+      // getNotOpenClass(this.value).then(res => {
+      //   this.$router.push("course/ ${this.value}");
+      // });
     }
   }
 };
@@ -63,4 +66,4 @@ export default {
   padding: 8px;
   width: 50%;
 }
-</style>
+</style>  

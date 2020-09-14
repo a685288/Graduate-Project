@@ -49,7 +49,7 @@ export const postAddClass = (params) => req('post', '/client/addclass', params);
  *   @returns {String} questionId
  *   @returns {Array} content
  *   @returns {Array} select
- * 
+ *   @returns {} type 
  *   @returns {Number} sort
  */
 export const getExamContent = () => req('get','/section/5f472ace8d33d47194b8d332/exam')
@@ -65,3 +65,4 @@ export const getExamContent = () => req('get','/section/5f472ace8d33d47194b8d332
  * GET
  * /invite/:invite
 */
+export const getNotOpenClass=()=>req('get','/invite/${invite}',)

@@ -57,7 +57,7 @@ export default {
       // console.log(this.last);
     },
     getClassId(id) {
-      this.$router.push("course/ ${id}");
+      this.$router.push("course/"+id);
       console.log(id);
       localStorage.setItem('classId', id)
     }

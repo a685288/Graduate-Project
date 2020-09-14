@@ -49,17 +49,16 @@ export default {
             })
             .catch(function(error) {});
         })
+        .then(() => {
+          this.$router.push("dashboard");
+        })
         .catch(error => {
           console.log("error.code:" + error.code);
           console.log("error.message:" + error.message);
           console.log("error.email:" + error.email);
           console.log("error.credential:" + error.credential);
         })
-        .then(() => {
-          this.$router.push("dashboard");
-        });
-    },
-    
+    }
   }
 };
 </script>

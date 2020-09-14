@@ -11,7 +11,7 @@ export default {
       user: {
         id: "",
         email: "",
-        name: "QQ"
+        name: ""
       },
       class: [
         {

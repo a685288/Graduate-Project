@@ -31,7 +31,7 @@ export default {
         background: true,
         content: "加選課程成功"
       });
-      console.log("1d");
+      console.log("加選");
       postAddClass({
         uid: localStorage.uid,
         classId: localStorage.classId
