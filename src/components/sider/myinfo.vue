@@ -14,7 +14,7 @@ export default {
     return {
       photo,
       value: "",
-      str: ""
+      str: "",
     };
   },
   methods: {
@@ -57,7 +57,7 @@ export default {
     Icon(type="ios-people")
     | 信箱： {{user.email}}
     br
-    Button(type="primary"  ghost shape="circle" icon="md-brush" @click='editName')
+    Button(type="primary" ghost shape="circle" icon="md-brush" @click='editName' v-model="value")
 </template>
 <style lang="scss" scoped>
 img {
