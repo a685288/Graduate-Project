@@ -49,20 +49,22 @@ export const postAddClass = (params) => req('post', '/client/addclass', params);
  *   @returns {String} questionId
  *   @returns {Array} content
  *   @returns {Array} select
- *   @returns {} type 
+ *   @returns {} type
  *   @returns {Number} sort
  */
-export const getExamContent = () => req('get','/section/5f472ace8d33d47194b8d332/exam')
+export const getExamContent = () =>
+  req('get', '/section/5f472ace8d33d47194b8d332/exam');
 
-/**送出答案
+/**給我答案
  * GET
  * /question/answer/:sectionId
  * @returns r
-*/
+ */
+export const submitExamAns = () => req('get', '/question/answer/5f472ace8d33d47194b8d332');
 
 /**
  * 搜尋非公開課程 用邀請碼
  * GET
  * /invite/:invite
-*/
-export const getNotOpenClass=()=>req('get','/invite/${invite}',)
+ */
+export const getNotOpenClass = () => req('get', '/invite/${invite}');
