@@ -52,13 +52,10 @@ export default {
         this.first = 0;
         this.last = 100;
       }
-      // console.log("x" + x);
-      // console.log(this.first);
-      // console.log(this.last);
     },
     getClassId(id) {
       this.$router.push("course/" + id);
-      console.log(id);
+      localStorage.removeItem("classId");
       localStorage.setItem("classId", id);
     }
   }
@@ -78,25 +75,23 @@ export default {
         span 20章以上
     .right
       .classcard(v-for="item in allClass" :key='item.classId')
-        Col
-          Card.card(v-if='first<=item.sectionNum&&item.sectionNum<=last' @click.native='getClassId(item.classId)')
-            .img
-              img(v-if='item.img != "" ' :src="item.img" )
-              img(v-else :src="defaultClass") 
-            .title {{item.topic}}
-            .topics
-              img(:src='topic')
-              |主題：{{item.sectionNum}}
-            .teacher
-              img(:src='teacher') 
-              |授課老師：{{item.teacherName}} 老師
-            hr
-            .content {{item.intro}}
+        Card.card(v-if='first<=item.sectionNum&&item.sectionNum<=last' @click.native='getClassId(item.classId)')
+          .img
+            img(v-if='item.img != "" ' :src="item.img" )
+            img(v-else :src="defaultClass") 
+          .title {{item.topic}}
+          .topics
+            img(:src='topic')
+            |主題：{{item.sectionNum}}
+          .teacher
+            img(:src='teacher') 
+            |授課老師：{{item.teacherName}} 老師
+          hr
+          .content {{item.intro}}
 </template>
 <style lang='scss' scoped>
 .allclass {
   display: flex;
-  justify-content: center;
   text-align: center;
   .CheckboxGroup {
     padding: 100px;
@@ -115,10 +110,9 @@ export default {
   }
   .right {
     flex: 8;
-    margin: 50px;
+    padding: 50px;
     flex-wrap: wrap;
     .classcard {
-      flex: 1;
       .card {
         margin: 15px;
         width: 240px;

@@ -2,14 +2,10 @@ import req from './https.js';
 
 /** 登入
  * @param {string} token
- * @return {string} accesstoken
+ * @returns {string} accesstoken
+ * @returns {string} id
  */
 export const postSignIn = (params) => req('post', '/auth/signin', params);
-// signIn({
-//   token: 賦予的值
-// }).then(res => {
-// });
-
 /**
  * 更新 user name
  * PUT

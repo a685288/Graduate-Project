@@ -85,12 +85,6 @@ div
     Button.startbtn(type="primary" shape="circle" @click='exam' v-if="btnshow") 開始測驗
   .exam(v-if="show")
     h1 課堂小考
-    //- RadioGroup.ques(v-for="item in section.question" :key="item.questionId" v-model='userAns[item.sort]' vertical) {{item.content}}
-    //-   Radio(label='A') {{item.select[0]}}
-    //-   Radio(label='B') {{item.select[1]}}
-    //-   Radio(label='C') {{item.select[2]}}
-    //-   Radio(label='D') {{item.select[3]}}
-    //-   br
     CheckboxGroup.ques(v-for="item in section.question" :key="item.questionId" v-model='userAns[item.sort]' vertical) {{item.content}}
       Checkbox(label='A') {{item.select[0]}}
       Checkbox(label='B') {{item.select[1]}}

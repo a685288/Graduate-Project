@@ -23,11 +23,10 @@ export default {
       ]
     };
   },
-  mounted() {},
   methods: {
-    add(type) {
+    addClass() {
       console.log("1d");
-      this.$Message[type]({
+      this.$Message["success"]({
         background: true,
         content: "加選課程成功"
       });
@@ -50,7 +49,7 @@ export default {
         h1 {{item.title}}
         h3 {{item.intro}}
         .button(align='center')
-          Button.btn(@click="add('success')") 加入課程
+          Button.btn(@click="addClass()") 加入課程
           Button.btn(@click='start()') 開始上課
       .right
         .box

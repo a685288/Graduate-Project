@@ -37,14 +37,10 @@ export default {
             .then(function(idToken) {
               // api
               postSignIn({
-                token: token
+                token: idToken
               }).then(res => {
-                localStorage.clear();
-                let uid = res.data.data.id;
-                let accessToken = res.data.data.accessToken;
-                localStorage.uid = uid;
-                localStorage.accessToken = accessToken;
-                localStorage.Token = accessToken;
+                console.log("signin" + res.data.data.accessToken);
+                localStorage.setItem('accessToken', res.data.data.accessToken);
               });
             })
             .catch(function(error) {});
@@ -57,7 +53,7 @@ export default {
           console.log("error.message:" + error.message);
           console.log("error.email:" + error.email);
           console.log("error.credential:" + error.credential);
-        })
+        });
     }
   }
 };
