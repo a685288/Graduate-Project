@@ -7,21 +7,21 @@ const errorHandel = (status, msg) => {
     case 400:
       tip(msg);
       break;
-
     case 404:
       tip(msg);
       break;
-
     default:
       tip(msg);
       break;
   }
 };
+
 let instance = axios.create({
   baseURL: '/api',
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Authorization': localStorage.Token,
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
     'Access-Control-Allow-Headers': '*',
     'Access-Control-Allow-Credentials': 'true',
   },

@@ -21,10 +21,10 @@ import firebase from "firebase/app";
 import "firebase";
 export default {
   name: "SignIn",
+  mounted() {
+    localStorage.clear();
+  },
   methods: {
-    check() {
-      this.$router.push("dashboard");
-    },
     googleSignin() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase
@@ -39,8 +39,7 @@ export default {
               postSignIn({
                 token: idToken
               }).then(res => {
-                console.log("signin" + res.data.data.accessToken);
-                localStorage.setItem('accessToken', res.data.data.accessToken);
+                localStorage.setItem("accessToken", res.data.data.accessToken);
               });
             })
             .catch(function(error) {});
@@ -64,7 +63,6 @@ export default {
   Card.SignCard
     #firebaseui-auth-container
       Button(@click.native="googleSignin()") Google 登入
-      Button( @click.native="check()" type='primary') 直接進入網站
 </template>
 
 <style lang='scss' scoped>

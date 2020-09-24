@@ -15,7 +15,7 @@ export default {
       teacher,
       allClass: [
         {
-          classId: "",
+          classID: "",
           createAt: "",
           imgUrl: "",
           intro: "",
@@ -62,32 +62,35 @@ export default {
 };
 </script>
 <template lang="pug">
-  .allclass
-    CheckboxGroup.CheckboxGroup(@on-change="checkBoxGroup")
-      h2 課程主題數
-      Checkbox.box(label="1" border)
-        span 小於2章    
-      Checkbox.box(label="2" border)
-        span 2-10章
-      Checkbox.box(label="11" border) 
-        span 11-20章
-      Checkbox.box(label="20" border)
-        span 20章以上
-    .right
-      .classcard(v-for="item in allClass" :key='item.classId')
-        Card.card(v-if='first<=item.sectionNum&&item.sectionNum<=last' @click.native='getClassId(item.classId)')
-          .img
-            img(v-if='item.img != "" ' :src="item.img" )
-            img(v-else :src="defaultClass") 
-          .title {{item.topic}}
-          .topics
-            img(:src='topic')
-            |主題：{{item.sectionNum}}
-          .teacher
-            img(:src='teacher') 
-            |授課老師：{{item.teacherName}} 老師
-          hr
-          .content {{item.intro}}
+.allclass
+  CheckboxGroup.CheckboxGroup(@on-change="checkBoxGroup")
+    h2 課程主題數
+    Checkbox.box(label="1", border)
+      span 小於2章
+    Checkbox.box(label="2", border)
+      span 2-10章
+    Checkbox.box(label="11", border) 
+      span 11-20章
+    Checkbox.box(label="20", border)
+      span 20章以上
+  .right
+    .classcard(v-for="item in allClass", :key="item.classId")
+      Card.card(
+        v-if="first <= item.sectionNum && item.sectionNum <= last",
+        @click.native="getClassId(item.classId)"
+      )
+        .img
+          img(v-if="item.img != ''", :src="item.img")
+          img(v-else, :src="defaultClass") 
+        .title {{ item.topic }}
+        .topics
+          img(:src="topic")
+          | 主題：{{ item.sectionNum }}
+        .teacher
+          img(:src="teacher") 
+          | 授課老師：{{ item.teacherName }} 老師
+        hr
+        .content {{ item.intro }}
 </template>
 <style lang='scss' scoped>
 .allclass {

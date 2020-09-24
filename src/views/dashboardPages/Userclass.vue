@@ -1,10 +1,12 @@
 <script>
 import myinfo from "@/components/sider/myinfo.vue";
-import { getMyClass } from "@/apis/course.js";
+import classInfoCard from "@/components/classCard.vue";
+import { getMyClass } from "../../apis/course.js";
 export default {
   name: "myclass",
   components: {
-    myinfo
+    myinfo,
+    classInfoCard
   },
   data() {
     return {
@@ -28,26 +30,28 @@ export default {
     };
   },
   mounted() {
-    getMyClass(localStorage.getItem("uid"))
-    .then(res => {
-      console.log(res.data);
-      //測res.data.classinfo資料
-      this.user.id = res.data.ID;
-      this.user.email = res.data.email;
-      this.user.name = res.data.name;
-      console.log(this.user.id);
-      this.class = res.data.classinfo;
-    });
+    getMyClass()
+      .then(res => {
+        this.user.id = res.data.data.ID;
+        this.user.email = res.data.data.email;
+        this.user.name = res.data.data.name;
+        this.class = res.data.data.classinfo;
+        console.log('user class data'+this.class);
+      })
+      .catch(err => {
+        alert(err);
+      });
   },
   methods: {}
 };
 </script>
 <template lang="pug">
 .div
-  myinfo.info(:user='user')
+  myinfo.info(:user="user")
+  classCard
   Tabs.tabs
-    TabPane(label='進行中') 進行中的課程
-    TabPane(label='已完成') 已完成的課程
+    TabPane(label="進行中", :classInfo="this.class") 進行中的課程
+    TabPane(label="已完成") 已完成的課程
 </template>
 
 <style lang="scss" scoped>

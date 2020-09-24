@@ -17,8 +17,8 @@ export const getAllClass = () => req('get', '/class');
 
 /**我的課程  (已加選課程)
  * GET
- * /client/:id(放uid)
- * @param   {string}  accesstoken  //header
+ * /client
+ * @params  {string}  accessToken  //header
  * @returns {string}  classId
  * @returns {string(base64)} imgUrl
  * @returns {string}  topic
@@ -28,7 +28,7 @@ export const getAllClass = () => req('get', '/class');
  * @returns {string}  teacherName
  * @returns {number}  createAt
  */
-export const getMyClass = () => req('get', '/client/${uid}');
+export const getMyClass = () => req('get', '/user');
 
 /**加選課程
  * PUT
@@ -52,19 +52,20 @@ export const postAddClass = (params) => req('post', '/client/addclass', params);
  *   @returns {} type
  *   @returns {Number} sort
  */
-export const getExamContent = () =>
-  req('get', '/section/5f472ace8d33d47194b8d332/exam');
+export const getExamContent = (sectionId) =>
+  req('get', `/section/${sectionId}/exam`);
 
 /**給我答案
  * GET
  * /question/answer/:sectionId
  * @returns r
  */
-export const submitExamAns = () => req('get', '/question/answer/5f472ace8d33d47194b8d332');
+export const submitExamAns = (sectionId) =>
+  req('get', `/question/answer/${sectionId}`);
 
 /**
  * 搜尋非公開課程 用邀請碼
  * GET
  * /invite/:invite
  */
-export const getNotOpenClass = () => req('get', '/invite/${invite}');
+export const getNotOpenClass = (invite) => req('get', `/invite/${invite}`);

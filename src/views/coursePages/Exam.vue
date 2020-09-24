@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     content() {
-      getExamContent("5f472ace8d33d47194b8d332").then(res => {
+      getExamContent(this.section).then(res => {
         this.section = res.data.data;
         console.log(this.section);
       });

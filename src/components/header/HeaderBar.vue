@@ -7,7 +7,7 @@
 
 <script>
 import MenuBar from "./MenuBar.vue";
-import logo from "@/assets/logo.jpeg";
+import logo from "@/assets/logo.png";
 export default {
   name: "TitleBar",
   components: {
@@ -23,6 +23,7 @@ export default {
 <style lang='scss' scoped>
 .Header {
   display: flex;
+  background-color: #ffffff;
   img {
     height: 60px;
   }

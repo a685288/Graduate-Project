@@ -14,12 +14,12 @@ export default {
     return {
       photo,
       value: "",
-      str: "",
+      username: "",
     };
   },
   methods: {
     editName() {
-      this.str = this.user.name;
+      this.username = this.user.name;
       this.$Modal.confirm({
         render: h => {
           return h("Input", {

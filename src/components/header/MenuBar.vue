@@ -1,20 +1,15 @@
 <template lang="pug">
   .TitleBar
-    Menu.left(mode="horizontal" :theme="theme" active-name="1" @on-select='route')
+    Menu.left(mode="horizontal" :theme="theme" active-name="2" @on-select='route')
       MenuItem(name='1')
         | {{ barItems.userClass }}
       MenuItem(name='2')
         Icon(type="ios-paper")
         | {{ barItems.onlineClass }}
-      Submenu(name='3')
-        template(slot='title')
-          Icon(type='ios-construct')
-          |{{ barItems.setting }}
-        MenuGroup(:title=`barItems.setitem.title`)
-          MenuItem(name='3-1') {{ barItems.setitem.userinfo }}
-          MenuItem(name='3-2') {{ barItems.setitem.logout }}
+      MenuItem(name='3')
+        | {{ barItems.setting }}
       .right
-        Input.right(search enter-button @on-search	="search()" v-model="value" placeholder="請輸入課程邀請碼")
+        Input.right(search enter-button @on-search="search()" v-model="value" placeholder="請輸入課程邀請碼")
 </template>
 <script>
 // import { getNotOpenClass } from "@/apis/course.js";
@@ -27,12 +22,7 @@ export default {
       barItems: {
         userClass: `我的課程`,
         onlineClass: `線上課程`,
-        setting: `設定`,
-        setitem: {
-          title: `個人`,
-          logout: `登出`,
-          userinfo: `個人資訊`
-        }
+        setting: `登出`
       }
     };
   },
@@ -46,6 +36,7 @@ export default {
           this.$router.push("/dashboard/allclass");
           break;
         default:
+          localStorage.clear();
           this.$router.push("/");
           break;
       }

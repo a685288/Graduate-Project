@@ -6,6 +6,7 @@ import req from './https.js';
  * @returns {string} id
  */
 export const postSignIn = (params) => req('post', '/auth/signin', params);
+
 /**
  * 更新 user name
  * PUT
