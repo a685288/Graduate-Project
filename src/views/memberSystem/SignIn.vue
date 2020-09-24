@@ -35,10 +35,12 @@ export default {
             .auth()
             .currentUser.getIdToken(true)
             .then(function(idToken) {
+              console.log(idToken)
               // api
               postSignIn({
                 token: idToken
               }).then(res => {
+                
                 localStorage.setItem("accessToken", res.data.data.accessToken);
               });
             })

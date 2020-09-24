@@ -1,11 +1,11 @@
 <script>
-import myinfo from "@/components/sider/myinfo.vue";
+import myInfoCard from "@/components/sider/myInfoCard.vue";
 import classInfoCard from "@/components/classCard.vue";
 import { getMyClass } from "../../apis/course.js";
 export default {
   name: "myclass",
   components: {
-    myinfo,
+    myInfoCard,
     classInfoCard
   },
   data() {
@@ -47,7 +47,7 @@ export default {
 </script>
 <template lang="pug">
 .div
-  myinfo.info(:user="user")
+  myInfoCard.info(:user="user")
   classCard
   Tabs.tabs
     TabPane(label="進行中", :classInfo="this.class") 進行中的課程
