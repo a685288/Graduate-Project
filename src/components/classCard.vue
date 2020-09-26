@@ -4,17 +4,17 @@ export default {
   props: {
     classInfo: 
     [
-      // {
-      //   ClassID: String,
-      //   createAt: String,
-      //   imgUrl: String,
-      //   intro: String,
-      //   sectionNum: String,
-      //   teacherId: String,
-      //   teacherName: String,
-      //   topic: String,
-      //   type: String
-      // }
+      {
+        ClassID: String,
+        createAt: String,
+        imgUrl: String,
+        intro: String,
+        sectionNum: String,
+        teacherId: String,
+        teacherName: String,
+        topic: String,
+        type: String
+      }
     ]
   },
   mounted() {
