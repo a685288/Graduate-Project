@@ -1,12 +1,12 @@
 <script>
 import myInfoCard from "@/components/sider/myInfoCard.vue";
-import classInfoCard from "@/components/classCard.vue";
+import classCard from "@/components/classCard.vue";
 import { getMyClass } from "../../apis/course.js";
 export default {
   name: "myclass",
   components: {
     myInfoCard,
-    classInfoCard
+    classCard
   },
   data() {
     return {
@@ -15,28 +15,20 @@ export default {
         email: "",
         name: ""
       },
-      class: [
-        {
-          classId: "",
-          imgUrl: "",
-          topic: "",
-          intro: "",
-          sectionNum: "",
-          type: "",
-          teacherName: "",
-          createAt: ""
-        }
+      classData: [
+        
       ]
     };
   },
   mounted() {
     getMyClass()
       .then(res => {
+        console.log("data---"+res.data.data.classinfo)
         this.user.id = res.data.data.ID;
         this.user.email = res.data.data.email;
         this.user.name = res.data.data.name;
-        this.class = res.data.data.classinfo;
-        console.log('user class data'+this.class);
+        this.classData = res.data.data.classinfo;
+        console.log("this.class---" + this.classData);
       })
       .catch(err => {
         alert(err);
@@ -48,9 +40,10 @@ export default {
 <template lang="pug">
 .div
   myInfoCard.info(:user="user")
-  classCard
   Tabs.tabs
-    TabPane(label="進行中", :classInfo="this.class") 進行中的課程
+    TabPane(label="進行中" v-for="item in classData" :key="item.id") 進行中的課程
+      //- classCard( :classInfo="item" )
+      h1 rtrhyerj
     TabPane(label="已完成") 已完成的課程
 </template>
 
@@ -64,7 +57,7 @@ export default {
   }
   .tabs {
     flex: 5;
-    padding: 0% 5%;
+    margin: 0% 5%;
   }
 }
 </style>>

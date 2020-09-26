@@ -2,20 +2,20 @@
 export default {
   name: "classInfoCard",
   props: {
-    classInfo: Array
-    // [
-    //   {
-    //     ClassID: "",
-    //     createAt: "",
-    //     imgUrl: "",
-    //     intro: "",
-    //     sectionNum: "",
-    //     teacherId: "",
-    //     teacherName: "",
-    //     topic: "",
-    //     type: ""
-    //   }
-    // ]
+    classInfo: 
+    [
+      {
+        ClassID: String,
+        createAt: String,
+        imgUrl: String,
+        intro: String,
+        sectionNum: String,
+        teacherId: String,
+        teacherName: String,
+        topic: String,
+        type: String
+      }
+    ]
   },
   mounted() {
     console.log("porps class info" + this.classInfo);

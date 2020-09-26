@@ -35,7 +35,6 @@ export default {
             .auth()
             .currentUser.getIdToken(true)
             .then(function(idToken) {
-              console.log(idToken)
               // api
               postSignIn({
                 token: idToken

@@ -30,7 +30,7 @@ export default {
   },
   mounted() {
     getAllClass().then(res => {
-      console.log(res.data.data);
+      console.log('lallclass data---'+res.data.data);
       this.allClass = res.data.data;
     });
   },
