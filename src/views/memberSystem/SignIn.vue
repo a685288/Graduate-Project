@@ -39,7 +39,6 @@ export default {
               postSignIn({
                 token: idToken
               }).then(res => {
-                
                 localStorage.setItem("accessToken", res.data.data.accessToken);
               });
             })
