@@ -19,7 +19,6 @@ export default {
       show: false,
       btnshow: true,
       check: false,
-      sid: "5f472ace8d33d47194b8d332",
       section: {
         sectionId: "",
         title: "", // 單元標題
@@ -44,7 +43,7 @@ export default {
   },
   methods: {
     content() {
-      getExamContent(this.section).then(res => {
+      getExamContent(this.section.sectionId).then(res => {
         this.section = res.data.data;
         console.log(this.section);
       });

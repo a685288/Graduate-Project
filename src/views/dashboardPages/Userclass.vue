@@ -31,7 +31,7 @@ export default {
         console.log("this.class---" + this.classData);
       })
       .catch(err => {
-        alert(err);
+        console.log(err);
       });
   },
   methods: {}
