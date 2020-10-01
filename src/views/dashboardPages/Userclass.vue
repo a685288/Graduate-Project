@@ -24,10 +24,12 @@ export default {
     getMyClass()
       .then(res => {
         console.log("data---"+res.data.data.classinfo)
-        this.user.id = res.data.data.ID;
-        this.user.email = res.data.data.email;
-        this.user.name = res.data.data.name;
+        this.user=res.data.data
+        // this.user.id = res.data.data.ID;
+        // this.user.email = res.data.data.email;
+        // this.user.name = res.data.data.name;
         this.classData = res.data.data.classinfo;
+        console.log('this user---'+this.user)
         console.log("this.class---" + this.classData);
       })
       .catch(err => {
@@ -41,6 +43,7 @@ export default {
 .div
   myInfoCard.info(:user="user")
   Tabs.tabs
+    TabPane(label='全部')
     TabPane(label="進行中" v-for="item in classData" :key="item.id") 進行中的課程
       //- classCard( :classInfo="item" )
       h1 rtrhyerj
