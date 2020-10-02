@@ -23,13 +23,10 @@ export default {
   mounted() {
     getMyClass()
       .then(res => {
-        console.log("data---"+res.data.data.classinfo)
+        console.log("user class data---"+res.data.data.classinfo)
         this.user=res.data.data
-        // this.user.id = res.data.data.ID;
-        // this.user.email = res.data.data.email;
-        // this.user.name = res.data.data.name;
         this.classData = res.data.data.classinfo;
-        console.log('this user---'+this.user)
+        console.log('this.user---'+this.user)
         console.log("this.class---" + this.classData);
       })
       .catch(err => {

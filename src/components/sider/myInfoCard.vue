@@ -44,7 +44,7 @@ export default {
       } else {
         console.log("無改變");
       }
-      console.log("ip");
+      console.log("update name fun");
       console.log(this.user.name);
     }
   }
@@ -54,15 +54,17 @@ export default {
   Card
     img(:src='photo')
     h2 {{user.name}}
-    Icon(type="ios-people")
-    | 信箱： {{user.email}}
+    p {{user.email}}
     br
-    Button(type="primary" ghost shape="circle" icon="md-brush" @click='editName' v-model="value")
+    Button.btn(type="primary" ghost shape="circle" icon="md-brush" @click='editName' v-model="value")
 </template>
 <style lang="scss" scoped>
 img {
   height: 100%;
   width: 100%;
   border-radius: 50%;
+}
+.btn{
+  margin: 10px;;
 }
 </style>
