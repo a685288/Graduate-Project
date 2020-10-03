@@ -27,6 +27,7 @@ export default {
   methods: {
     googleSignin() {
       var provider = new firebase.auth.GoogleAuthProvider();
+      localStorage.removeItem("accessToken")
       firebase
         .auth()
         .signInWithPopup(provider)

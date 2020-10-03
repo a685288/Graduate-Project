@@ -13,4 +13,4 @@ export const postSignIn = (params) => req('post', '/auth/signin', params);
  * /client/updatename
  * @param {string} name
  */
-export const updateName = (params) => req('put', '/client/updatename', params);
+export const updateName = (params) => req('put', '/user/updatename', params);
