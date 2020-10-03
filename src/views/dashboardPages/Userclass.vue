@@ -41,9 +41,9 @@ export default {
   myInfoCard.info(:user="user")
   Tabs.tabs
     TabPane(label='全部')
-    TabPane(label="進行中" v-for="item in classData" :key="item.id") 進行中的課程
+    TabPane(label="進行中") 進行中的課程
       //- classCard( :classInfo="item" )
-      h1 rtrhyerj
+      
     TabPane(label="已完成") 已完成的課程
 </template>
 

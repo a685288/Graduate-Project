@@ -16,7 +16,7 @@ export default {
       allClass: [
         {
           classID: "",
-          createAt: "",
+          createAt: '',
           imgUrl: "",
           intro: "",
           isOpen: "",
@@ -151,6 +151,8 @@ export default {
         }
         .content {
           margin: 10px 0px;
+          width: 200px;
+          word-wrap: break-word; word-break: normal;
         }
       }
     }
