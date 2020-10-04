@@ -101,7 +101,13 @@ function stopVideo() {
 <script>
 // Youtube api
 export default {
-  name: "Youtube api"
+  name: "Youtube api",
+  // props:{
+  //   url:''
+  // },
+  methods: {
+    
+  },
 };
 </script>
 

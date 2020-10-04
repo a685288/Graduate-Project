@@ -1,5 +1,5 @@
 <script>
-import myInfoCard from "@/components/sider/myInfoCard.vue";
+import myInfoCard from "@/components/userClass/myInfoCard.vue";
 import classCard from "@/components/classCard.vue";
 import { getMyClass } from "../../apis/course.js";
 export default {
@@ -12,38 +12,51 @@ export default {
     return {
       user: {
         id: "",
-        email: "",
-        name: ""
+        email: "33",
+        name: "22"
       },
-      classData: [
-        
+      classInfo: [
+        {
+        ClassID: String,
+        createAt: String,
+        imgUrl: String,
+        intro: String,
+        sectionNum: String,
+        teacherId: String,
+        teacherName: String,
+        topic: String,
+        type: String
+      }
       ]
     };
   },
   mounted() {
-    getMyClass()
-      .then(res => {
-        // console.log("user class data---"+res.data.data.classinfo)
-        this.user=res.data.data
-        // this.classData = res.data.data.classinfo;
-        console.log('this.user---'+this.user)
-        console.log("this.classData---" + this.classData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.userCalss()
   },
-  methods: {}
+  methods: {
+    userCalss() {
+      getMyClass()
+        .then(res => {
+          this.user = res.data.data;
+          this.classInfo = res.data.data.classInfo;
+          console.log("this.user---" + this.user);
+          console.log("this.classData---" + this.classData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 <template lang="pug">
 .div
-  myInfoCard.info(:user="user")
+  myInfoCard.info(:user="this.user")
   Tabs.tabs
-    TabPane(label='全部')
+    TabPane(label="全部")
+      div
+        classCard( :classInfo="classInfo" )
     TabPane(label="進行中") 進行中的課程
-      //- classCard( :classInfo="item" )
-      
     TabPane(label="已完成") 已完成的課程
 </template>
 

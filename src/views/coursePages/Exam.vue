@@ -22,7 +22,7 @@ export default {
       section: {
         sectionId: "",
         title: "", // 單元標題
-        url: "", // youtube url
+        url: "TsdcEqE4kSc", // youtube url
         type: "",
         question: [
           {
@@ -78,12 +78,12 @@ export default {
 <template lang="pug">
 div
   .video
-    h1 第一單元 時間邏輯
-    Youtube.youtube(src="http://www.youtube.com/embed/mLVfozgYKFM")
+    h1 第一單元 時間邏輯 {{section.url}}
+    Youtube.youtube(:src='"http://www.youtube.com/embed/"+this.section.url')
     br
     Button.startbtn(type="primary" shape="circle" @click='exam' v-if="btnshow") 開始測驗
   .exam(v-if="show")
-    h1 課堂小考
+    h1 課堂小考 
     CheckboxGroup.ques(v-for="item in section.question" :key="item.questionId" v-model='userAns[item.sort]' vertical) {{item.content}}
       Checkbox(label='A') {{item.select[0]}}
       Checkbox(label='B') {{item.select[1]}}
