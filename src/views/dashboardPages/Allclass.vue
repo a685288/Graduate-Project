@@ -16,7 +16,7 @@ export default {
       allClass: [
         {
           classID: "",
-          createAt: '',
+          createAt: "",
           imgUrl: "",
           intro: "",
           isOpen: "",
@@ -80,7 +80,7 @@ export default {
         @click.native="getClassId(item.classId)"
       )
         .img
-          img(v-if="item.img != ''", :src="item.img")
+          img(v-if="item.imgUrl != ''", :src="item.imgUrl")
           img(v-else, :src="defaultClass") 
         .title {{ item.topic }}
         .topics
@@ -152,7 +152,8 @@ export default {
         .content {
           margin: 10px 0px;
           width: 200px;
-          word-wrap: break-word; word-break: normal;
+          word-wrap: break-word;
+          word-break: normal;
         }
       }
     }
