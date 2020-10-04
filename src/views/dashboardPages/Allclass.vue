@@ -2,10 +2,14 @@
 import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
+import classCard from "@/components/classCard.vue";
 import { getAllClass } from "@/apis/course.js";
 
 export default {
   name: "allclass",
+  components: {
+    classCard
+  },
   data() {
     return {
       first: 0,
@@ -30,7 +34,7 @@ export default {
   },
   mounted() {
     getAllClass().then(res => {
-      console.log('allclass data---'+res.data.data);
+      console.log("allclass data---" + res.data.data);
       this.allClass = res.data.data;
     });
   },
