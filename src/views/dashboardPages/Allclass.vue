@@ -59,8 +59,6 @@ export default {
     },
     getClassId(id) {
       this.$router.push("course/" + id);
-      localStorage.removeItem("classId");
-      localStorage.setItem("classId", id);
     }
   }
 };

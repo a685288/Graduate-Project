@@ -19,12 +19,22 @@ export default {
   },
   mounted() {
     console.log("porps class info---" + this.classInfo);
+  },
+  methods:{
+    toCourse(id){
+      this.$router.push("course/" + id);
+    }
+    
   }
 };
 </script>
 <template lang="pug">
 .div 
-  Card.card(v-for="item in classInfo", :key="item.classId")
+  Card.card(
+    v-for="item in classInfo",
+    :key="item.ClassID",
+    @click.native="toCourse(item.ClassID)"
+  )
     .img
       img(v-if="item.imgUrl != ''", :src="item.imgUrl")
       img(v-else, :src="defaultClass") 

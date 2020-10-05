@@ -13,6 +13,7 @@ export default {
     return {
       topic,
       teacher,
+      classId:'',
       course: [
         {
           title: "英文基礎課",
@@ -23,17 +24,19 @@ export default {
       ]
     };
   },
+mounted(){
+  this.classId=this.$route.params.classId
+},
   methods: {
     addClass() {
-      console.log("1d");
       this.$Message["success"]({
         background: true,
         content: "加選課程成功"
       });
-      console.log("加選");
+      console.log("加選classID"+this.classId);
       postAddClass({
         uid: localStorage.uid,
-        classId: localStorage.classId
+        classId: this.classId
       });
     },
     start() {

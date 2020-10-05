@@ -1,7 +1,7 @@
 <script>
 import myInfoCard from "@/components/userClass/myInfoCard.vue";
 import classCard from "@/components/classCard.vue";
-import { getMyClass } from "../../apis/course.js";
+// import { getMyClass } from "../../apis/course.js";
 export default {
   name: "myclass",
   components: {
@@ -28,7 +28,7 @@ export default {
       //   }
       // ]
       classInfo: [{
-          ClassID: '123',
+          ClassID: '5f44dbf12f4cd865d4504bee',
           createAt: '123',
           imgUrl: '',
           intro: 'dhrthfjgjfjgoiertjfcjjdjtriirjthjtrijihjitrjihjijhirtji',
@@ -55,18 +55,18 @@ export default {
     this.userCalss()
   },
   methods: {
-    userCalss() {
-      getMyClass()
-        .then(res => {
-          this.user = res.data.data;
-          this.classInfo = res.data.data.classInfo;
-          console.log("this.user---" + this.user);
-          console.log("this.classData---" + this.classData);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+  //   userCalss() {
+  //     getMyClass()
+  //       .then(res => {
+  //         this.user = res.data.data;
+  //         this.classInfo = res.data.data.classInfo;
+  //         console.log("this.user---" + this.user);
+  //         console.log("this.classData---" + this.classData);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //   }
   }
 };
 </script>
