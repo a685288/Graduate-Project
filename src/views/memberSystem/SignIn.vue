@@ -18,16 +18,25 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 import { postSignIn } from "@/apis/member.js";
 import firebase from "firebase/app";
+import logo from "../../assets/logo.png";
+import googleBtn from "../../assets/googleSignIn.png";
+
 import "firebase";
 export default {
   name: "SignIn",
+  data() {
+    return {
+      logo,
+      googleBtn
+    };
+  },
   mounted() {
     localStorage.clear();
   },
   methods: {
     googleSignin() {
       var provider = new firebase.auth.GoogleAuthProvider();
-      localStorage.removeItem("accessToken")
+      localStorage.removeItem("accessToken");
       firebase
         .auth()
         .signInWithPopup(provider)
@@ -61,26 +70,28 @@ export default {
 
 <template lang="pug">
 .SignIn
-  Card.SignCard
-    #firebaseui-auth-container
-      Button(@click.native="googleSignin()") Google 登入
+  h1 學海無涯
+    img.logo(:src="logo") 
+  Button(@click.native="googleSignin()")
+    img(:src='googleBtn') 
 </template>
 
 <style lang='scss' scoped>
 .SignIn {
   min-height: 400px;
   align-items: center;
-  display: flex;
   justify-content: center;
-  .SignCard {
-    margin: 50px;
-    padding: 50px;
-    position: relative;
-    // max-width: 500px;
-    min-width: 500px;
-    button {
-      margin: 10px;
+  .logo{
+    height: 100px;
+  }
+  button{
+    height: 0px;
+    width: 0px;
+    border: 0px;
+    img{
+      height: 50px;
     }
   }
+  
 }
 </style>
