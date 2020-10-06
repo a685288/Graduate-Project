@@ -33,35 +33,10 @@ export const getMyClass = () => req('get', '/user');
 /**加選課程
  * PUT
  * /client/addclass
- * @param {string} uid
- * @param {string} classId
+ * @param {string} invite
  */
-export const postAddClass = (params) => req('post', '/client/addclass', params);
+export const postAddClass = (invite) => req('get', `/invite/${invite}`);
 
-/**取得測驗內容(不含答案)
- * GET
- * /section/${sectionId}/exam
- * @returns {String} sectionId
- * @returns {String} title        單元標題
- * @returns {String} url
- * @returns {Number} type
- * @returns {Array } question
- *   @returns {String} questionId
- *   @returns {Array} content
- *   @returns {Array} select
- *   @returns {} type
- *   @returns {Number} sort
- */
-export const getExamContent = (sectionId) =>
-  req('get', `/section/${sectionId}/exam`);
-
-/**給我答案
- * GET
- * /question/answer/:sectionId
- * @returns r
- */
-export const submitExamAns = (sectionId) =>
-  req('get', `/question/answer/${sectionId}`);
 
 /**
  * 搜尋非公開課程 用邀請碼

@@ -1,18 +1,5 @@
-<template lang="pug">
-  .TitleBar
-    Menu.left(mode="horizontal" :theme="theme" active-name="2" @on-select='route')
-      MenuItem(name='1')
-        | {{ barItems.userClass }}
-      MenuItem(name='2')
-        Icon(type="ios-paper")
-        | {{ barItems.onlineClass }}
-      MenuItem(name='3')
-        | {{ barItems.setting }}
-      .right
-        Input.right(search enter-button @on-search="search()" v-model="value" placeholder="請輸入課程邀請碼")
-</template>
 <script>
-// import { getNotOpenClass } from "@/apis/course.js";
+import { getNotOpenClass } from "@/apis/course.js";
 export default {
   name: "TitleBar",
   data() {
@@ -20,8 +7,8 @@ export default {
       theme: "light",
       value: "",
       barItems: {
-        userClass: `我的課程`,
         onlineClass: `線上課程`,
+        userClass: `我的課程`,
         setting: `登出`
       }
     };
@@ -31,7 +18,7 @@ export default {
       switch (n) {
         case `1`:
           this.$router.push("/dashboard/myclass");
-          console.log('myclass')
+          console.log("myclass");
           break;
         case `2`:
           this.$router.push("/dashboard/allclass");
@@ -44,14 +31,39 @@ export default {
     },
     search() {
       console.log("search()");
-      console.log(this.value);
-      // getNotOpenClass(this.value).then(res => {
-      //   this.$router.push("course/ ${this.value}");
-      // });
+      console.log("this.value---" + this.value);
+      getNotOpenClass({ invite: toString(this.value) }).then(res => {
+        console.log(res.data.ClassID);
+        this.$router.push("course/"+res.data.ClassID);
+      });
     }
   }
 };
 </script>
+<template lang="pug">
+.TitleBar
+  Menu.left(
+    mode="horizontal",
+    :theme="theme",
+    active-name="2",
+    @on-select="route"
+  )
+    MenuItem(name="1")
+      | {{ barItems.userClass }}
+    MenuItem(name="2")
+      Icon(type="ios-paper")
+      | {{ barItems.onlineClass }}
+    MenuItem(name="3")
+      | {{ barItems.setting }}
+    .right
+      Input.right(
+        search,
+        enter-button,
+        @on-search="search()",
+        v-model="value",
+        placeholder="請輸入課程邀請碼"
+      )
+</template>
 <style scoped>
 .right {
   float: right;
