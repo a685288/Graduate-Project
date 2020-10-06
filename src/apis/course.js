@@ -30,6 +30,14 @@ export const getAllClass = () => req('get', '/class');
  */
 export const getMyClass = () => req('get', '/user');
 
+/**取得課程資訊 (course)
+ * GET
+ * /calss/one/{id}
+ * (5f797d96048cab61b8da238e)
+ *
+ */
+export const getCourseInfo = (id) => req('get', `/class/one/${id}`);
+
 /**加選課程
  * PUT
  * /client/addclass
@@ -37,10 +45,9 @@ export const getMyClass = () => req('get', '/user');
  */
 export const postAddClass = (invite) => req('get', `/invite/${invite}`);
 
-
 /**
  * 搜尋非公開課程 用邀請碼
  * GET
- * /invite/:invite
+ * /invite/:invite     (118N1ZY)
  */
 export const getNotOpenClass = (invite) => req('get', `/invite/${invite}`);

@@ -2,7 +2,7 @@
 import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
-import { postAddClass } from "@/apis/course.js";
+import { getCourseInfo, postAddClass } from "@/apis/course.js";
 
 export default {
   name: "courseinfo",
@@ -13,27 +13,35 @@ export default {
     return {
       topic,
       teacher,
-      classId:'',
-      course: [
-        {
-          title: "英文基礎課",
-          intro: "成就你的未來",
-          topic: "13",
-          teacher: "Rudy"
-        }
-      ]
+      theClassId: "",
+      classInfo: {
+        classId: "",
+        createAt: "",
+        imgUrl: "",
+        intro: "",
+        isOpen: "",
+        isPublic: "",
+        sectionNum: "",
+        teacherName: "",
+        topic: ""
+      }
     };
   },
-mounted(){
-  this.classId=this.$route.params.classId
-},
+  mounted() {
+    this.theClassId = this.$route.params.classId;
+    console.log("course-this.classId---" + this.theClassId);
+    getCourseInfo(this.theClassId).then(res => {
+      this.classInfo=res.data.data
+      console.log("this.classInfo---"+this.classInfo);
+    });
+  },
   methods: {
     addClass() {
       this.$Message["success"]({
         background: true,
         content: "加選課程成功"
       });
-      console.log("加選classID"+this.classId);
+      console.log("加選classID" + this.classId);
       postAddClass({
         uid: localStorage.uid,
         classId: this.classId
@@ -46,28 +54,28 @@ mounted(){
 };
 </script>
 <template lang="pug">
-  .content
-    .info(v-for="item in course" :key="item.id")
-      .left
-        h1 {{item.title}}
-        h3 {{item.intro}}
-        .button(align='center')
-          Button.btn(@click="addClass()") 加入課程
-          Button.btn(@click='start()') 開始上課
-      .right
-        .box
-          h3 課程進度
-          i-circle.circle(:percent="50")
-            span.demo-Circle-inner 50%
-        .box
-          h3 課程資訊
-          .news
-            img(:src='topic')
-            | 主題：{{item.topic}}
-            br
-            img(:src='teacher') 
-            | 授課老師：{{item.teacher}} 老師
-    lessonTopic
+.content
+  .info(v-for="(item,index) in classInfo", :key="index")
+    .left
+      h1 {{ item.tpoic }}
+      h3 {{ item.intro }}
+      .button(align="center")
+        Button.btn(@click="addClass()") 加入課程
+        Button.btn(@click="start()") 開始上課
+    .right
+      .box
+        h3 課程進度
+        i-circle.circle(:percent="50")
+          span.demo-Circle-inner 50%
+      .box
+        h3 課程資訊
+        .news
+          img(:src="topic")
+          | 主題：{{ item.topic }}
+          br
+          img(:src="teacher") 
+          | 授課老師：{{ item.teacher }} 老師
+  lessonTopic
 </template>
 <style lang="scss" scoped>
 .content {

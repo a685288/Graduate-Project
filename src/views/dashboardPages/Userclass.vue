@@ -27,28 +27,6 @@ export default {
           type: String
         }
       ]
-      // classInfo: [{
-      //     ClassID: '5f44dbf12f4cd865d4504bee',
-      //     createAt: '123',
-      //     imgUrl: '',
-      //     intro: 'dhrthfjgjfjgoiertjfcjjdjtriirjthjtrijihjitrjihjijhirtji',
-      //     sectionNum: '123',
-      //     teacherId: '123',
-      //     teacherName: '123',
-      //     topic: '123',
-      //     type: '123'
-      //   },{
-      //     ClassID: '123',
-      //     createAt: '123',
-      //     imgUrl: '',
-      //     intro: '123',
-      //     sectionNum: '123',
-      //     teacherId: '123',
-      //     teacherName: '123',
-      //     topic: '123',
-      //     type: '123'
-      //   }
-      // ]
     };
   },
   mounted() {

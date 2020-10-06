@@ -28,7 +28,7 @@ export default {
 .div 
   Card.card(
     v-for="(item,index) in classInfo",
-    :key="item.ClassID",
+    :key="index",
     @click.native="toCourse(item.ClassID)"
   )
     .img

@@ -30,11 +30,10 @@ export default {
       }
     },
     search() {
-      console.log("search()");
-      console.log("this.value---" + this.value);
-      getNotOpenClass({ invite: toString(this.value) }).then(res => {
-        console.log(res.data.ClassID);
-        this.$router.push("course/"+res.data.ClassID);
+      console.log("search() this.value---" + this.value);
+      getNotOpenClass(this.value).then(res => {
+        console.log("ClassID"+res.data);
+        this.$router.push("course/"+res.data.data.classId);
       });
     }
   }
