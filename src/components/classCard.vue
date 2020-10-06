@@ -17,21 +17,17 @@ export default {
       teacher
     };
   },
-  mounted() {
-    console.log("porps class info---" + this.classInfo);
-  },
   methods:{
     toCourse(id){
       this.$router.push("course/" + id);
     }
-    
   }
 };
 </script>
 <template lang="pug">
 .div 
   Card.card(
-    v-for="item in classInfo",
+    v-for="(item,index) in classInfo",
     :key="item.ClassID",
     @click.native="toCourse(item.ClassID)"
   )

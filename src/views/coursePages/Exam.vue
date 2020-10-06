@@ -20,9 +20,9 @@ export default {
       btnshow: true,
       check: false,
       section: {
-        sectionId: "",
+        sectionId: "5f797dd3048cab61b8da238f",
         title: "", // 單元標題
-        url: "TsdcEqE4kSc", // youtube url
+        url: "", // youtube url
         type: "",
         question: [
           {
@@ -45,7 +45,7 @@ export default {
     content() {
       getExamContent(this.section.sectionId).then(res => {
         this.section = res.data.data;
-        console.log(this.section);
+        console.log('this.section'+res.data.data);
       });
     },
     submit() {
@@ -78,8 +78,8 @@ export default {
 <template lang="pug">
 div
   .video
-    h1 第一單元 時間邏輯 {{section.url}}
-    Youtube.youtube(:src='"http://www.youtube.com/embed/"+this.section.url')
+    h1 第一單元 時間邏輯
+    Youtube.youtube(:src='"http://www.youtube.com/embed/lswoCJn3JNA"+this.section.url')
     br
     Button.startbtn(type="primary" shape="circle" @click='exam' v-if="btnshow") 開始測驗
   .exam(v-if="show")

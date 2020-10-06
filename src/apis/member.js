@@ -10,7 +10,7 @@ export const postSignIn = (params) => req('post', '/auth/signin', params);
 /**
  * 更新 user name
  * PUT
- * /client/updatename
+ * /user/updatename
  * @param {string} name
  */
 export const updateName = (params) => req('put', '/user/updatename', params);

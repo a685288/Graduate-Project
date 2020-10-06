@@ -1,7 +1,7 @@
 <script>
-// 我的課程左邊
+// 我的課程左邊 個人資訊卡
 import photo from "@/assets/photo.jpg";
-// import { updateName } from "@/apis/member.js"
+import { updateName } from "@/apis/member.js";
 export default {
   name: "myinfo",
   props: {
@@ -14,11 +14,21 @@ export default {
     return {
       photo,
       value: ""
-      // oldUserName: "",
     };
   },
   methods: {
     editName() {
+      this.inputFun();
+      if (this.value !== "") {
+        this.newName();
+        this.user.name = this.value;
+      } else {
+        console.log("未輸入內容");
+      }
+      console.log("this.user.name---" + this.user.name);
+      console.log("this.value---" + this.value);
+    },
+    inputFun() {
       this.$Modal.confirm({
         render: h => {
           return h("Input", {
@@ -31,24 +41,25 @@ export default {
               input: val => {
                 this.value = val;
               }
+            },
+            onOk: () => {
+              this.$Message.info("成功更改姓名");
             }
           });
         }
       });
-      this.user.name = this.value;
-      console.log("this.user.name---" + this.user.name);
-      console.log("this value---" + this.value);
-      // this.updateName();
+    },
+    newName() {
+      updateName({ name: this.value })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      console.log("update name fun");
+      console.log(this.user.name);
     }
-    // updateName() {
-    //   if (this.user.name != this.oldUserName) {
-    //     console.log("改變");
-    //   } else {
-    //     console.log("無改變");
-    //   }
-    //   console.log("update name fun");
-    //   console.log(this.user.name);
-    // }
   }
 };
 </script>
@@ -64,7 +75,6 @@ Card
     shape="circle",
     icon="md-brush",
     @click="editName",
-    v-model="user.name"
   )
 </template>
 <style lang="scss" scoped>

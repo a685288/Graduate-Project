@@ -1,7 +1,7 @@
 <script>
 import myInfoCard from "@/components/userClass/myInfoCard.vue";
 import classCard from "@/components/classCard.vue";
-// import { getMyClass } from "../../apis/course.js";
+import { getMyClass } from "../../apis/course.js";
 export default {
   name: "myclass",
   components: {
@@ -15,58 +15,58 @@ export default {
         email: "33",
         name: "22"
       },
-      // classInfo: [{
-      //     ClassID: String,
-      //     createAt: String,
-      //     imgUrl: String,
-      //     intro: String,
-      //     sectionNum: String,
-      //     teacherId: String,
-      //     teacherName: String,
-      //     topic: String,
-      //     type: String
-      //   }
-      // ]
       classInfo: [{
-          ClassID: '5f44dbf12f4cd865d4504bee',
-          createAt: '123',
-          imgUrl: '',
-          intro: 'dhrthfjgjfjgoiertjfcjjdjtriirjthjtrijihjitrjihjijhirtji',
-          sectionNum: '123',
-          teacherId: '123',
-          teacherName: '123',
-          topic: '123',
-          type: '123'
-        },{
-          ClassID: '123',
-          createAt: '123',
-          imgUrl: '',
-          intro: '123',
-          sectionNum: '123',
-          teacherId: '123',
-          teacherName: '123',
-          topic: '123',
-          type: '123'
+          ClassID: String,
+          createAt: String,
+          imgUrl: String,
+          intro: String,
+          sectionNum: String,
+          teacherId: String,
+          teacherName: String,
+          topic: String,
+          type: String
         }
       ]
+      // classInfo: [{
+      //     ClassID: '5f44dbf12f4cd865d4504bee',
+      //     createAt: '123',
+      //     imgUrl: '',
+      //     intro: 'dhrthfjgjfjgoiertjfcjjdjtriirjthjtrijihjitrjihjijhirtji',
+      //     sectionNum: '123',
+      //     teacherId: '123',
+      //     teacherName: '123',
+      //     topic: '123',
+      //     type: '123'
+      //   },{
+      //     ClassID: '123',
+      //     createAt: '123',
+      //     imgUrl: '',
+      //     intro: '123',
+      //     sectionNum: '123',
+      //     teacherId: '123',
+      //     teacherName: '123',
+      //     topic: '123',
+      //     type: '123'
+      //   }
+      // ]
     };
   },
   mounted() {
     this.userCalss()
   },
   methods: {
-  //   userCalss() {
-  //     getMyClass()
-  //       .then(res => {
-  //         this.user = res.data.data;
-  //         this.classInfo = res.data.data.classInfo;
-  //         console.log("this.user---" + this.user);
-  //         console.log("this.classData---" + this.classData);
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
+    userCalss() {
+      getMyClass()
+        .then(res => {
+          this.user = res.data.data;
+          this.classInfo = res.data.data.classinfo;
+          console.log("this.user---" + this.user);
+          console.log("this.classInfo---" + this.classInfo);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>

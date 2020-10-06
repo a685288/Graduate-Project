@@ -20,8 +20,7 @@ let instance = axios.create({
   baseURL: '/api',
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+    'Authorization': '',
     'Access-Control-Allow-Headers': '*',
     'Access-Control-Allow-Credentials': 'true',
   },
@@ -29,6 +28,9 @@ let instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      'accessToken'
+    )}`;
     return config;
   },
   (error) => {
