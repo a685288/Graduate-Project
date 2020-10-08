@@ -19,6 +19,7 @@ export default {
       show: false,
       btnshow: true,
       check: false,
+      theSectionId: "",
       section: {
         sectionId: "5f797dd3048cab61b8da238f",
         title: "", // 單元標題
@@ -39,15 +40,14 @@ export default {
     };
   },
   mounted() {
-    this.content();
+    this.theSectionId = this.$route.params.sectionId;
+    console.log("course-this.theSectionId---" + this.theSectionId);
+    getExamContent(this.theSectionId).then(res => {
+      this.section = res.data.data;
+      console.log("this.section---" + res.data.data);
+    });
   },
   methods: {
-    content() {
-      getExamContent(this.section.sectionId).then(res => {
-        this.section = res.data.data;
-        console.log('this.section'+res.data.data);
-      });
-    },
     submit() {
       console.log("ans" + this.ans);
       submitExamAns("5f472ace8d33d47194b8d332").then(res => {
@@ -60,12 +60,14 @@ export default {
       for (var i = 0; i < this.correctAns.length; i++) {
         console.log("正確答案" + this.correctAns[i].answer);
         console.log("用戶答案" + this.userAns[i]);
-        if (this.correctAns[i].answer.toString() === this.userAns[i].toString()) {
+        if (
+          this.correctAns[i].answer.toString() === this.userAns[i].toString()
+        ) {
           this.score++;
-          console.log('加1分')
+          console.log("加1分");
         }
       }
-      console.log("分數"+this.score)
+      console.log("分數" + this.score);
     },
     exam() {
       this.show = true;
@@ -79,23 +81,35 @@ export default {
 div
   .video
     h1 第一單元 時間邏輯
-    Youtube.youtube(:src='"http://www.youtube.com/embed/lswoCJn3JNA"+this.section.url')
+    Youtube.youtube(
+      :src="'http://www.youtube.com/embed/lswoCJn3JNA' + this.section.url"
+    )
     br
-    Button.startbtn(type="primary" shape="circle" @click='exam' v-if="btnshow") 開始測驗
+    Button.startbtn(
+      type="primary",
+      shape="circle",
+      @click="exam",
+      v-if="btnshow"
+    ) 開始測驗
   .exam(v-if="show")
-    h1 課堂小考 
-    CheckboxGroup.ques(v-for="item in section.question" :key="item.questionId" v-model='userAns[item.sort]' vertical) {{item.content}}
-      Checkbox(label='A') {{item.select[0]}}
-      Checkbox(label='B') {{item.select[1]}}
-      Checkbox(label='C') {{item.select[2]}}
-      Checkbox(label='D') {{item.select[3]}}
+    h1 課堂小考
+    CheckboxGroup.ques(
+      v-for="item in section.question",
+      :key="item.questionId",
+      v-model="userAns[item.sort]",
+      vertical
+    ) {{ item.content }}
+      Checkbox(label="A") {{ item.select[0] }}
+      Checkbox(label="B") {{ item.select[1] }}
+      Checkbox(label="C") {{ item.select[2] }}
+      Checkbox(label="D") {{ item.select[3] }}
       br
     //- radio.ques
     //- radio.ques
     //- multipleChoice.ques
     //- multipleChoice.ques
     //- shortAnswer.ques
-    Button(type="primary" shape="circle" v-if="check" @click='submit') 送出答案
+    Button(type="primary", shape="circle", v-if="check", @click="submit") 送出答案
 </template>
 <style lang="scss" scoped>
 div {

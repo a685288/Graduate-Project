@@ -42,7 +42,7 @@ const routes = [
         component: lesson,
         children: [
           {
-            path: 'exam',
+            path: 'exam/:sectionId?',
             component: exam,
           }
         ],

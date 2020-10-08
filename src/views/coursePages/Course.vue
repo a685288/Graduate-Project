@@ -21,7 +21,8 @@ export default {
         intro: "",
         isOpen: "",
         isPublic: "",
-        sectionNum: "",
+        section: [{ sectionId: "5f797dd3048cab61b8da238f", sectionTitle: "gbgfn" },
+        { sectionId: "hrtjhytj", sectionTitle: "gbgfn" }],
         teacherName: "",
         topic: ""
       }
@@ -31,8 +32,8 @@ export default {
     this.theClassId = this.$route.params.classId;
     console.log("course-this.classId---" + this.theClassId);
     getCourseInfo(this.theClassId).then(res => {
-      this.classInfo=res.data.data
-      console.log("this.classInfo---"+this.classInfo);
+      this.classInfo = res.data.data;
+      console.log("this.classInfo---" + this.classInfo);
     });
   },
   methods: {
@@ -55,10 +56,10 @@ export default {
 </script>
 <template lang="pug">
 .content
-  .info(v-for="(item,index) in classInfo", :key="index")
+  .info
     .left
-      h1 {{ item.tpoic }}
-      h3 {{ item.intro }}
+      h1 {{ classInfo.tpoic }}
+      h3 {{ classInfo.intro }}
       .button(align="center")
         Button.btn(@click="addClass()") 加入課程
         Button.btn(@click="start()") 開始上課
@@ -71,11 +72,11 @@ export default {
         h3 課程資訊
         .news
           img(:src="topic")
-          | 主題：{{ item.topic }}
+          | 主題：{{ classInfo.topic }}
           br
           img(:src="teacher") 
-          | 授課老師：{{ item.teacher }} 老師
-  lessonTopic
+          | 授課老師：{{ classInfo.teacherName }} 老師
+  lessonTopic(:section="this.classInfo.section")
 </template>
 <style lang="scss" scoped>
 .content {
