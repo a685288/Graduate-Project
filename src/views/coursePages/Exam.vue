@@ -1,6 +1,5 @@
 <script>
 // youtube 影片+測驗畫面
-import Youtube from "@/components/lesson/youtube.vue";
 // import radio from "@/components/lesson/question/radio.vue";
 // import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
 // import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
@@ -9,7 +8,6 @@ import { getExamContent, submitExamAns } from "@/apis/course.js";
 export default {
   name: "video",
   components: {
-    Youtube
     // radio,
     // multipleChoice,
     // shortAnswer
@@ -23,7 +21,7 @@ export default {
       section: {
         sectionId: "5f797dd3048cab61b8da238f",
         title: "", // 單元標題
-        url: "", // youtube url
+        url: "sjfBgZTNLGY", // youtube url
         type: "",
         question: [
           {
@@ -81,9 +79,7 @@ export default {
 div
   .video
     h1 第一單元 時間邏輯
-    Youtube.youtube(
-      :src="'http://www.youtube.com/embed/lswoCJn3JNA' + this.section.url"
-    )
+    iframe.youtube(:src="'https://www.youtube.com/embed/' + this.section.url", frameborder='0', allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
     br
     Button.startbtn(
       type="primary",
@@ -120,6 +116,10 @@ div {
   }
   .video {
     padding: 50px;
+    .youtube{
+      width:560px;
+      height: 315px;
+    }
     .startbtn {
       margin: 10px;
       height: 70px;

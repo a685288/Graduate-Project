@@ -1,10 +1,12 @@
 <script src="@/courseData/course.js"></script>
 <script>
+import { getExamContent } from "@/apis/course.js";
 // 課程影片測驗左邊的bar
 export default {
   name: "sidebar",
   data() {
-    return { 
+    return {
+      theClassId:'',
       lessons: [
         {
           id: "1",
@@ -19,8 +21,14 @@ export default {
       ]
     };
   },
-  methods: {
-  }
+  mounted() {
+    this.theClassId = this.$route.params.classId;
+    console.log("ExamLeftBar-this.theClassId---" + this.theClassId);
+    getExamContent(this.theSectionId).then(res => {
+      this.section = res.data.data;
+      console.log("this.section---" + res.data.data);
+    });
+  },
 };
 </script>
 <template lang="pug">

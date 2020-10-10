@@ -1,22 +1,22 @@
 <script>
-import SideBar from "@/components/lesson/sideBar.vue";
+import ExamLeftBar from "@/components/lesson/ExamLeftBar.vue";
 export default {
   name: "lesson",
   components: {
-    SideBar
+    ExamLeftBar
   }
 };
 </script>
 <template lang="pug">
   .lesson
-    SideBar.SideBar
+    ExamLeftBar.ExamLeftBar
     router-view.content
 </template>
 <style lang="scss" scoped>
 .lesson {
   display: flex;
   flex-direction: row;
-  .SideBar {
+  .ExamLeftBar {
     flex: 1;
   }
   .content {

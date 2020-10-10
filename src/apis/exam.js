@@ -19,7 +19,6 @@ export const getExamContent = (sectionId) =>
 /**給我答案
  * GET
  * /question/answer/:sectionId
- * @returns r
  */
 export const submitExamAns = (sectionId) =>
   req('get', `/question/answer/${sectionId}`);

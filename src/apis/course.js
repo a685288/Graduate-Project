@@ -34,7 +34,7 @@ export const getMyClass = () => req('get', '/user');
  * GET
  * /calss/one/{id}
  * (5f797d96048cab61b8da238e)
- *
+ * (5f7ea0274ae46479296a77f2)
  */
 export const getCourseInfo = (id) => req('get', `/class/one/${id}`);
 

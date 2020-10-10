@@ -21,8 +21,10 @@ export default {
         intro: "",
         isOpen: "",
         isPublic: "",
-        section: [{ sectionId: "5f797dd3048cab61b8da238f", sectionTitle: "gbgfn" },
-        { sectionId: "hrtjhytj", sectionTitle: "gbgfn" }],
+        section: [
+          { sectionId: "5f797dd3048cab61b8da238f", sectionTitle: "gbgfn" },
+          { sectionId: "hrtjhytj", sectionTitle: "gbnhgnghhgfn" }
+        ],
         teacherName: "",
         topic: ""
       }
@@ -33,7 +35,6 @@ export default {
     console.log("course-this.classId---" + this.theClassId);
     getCourseInfo(this.theClassId).then(res => {
       this.classInfo = res.data.data;
-      console.log("this.classInfo---" + this.classInfo);
     });
   },
   methods: {
@@ -49,7 +50,8 @@ export default {
       });
     },
     start() {
-      this.$router.push("/dashboard/lesson/exam");
+      console.log("start()"+this.classInfo.section)
+      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + this.classInfo.section);
     }
   }
 };
@@ -58,7 +60,7 @@ export default {
 .content
   .info
     .left
-      h1 {{ classInfo.tpoic }}
+      h1 {{ classInfo.topic }}
       h3 {{ classInfo.intro }}
       .button(align="center")
         Button.btn(@click="addClass()") 加入課程
@@ -135,7 +137,7 @@ export default {
           img {
             width: 18px;
             vertical-align: middle;
-            margin: 10px 0px;
+            margin: 10px 5px;
           }
         }
       }

@@ -37,8 +37,8 @@ const routes = [
       },
       {
         name: 'lesson',
-        path: 'lesson',
-        redirect: '/lesson/exam',
+        path: 'course/:classId?/lesson/',
+        redirect: 'course/:classId?/lesson/exam',
         component: lesson,
         children: [
           {

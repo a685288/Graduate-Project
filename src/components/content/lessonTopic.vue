@@ -9,9 +9,16 @@ export default {
       sectionTitle: String
     }
   },
+  data(){
+    return{
+      theClassId:'',
+    }
+  },
   methods:{
     toExam(id){
-      this.$router.push("exam/" + id);
+      this.theClassId = this.$route.params.classId;
+      console.log("course-this.classId---" + this.theClassId);
+      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + id);
     }
   }
 };
@@ -22,6 +29,7 @@ export default {
     .lessons(v-for="(item, index) in section",:key="index")
       Card.card(@click.native="toExam(item.sectionId)") 第{{index+1}}課－{{item.sectionTitle}}
         Icon.icon(type="md-arrow-dropright-circle") 
+        
 </template>
 <style lang='scss' scoped>
 .div {
