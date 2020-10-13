@@ -18,7 +18,7 @@ export default {
     console.log("ExamLeftBar-this.theClassId---" + this.theClassId);
     getCourseInfo(this.theClassId).then(res => {
       this.section = res.data.data.sections;
-      // 000000000
+      // 111
     });
   },
   methods:{
