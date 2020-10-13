@@ -22,3 +22,12 @@ export const getExamContent = (sectionId) =>
  */
 export const submitExamAns = (sectionId) =>
   req('get', `/question/answer/${sectionId}`);
+
+/**建立考試進度&課程進度
+ * @returns {string} classId
+ * @returns {string} sectionId
+ * @returns {Array} selects
+ *  @returns {Array} 答案選項
+ */
+export const postExamRecord = (params) =>
+  req('post', `/record`,params);

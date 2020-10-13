@@ -3,7 +3,7 @@
 // import radio from "@/components/lesson/question/radio.vue";
 // import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
 // import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
-import { getExamContent, submitExamAns } from "@/apis/course.js";
+import { getExamContent, submitExamAns, postExamRecord } from "@/apis/exam.js";
 
 export default {
   name: "video",
@@ -17,9 +17,10 @@ export default {
       show: false,
       btnshow: true,
       check: false,
+      theClassId: "",
       theSectionId: "",
       section: {
-        sectionId: "5f797dd3048cab61b8da238f",
+        sectionId: "",
         title: "", // 單元標題
         url: "sjfBgZTNLGY", // youtube url
         type: "",
@@ -38,6 +39,7 @@ export default {
     };
   },
   mounted() {
+    this.theClassId = this.$route.params.classId;
     this.theSectionId = this.$route.params.sectionId;
     console.log("course-this.theSectionId---" + this.theSectionId);
     getExamContent(this.theSectionId).then(res => {
@@ -48,7 +50,7 @@ export default {
   methods: {
     submit() {
       console.log("ans" + this.ans);
-      submitExamAns("5f472ace8d33d47194b8d332").then(res => {
+      submitExamAns(this.theSectionId).then(res => {
         this.correctAns = res.data.data;
         console.log(this.correctAns);
         this.countScore();
@@ -66,6 +68,11 @@ export default {
         }
       }
       console.log("分數" + this.score);
+      postExamRecord({
+        classId: this.theClassId,
+        sectionId: this.sectionId,
+        selects: this.userAns
+      });
     },
     exam() {
       this.show = true;
@@ -79,12 +86,17 @@ export default {
 div
   .video
     h1 第一單元 時間邏輯
-    iframe.youtube(:src="'https://www.youtube.com/embed/' + this.section.url", frameborder='0', allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+    iframe.youtube(
+      :src="'https://www.youtube.com/embed/' + this.section.url",
+      frameborder="0",
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+      allowfullscreen=""
+    )
     br
     Button.startbtn(
       type="primary",
       shape="circle",
-      @click="exam",
+      @click="exam()",
       v-if="btnshow"
     ) 開始測驗
   .exam(v-if="show")
@@ -116,9 +128,9 @@ div {
   }
   .video {
     padding: 50px;
-    .youtube{
-      width:560px;
-      height: 315px;
+    .youtube {
+      width: 800px;
+      height: 500px;
     }
     .startbtn {
       margin: 10px;

@@ -16,6 +16,9 @@ export default {
       value: ""
     };
   },
+  mounted(){
+    this.value=this.user.name
+  },
   methods: {
     editName() {
       this.inputFun();
@@ -42,9 +45,9 @@ export default {
                 this.value = val;
               }
             },
-            onOk: () => {
-              this.$Message.info("成功更改姓名");
-            }
+            // onOk: () => {
+            //   this.$Message.info("成功更改姓名");
+            // }
           });
         }
       });
@@ -64,9 +67,9 @@ export default {
 };
 </script>
 <template lang="pug">
-Card
+div
   img(:src="photo")
-  h2 {{ user.name }}
+  h2 {{ this.value }}
   p {{ user.email }}
   br
   Button.btn(
@@ -79,11 +82,11 @@ Card
 </template>
 <style lang="scss" scoped>
 img {
-  height: 100%;
+  height: 50%;
   width: 100%;
   border-radius: 50%;
 }
 .btn {
-  margin: 10px;
+  // margin: 10px;
 }
 </style>

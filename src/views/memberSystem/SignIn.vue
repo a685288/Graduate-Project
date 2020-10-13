@@ -71,9 +71,10 @@ export default {
 <template lang="pug">
 .SignIn
   h1 學海無涯
-    img.logo(:src="logo") 
+  img.logo(:src="logo") 
+  br
   Button(@click.native="googleSignin()")
-    img(:src='googleBtn') 
+    img(:src='googleBtn')
 </template>
 
 <style lang='scss' scoped>

@@ -14,6 +14,7 @@ export default {
       topic,
       teacher,
       theClassId: "",
+      sectionNum:'',
       classInfo: {
         classId: "",
         createAt: "",
@@ -36,6 +37,7 @@ export default {
     getCourseInfo(this.theClassId).then(res => {
       this.classInfo = res.data.data;
     });
+    this.sectionNum=this.classInfo.section.length
   },
   methods: {
     addClass() {
@@ -74,7 +76,7 @@ export default {
         h3 課程資訊
         .news
           img(:src="topic")
-          | 主題：{{ classInfo.topic }}
+          | 主題數：{{ this.sectionNum }}
           br
           img(:src="teacher") 
           | 授課老師：{{ classInfo.teacherName }} 老師
@@ -133,7 +135,7 @@ export default {
           line-height: 150%;
         }
         .news {
-          margin: 5%;
+          margin: 0%;
           img {
             width: 18px;
             vertical-align: middle;
