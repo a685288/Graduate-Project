@@ -1,0 +1,89 @@
+<template lang="pug">
+.Header
+  img(:src="logo")
+  .Menu
+    .TitleBar
+      Menu.left(
+        mode="horizontal",
+        :theme="theme",
+        active-name="2",
+        @on-select="route"
+      )
+        MenuItem(name="1")
+          | {{ barItems.userClass }}
+        MenuItem(name="2")
+          Icon(type="ios-paper")
+          | {{ barItems.onlineClass }}
+        MenuItem(name="3")
+          | {{ barItems.setting }}
+        .right
+          Input.right(
+            search,
+            enter-button,
+            @on-search="search()",
+            v-model="value",
+            placeholder="請輸入課程邀請碼"
+          )
+</template>
+
+<script>
+import logo from "@/assets/logo.png";
+import { getNotOpenClass } from "@/apis/course.js";
+
+export default {
+  name: "TitleBar",
+  data() {
+    return {
+      logo,
+      theme: "light",
+      value: "",
+      barItems: {
+        onlineClass: `線上課程`,
+        userClass: `我的課程`,
+        setting: `登出`
+      }
+    };
+  },
+  methods: {
+    route(n) {
+      switch (n) {
+        case `1`:
+          this.$router.push("/dashboard/myclass");
+          console.log("myclass");
+          break;
+        case `2`:
+          this.$router.push("/dashboard/allclass");
+          break;
+        default:
+          localStorage.clear();
+          this.$router.push("/");
+          break;
+      }
+    },
+    search() {
+      console.log("search() this.value---" + this.value);
+      getNotOpenClass(this.value).then(res => {
+        console.log("ClassID" + res.data);
+        this.$router.push("course/" + res.data.data.classId);
+      });
+    }
+  }
+};
+</script>
+<style lang='scss' scoped>
+.Header {
+  display: flex;
+  background-color: #ffffff;
+  img {
+    height: 60px;
+  }
+  .Menu {
+    flex: 1;
+    .right {
+      float: right;
+      padding: 8px;
+      width: 50%;
+    }
+  }
+}
+</style>
