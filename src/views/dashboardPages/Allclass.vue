@@ -9,7 +9,7 @@ export default {
   name: "allclass",
   components: {
     classCard
-  },//更改card排序
+  },//更改card排序 test1
   data() {
     return {
       first: 0,
