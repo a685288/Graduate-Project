@@ -2,7 +2,7 @@
 import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
-import { getCourseInfo, postAddClass } from "@/apis/course.js";
+import { getCourseInfo, putAddClass } from "@/apis/course.js";
 
 export default {
   name: "courseinfo",
@@ -14,7 +14,6 @@ export default {
       topic,
       teacher,
       theClassId: "",
-      sectionNum:'',
       classInfo: {
         classId: "",
         createAt: "",
@@ -22,9 +21,9 @@ export default {
         intro: "",
         isOpen: "",
         isPublic: "",
-        section: [
-          { sectionId: "5f797dd3048cab61b8da238f", sectionTitle: "gbgfn" },
-          { sectionId: "hrtjhytj", sectionTitle: "gbnhgnghhgfn" }
+        sectionNum:'',
+        sections: [
+          { sectionId: "", title: "" },
         ],
         teacherName: "",
         topic: ""
@@ -33,11 +32,9 @@ export default {
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
-    console.log("course-this.classId---" + this.theClassId);
     getCourseInfo(this.theClassId).then(res => {
       this.classInfo = res.data.data;
     });
-    this.sectionNum=this.classInfo.section.length
   },
   methods: {
     addClass() {
@@ -45,11 +42,15 @@ export default {
         background: true,
         content: "加選課程成功"
       });
-      console.log("加選classID" + this.classId);
-      postAddClass({
-        uid: localStorage.uid,
-        classId: this.classId
-      });
+      console.log("加選classID--" + this.theClassId);
+      putAddClass(
+        this.theClassId
+      ).then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     start() {
       console.log("start()"+this.classInfo.section)
@@ -76,11 +77,11 @@ export default {
         h3 課程資訊
         .news
           img(:src="topic")
-          | 主題數：{{ this.sectionNum }}
+          | 主題數：{{ classInfo.sectionNum }}
           br
           img(:src="teacher") 
           | 授課老師：{{ classInfo.teacherName }} 老師
-  lessonTopic(:section="this.classInfo.section")
+  lessonTopic(:section="this.classInfo.sections")
 </template>
 <style lang="scss" scoped>
 .content {

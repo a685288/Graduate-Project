@@ -6,7 +6,7 @@ export default {
   props: {
     section: {
       sectionId: String,
-      sectionTitle: String
+      title: String
     }
   },
   data(){
@@ -27,7 +27,7 @@ export default {
   .div
     h1 包含的課程
     .lessons(v-for="(item, index) in section",:key="index")
-      Card.card(@click.native="toExam(item.sectionId)") 第{{index+1}}課－{{item.sectionTitle}}
+      Card.card(@click.native="toExam(item.sectionId)") 第{{index+1}}課－{{item.title}}
         Icon.icon(type="md-arrow-dropright-circle") 
         
 </template>

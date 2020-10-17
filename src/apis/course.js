@@ -43,7 +43,7 @@ export const getCourseInfo = (id) => req('get', `/class/one/${id}`);
  * /client/addclass
  * @param {string} invite
  */
-export const postAddClass = (invite) => req('get', `/invite/${invite}`);
+export const putAddClass = (params) => req('put', `/user/addclass`, params);
 
 /**
  * 搜尋非公開課程 用邀請碼
