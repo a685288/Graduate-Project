@@ -22,7 +22,7 @@ export default {
       section: {
         sectionId: "",
         title: "", // 單元標題
-        url: "sjfBgZTNLGY", // youtube url
+        url: "", // youtube url
         type: "",
         question: [
           {

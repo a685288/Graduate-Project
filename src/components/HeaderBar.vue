@@ -49,7 +49,6 @@ export default {
       switch (n) {
         case `1`:
           this.$router.push("/dashboard/myclass");
-          console.log("myclass");
           break;
         case `2`:
           this.$router.push("/dashboard/allclass");

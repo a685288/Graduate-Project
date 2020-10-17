@@ -17,7 +17,7 @@ export default {
       classInfo: {
         classId: "",
         createAt: "",
-        imgUrl: "",
+        // imgUrl: "",
         intro: "",
         isOpen: "",
         isPublic: "",
@@ -42,7 +42,6 @@ export default {
         background: true,
         content: "加選課程成功"
       });
-      console.log("加選classID--" + this.theClassId);
       putAddClass(
       {classId: this.theClassId}
       ).then(res => {
@@ -53,8 +52,7 @@ export default {
         });
     },
     start() {
-      console.log("start()"+this.classInfo.section)
-      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + this.classInfo.section);
+      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + this.classInfo.sections[0].sectionId);
     }
   }
 };
