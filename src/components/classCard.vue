@@ -25,11 +25,11 @@ export default {
 };
 </script>
 <template lang="pug">
-.div 
+.div
   Card.card(
     v-for="(item,index) in classInfo",
     :key="index",
-    @click.native="toCourse(item.ClassID)"
+    @click.native="toCourse(item.classId)"
   )
     .img
       img(v-if="item.imgUrl != ''", :src="item.imgUrl")
