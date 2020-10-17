@@ -16,21 +16,7 @@ export default {
       value: ""
     };
   },
-  mounted(){
-    this.value=this.user.name
-  },
   methods: {
-    editName() {
-      this.inputFun();
-      if (this.value !== "") {
-        this.newName();
-        this.user.name = this.value;
-      } else {
-        console.log("未輸入內容");
-      }
-      console.log("this.user.name---" + this.user.name);
-      console.log("this.value---" + this.value);
-    },
     inputFun() {
       this.$Modal.confirm({
         render: h => {
@@ -42,13 +28,18 @@ export default {
             },
             on: {
               input: val => {
+                this.user.name = val;
                 this.value = val;
               }
-            },
-            // onOk: () => {
-            //   this.$Message.info("成功更改姓名");
-            // }
+            }
           });
+        },
+        onOk: () => {
+          if (this.value !== "") {
+            this.newName();
+          } else {
+            console.log("未輸入內容");
+          }
         }
       });
     },
@@ -69,7 +60,7 @@ export default {
 <template lang="pug">
 div
   img(:src="photo")
-  h2 {{ this.value }}
+  h2 {{ user.name }}
   p {{ user.email }}
   br
   Button.btn(
@@ -77,7 +68,7 @@ div
     ghost,
     shape="circle",
     icon="md-brush",
-    @click="editName",
+    @click="inputFun"
   )
 </template>
 <style lang="scss" scoped>
@@ -85,8 +76,5 @@ img {
   height: 50%;
   width: 100%;
   border-radius: 50%;
-}
-.btn {
-  // margin: 10px;
 }
 </style>
