@@ -12,8 +12,8 @@ export default {
     return {
       user: {
         id: "",
-        email: "33",
-        name: "22"
+        email: "",
+        name: ""
       },
       classInfo: [{
           ClassID: String,
