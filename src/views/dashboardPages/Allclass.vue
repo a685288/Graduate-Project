@@ -9,7 +9,7 @@ export default {
   name: "allclass",
   components: {
     classCard
-  },//更改card排序
+  },
   data() {
     return {
       first: 0,
@@ -17,9 +17,9 @@ export default {
       defaultClass,
       topic,
       teacher,
-      allClass: [
+      classInfo: [
         {
-          classID: "",
+          classId: "",
           createAt: "",
           imgUrl: "",
           intro: "",
@@ -34,8 +34,7 @@ export default {
   },
   mounted() {
     getAllClass().then(res => {
-      console.log("allclass data---" + res.data.data);
-      this.allClass = res.data.data;
+      this.classInfo = res.data.data;
     });
   },
   methods: {
@@ -76,7 +75,7 @@ export default {
     Checkbox.box(label="20", border)
       span 20章以上
   .right
-    .classcard(v-for="item in allClass", :key="item.classId")
+    .classcard(v-for="item in classInfo", :key="item.classId")
       Card.card(
         v-if="first <= item.sectionNum && item.sectionNum <= last",
         @click.native="getClassId(item.classId)"
@@ -116,9 +115,11 @@ export default {
   .right {
     flex: 8;
     padding: 50px;
-    flex-wrap: wrap;
+    display: flex;
+    // flex-wrap: wrap;
     .classcard {
       .card {
+        flex-wrap: wrap;
         margin: 15px;
         width: 240px;
         height: 350px;
