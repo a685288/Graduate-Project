@@ -15,14 +15,13 @@ export default {
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
-    console.log("ExamLeftBar-this.theClassId---" + this.theClassId);
     getCourseInfo(this.theClassId).then(res => {
       this.section = res.data.data.sections;
-      // 111
     });
   },
   methods:{
     toSection(id){
+      console.log('toSection')
       this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + id);
     }
   }
@@ -30,8 +29,8 @@ export default {
 </script>
 <template lang="pug">
 .div
-  Menu(active-name="1")
-    MenuItem(:name="item.sectionId", v-for="(item,index) in section", :key="index",@click="toSection(item.sectionId)")
+  Menu(active-name="1" @on-select="toSection")
+    MenuItem(:name="item.sectionId", v-for="(item,index) in section", :key="index",)
       | L{{ index+1 }}－{{ item.title }}
 </template>
 <style lang="scss" scoped>
