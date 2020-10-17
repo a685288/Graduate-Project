@@ -44,7 +44,7 @@ export default {
       });
       console.log("加選classID--" + this.theClassId);
       putAddClass(
-        this.theClassId
+      {classId: this.theClassId}
       ).then(res => {
           console.log(res);
         })
