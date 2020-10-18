@@ -17,7 +17,7 @@ export default {
       classInfo: {
         classId: "",
         createAt: "",
-        // imgUrl: "",
+        imgUrl: "",
         intro: "",
         isOpen: "",
         isPublic: "",
