@@ -1,7 +1,18 @@
 <script>
 // 單選題
 export default {
-  name:'radio'
+  name:'radio',
+  props: {
+    question: {
+      
+            questionId: String,
+            content: String, // 問題敘述
+            select: Array, // 選項
+            sort: String,
+            type: String
+          }
+    
+  },
 }
 </script>
 <template lang="pug">

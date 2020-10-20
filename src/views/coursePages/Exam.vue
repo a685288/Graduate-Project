@@ -1,16 +1,16 @@
 <script>
 // youtube 影片+測驗畫面
-// import radio from "@/components/lesson/question/radio.vue";
-// import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
-// import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
+import radio from "@/components/lesson/question/radio.vue";
+import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
+import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
 import { getExamContent, submitExamAns, postExamRecord } from "@/apis/exam.js";
 
 export default {
   name: "video",
   components: {
-    // radio,
-    // multipleChoice,
-    // shortAnswer
+    radio,
+    multipleChoice,
+    shortAnswer
   },
   data() {
     return {
@@ -29,7 +29,8 @@ export default {
             questionId: "",
             content: "", // 問題敘述
             select: ["", "", "", ""], // 選項
-            sort: ""
+            sort: "",
+            type: "",
           }
         ]
       },
@@ -41,10 +42,8 @@ export default {
   mounted() {
     this.theClassId = this.$route.params.classId;
     this.theSectionId = this.$route.params.sectionId;
-    console.log("course-this.theSectionId---" + this.theSectionId);
     getExamContent(this.theSectionId).then(res => {
       this.section = res.data.data;
-      console.log("this.section---" + res.data.data);
     });
   },
   methods: {
@@ -85,7 +84,7 @@ export default {
 <template lang="pug">
 div
   .video
-    h1 第一單元 時間邏輯
+    h1 {{this.section.title}}
     iframe.youtube(
       :src="'https://www.youtube.com/embed/' + this.section.url",
       frameborder="0",
@@ -100,23 +99,24 @@ div
       v-if="btnshow"
     ) 開始測驗
   .exam(v-if="show")
-    h1 課堂小考
-    CheckboxGroup.ques(
-      v-for="item in section.question",
-      :key="item.questionId",
-      v-model="userAns[item.sort]",
-      vertical
-    ) {{ item.content }}
-      Checkbox(label="A") {{ item.select[0] }}
-      Checkbox(label="B") {{ item.select[1] }}
-      Checkbox(label="C") {{ item.select[2] }}
-      Checkbox(label="D") {{ item.select[3] }}
-      br
-    //- radio.ques
-    //- radio.ques
-    //- multipleChoice.ques
-    //- multipleChoice.ques
-    //- shortAnswer.ques
+    h1 {{this.section.title}}－課堂小考
+    .questionDiv(v-for="(item,index) in section.question" :key="index")
+      h3 第{{index+1}}題
+      radio.ques(v-if="item.type==0" :question='item.question')
+      multipleChoice.ques(v-if="item.type==1")
+      shortAnswer.ques(v-if="item.type==2")
+    //- CheckboxGroup.ques(
+    //-   v-for="(item,index) in section.question",
+    //-   :key="index",
+    //-   v-model="userAns[item.sort]",
+    //-   vertical
+    //- ) {{ item.content }}
+      //- Checkbox(label="A") {{ item.select[0] }}
+      //- Checkbox(label="B") {{ item.select[1] }}
+      //- Checkbox(label="C") {{ item.select[2] }}
+      //- Checkbox(label="D") {{ item.select[3] }}
+      //- br
+    
     Button(type="primary", shape="circle", v-if="check", @click="submit") 送出答案
 </template>
 <style lang="scss" scoped>
