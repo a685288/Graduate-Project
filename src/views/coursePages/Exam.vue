@@ -100,7 +100,7 @@ div
     ) 開始測驗
   .exam(v-if="show")
     h1 {{this.section.title}}－課堂小考
-    .questionDiv(v-for="(item,index) in section" :key="index")
+    .questionDiv(v-for="(item,index) in section.question" :key="index")
       h3 第{{index+1}}題
       radio.ques(v-if="item.type==0" :question='item.question')
       multipleChoice.ques(v-if="item.type==1")
