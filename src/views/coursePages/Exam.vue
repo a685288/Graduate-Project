@@ -40,6 +40,7 @@ export default {
     };
   },
   mounted() {
+    //1020 push
     this.theClassId = this.$route.params.classId;
     this.theSectionId = this.$route.params.sectionId;
     getExamContent(this.theSectionId).then(res => {
