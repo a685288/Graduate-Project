@@ -19,7 +19,7 @@ export default {
       teacher,
       classInfo: [
         {
-          classId: "",
+          ClassID: "",
           createAt: "",
           imgUrl: "",
           intro: "",
