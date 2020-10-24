@@ -6,7 +6,7 @@ export default {
   name: "classInfoCard",
   props: {
     classInfo: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
@@ -17,77 +17,93 @@ export default {
       teacher
     };
   },
-  methods:{
-    toCourse(id){
+  //   ClassID: "",
+  //   createAt: "",
+  //   imgUrl: "",
+  //   intro: "",
+  //   isOpen: "",
+  //   isPublic: "",
+  //   sectionNum: "",
+  //   teacherName: "",
+  //   topic: ""
+  methods: {
+    toCourse(id) {
       this.$router.push("course/" + id);
     }
   }
 };
 </script>
 <template lang="pug">
-.div
-  Card.card(
-    v-for="(item,index) in classInfo",
-    :key="index",
-    @click.native="toCourse(item.ClassID)"
-  )
+Card.card(@click.native="toCourse(item.ClassID)")
+  .topcon
     .img
-      img(v-if="item.imgUrl != ''", :src="item.imgUrl")
+      img(v-if="classInfo.imgUrl != ''", :src="classInfo.imgUrl")
       img(v-else, :src="defaultClass") 
-    .title {{ item.topic }}
+    .title {{ classInfo.topic }}
     .topics
       img(:src="topic")
-      | 主題：{{ item.sectionNum }}
+      | 主題：{{ classInfo.sectionNum }}
     .teacher
       img(:src="teacher") 
-      | 授課老師：{{ item.teacherName }} 老師
-    hr
-    .content {{ item.intro }}
+      | 老師：{{ classInfo.teacherName }} 
+  hr
+  .content {{ classInfo.intro }}
 </template>
 <style lang="scss" scoped>
-.div {
+.card {
   display: flex;
-  margin: 15px;
+  margin: 10px;
   width: 240px;
   height: 350px;
-  color: #000000;
-  .card {
-    flex-wrap: wrap;
-    margin: 0px 5px;
+  flex-wrap: wrap;
+  margin: 10px;
+  .topcon{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 200px;
     .img {
+      flex: 1;
       height: 110px;
       line-height: 110px;
       img {
-        width: 50px;
+        max-height: 100%;
         vertical-align: middle;
       }
     }
     .title {
+      flex: 1;
       font-size: 20px;
       font-weight: bold;
+      margin-bottom: 5px;
     }
-    .topics,
-    .teacher {
+    .topics, .teacher {
+      flex: 1;
       line-height: 18px;
       font-size: 14px;
       text-align: left;
-      margin: 5px;
       img {
         width: 18px;
         vertical-align: middle;
         margin: 5px;
       }
     }
-    hr {
-      size: 1px;
-      color: #e8eaec;
-    }
-    .content {
-      margin: 10px 0px;
-      width: 200px;
-      word-wrap: break-word;
-      word-break: normal;
-    }
+  }
+  hr {
+    size: 1px;
+    color: #e8eaec;
+  }
+  .content{
+    flex: 1;
+    width: 200px;
+    height: 100px;
+    margin: auto;
+    padding: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; //行數
+    -webkit-box-orient: vertical;
+    white-space: normal;
   }
 }
 </style>

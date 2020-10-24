@@ -1,9 +1,36 @@
-<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+<template lang="pug">
+.SignIn
+  .logo
+    img(:src="logo")
+    h1 學海無涯
+    .content
+      p 想要遠端教學嗎？
+      p 想要整理學校的所有課程嗎？
+      p 想要提升自主學習的能力嗎？
+      p 學海無涯 讓你的上課不再單調
+  Card.login(dis-hover)
+    h3(slot="title") 登入方式
+    .googleSignin
+      Button(
+        size="large"
+        icon="logo-google"
+        @click.native="googleSignin()") google
+  .area
+    ul.circles
+      li 
+      li 
+      li 
+      li 
+      li 
+      li 
+      li 
+      li
+      li 
+      li
+</template>
 <script>
 // Firebase
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyA3X54KKQ_f_QS9PwHdk3gO7N-aQfM6wSg",
   authDomain: "e-learning-4550b.firebaseapp.com",
   databaseURL: "https://e-learning-4550b.firebaseio.com",
@@ -20,8 +47,8 @@ import { postSignIn } from "@/apis/member.js";
 import firebase from "firebase/app";
 import logo from "../../assets/logo.png";
 import googleBtn from "../../assets/googleSignIn.png";
-
 import "firebase";
+let provider = new firebase.auth.GoogleAuthProvider();
 export default {
   name: "SignIn",
   data() {
@@ -34,65 +61,169 @@ export default {
     localStorage.clear();
   },
   methods: {
-    googleSignin() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      localStorage.removeItem("accessToken");
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(res) {
-          firebase
-            .auth()
-            .currentUser.getIdToken(true)
-            .then(function(idToken) {
-              // api
-              postSignIn({
-                token: idToken
-              }).then(res => {
-                localStorage.setItem("accessToken", res.data.data.accessToken);
-              });
-            })
-            .catch(function(error) {});
-        })
-        .then(() => {
+    async googleSignin() {
+      await localStorage.removeItem("accessToken");
+      try {
+        await firebase.auth().signInWithPopup(provider);
+        let idToken = await firebase.auth().currentUser.getIdToken(true);
+        let res = await postSignIn({ token: idToken });
+        if (res.data.status.code === 0) {
+          localStorage.setItem("accessToken", res.data.data.accessToken);
           this.$router.push("dashboard");
-        })
-        .catch(error => {
-          console.log("error.code:" + error.code);
-          console.log("error.message:" + error.message);
-          console.log("error.email:" + error.email);
-          console.log("error.credential:" + error.credential);
-        });
+        }
+      } catch (err) {
+        this.$Message.error("登入失敗");
+        console.log(err);
+      }
     }
   }
 };
 </script>
-
-<template lang="pug">
-.SignIn
-  h1 學海無涯
-  img.logo(:src="logo") 
-  br
-  Button(@click.native="googleSignin()")
-    img(:src='googleBtn')
-</template>
-
 <style lang='scss' scoped>
 .SignIn {
-  min-height: 400px;
-  align-items: center;
-  justify-content: center;
-  .logo{
-    height: 100px;
-  }
-  button{
-    height: 0px;
-    width: 0px;
-    border: 0px;
-    img{
-      height: 50px;
+  height: 100%;
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+  .logo {
+    color: white;
+    font-size: 35px;
+    img {
+      max-height: 200px;
+    }
+    .content{
+      font-size: 20px;
     }
   }
-  
+  .login {
+    margin: 10px auto 0px auto;
+    width: 20%;
+    .googleSignin {
+      margin: 5px;
+    }
+  }
+}
+
+@import url("https://fonts.googleapis.com/css?family=Exo:400,700");
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  font-family: "Exo", sans-serif;
+}
+.context {
+  width: 100%;
+  position: absolute;
+  top: 50vh;
+}
+.context h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+}
+.area {
+  // background: #4e54c8;
+  z-index: -1;
+  position: absolute;
+  background: rgb(25, 150, 180);
+  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+  width: 100%;
+  height: 100vh;
+}
+.circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.circles li {
+  position: absolute;
+  display: block;
+  list-style: none;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  animation: animate 25s linear infinite;
+  bottom: -150px;
+}
+.circles li:nth-child(1) {
+  left: 25%;
+  width: 80px;
+  height: 80px;
+  animation-delay: 0s;
+}
+.circles li:nth-child(2) {
+  left: 10%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+.circles li:nth-child(3) {
+  left: 70%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 4s;
+}
+.circles li:nth-child(4) {
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  animation-delay: 0s;
+  animation-duration: 18s;
+}
+.circles li:nth-child(5) {
+  left: 65%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 0s;
+}
+.circles li:nth-child(6) {
+  left: 75%;
+  width: 110px;
+  height: 110px;
+  animation-delay: 3s;
+}
+.circles li:nth-child(7) {
+  left: 35%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 7s;
+}
+.circles li:nth-child(8) {
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 15s;
+  animation-duration: 45s;
+}
+.circles li:nth-child(9) {
+  left: 20%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 2s;
+  animation-duration: 35s;
+}
+.circles li:nth-child(10) {
+  left: 85%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+  animation-duration: 11s;
+}
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
 }
 </style>
