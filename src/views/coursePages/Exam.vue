@@ -6,7 +6,6 @@ import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
 import { getExamContent, submitExamAns, postExamRecord } from "@/apis/exam.js";
 
 export default {
-  name: "video",
   components: {
     radio,
     multipleChoice,
@@ -14,64 +13,90 @@ export default {
   },
   data() {
     return {
-      show: false,
+      show: false, 
       btnshow: true,
-      check: false,
+      check: false, 
       theClassId: "",
       theSectionId: "",
-      section: {
-        sectionId: "",
-        title: "", // 單元標題
-        url: "", // youtube url
-        type: "",
-        question: [
-          {
-            questionId: "",
-            content: "", // 問題敘述
-            select: ["", "", "", ""], // 選項
-            sort: "",
-            type: "",
-          }
-        ]
-      },
-      userAns: [],
+      answer: [{}, {}, {}, {}, {}],
+      section: {},
       correctAns: [],
-      score: 0
+      array: []
     };
   },
   mounted() {
-    //1020 push
     this.theClassId = this.$route.params.classId;
     this.theSectionId = this.$route.params.sectionId;
     getExamContent(this.theSectionId).then(res => {
-      this.section = res.data.data;
+      if (res.data.status.code === 0) {
+        this.section = res.data.data;
+      } else {
+        this.$Message.error(`err:${res.data.status.code}`);
+      }
     });
   },
   methods: {
+    ans(userAns) {
+      this.answer[userAns.sort].questionId = userAns.questionId;
+      this.answer[userAns.sort].selects = userAns.selects;
+      this.answer[userAns.sort].type = userAns.type;
+    },
     submit() {
-      console.log("ans" + this.ans);
       submitExamAns(this.theSectionId).then(res => {
-        this.correctAns = res.data.data;
-        console.log(this.correctAns);
-        this.countScore();
+        if (res.data.status.code === 0) {
+          this.correctAns = res.data.data;
+        } else {
+          this.$Message.error(`err:${res.data.status.code}`);
+        }
+        this.score();
       });
     },
-    countScore() {
-      for (var i = 0; i < this.correctAns.length; i++) {
-        console.log("正確答案" + this.correctAns[i].answer);
-        console.log("用戶答案" + this.userAns[i]);
-        if (
-          this.correctAns[i].answer.toString() === this.userAns[i].toString()
-        ) {
-          this.score++;
-          console.log("加1分");
+    score() {
+      for (let x = 0; x < 5; x++) {
+        let check = 1;
+        switch (this.answer[x].type) {
+          case 0: //單選
+            if (this.correctAns[x].answer[0] === this.answer[x].selects[0]) {
+              this.answer[x].isTrue = 1;
+            } else {
+              this.answer[x].isTrue = 0;
+            }
+            break;
+          case 1: //多選
+            if (
+              this.correctAns[x].answer.length === this.answer[x].selects.length
+            ) {
+              for (let i = 0; i < this.correctAns[x].answer.length; i++) {
+                if (
+                  !this.correctAns[x].answer.includes(this.answer[x].selects[i])
+                ) {
+                  check = 0;
+                  break;
+                }
+              }
+            } else {
+              check = 0;
+            }
+            this.answer[x].isTrue = check;
+            check = 1;
+            break;
+          case 2: //簡答
+            this.answer[x].isTrue = 1;
+            break;
+          default:
+            console.log("未知錯誤");
+            break;
         }
       }
-      console.log("分數" + this.score);
+      this.answer.forEach(item => {
+        delete item.type;
+      });
+      console.log("this.answer---" + this.answer);
       postExamRecord({
         classId: this.theClassId,
-        sectionId: this.sectionId,
-        selects: this.userAns
+        sectionId: this.theSectionId,
+        records: this.answer,
+        step: 1
       });
     },
     exam() {
@@ -85,41 +110,34 @@ export default {
 <template lang="pug">
 div
   .video
-    h1 {{this.section.title}}
+    h1 {{ this.section.title }}
     iframe.youtube(
       :src="'https://www.youtube.com/embed/' + this.section.url",
       frameborder="0",
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-      allowfullscreen=""
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     )
     br
     Button.startbtn(
       type="primary",
       shape="circle",
       @click="exam()",
-      v-if="btnshow"
+      v-if="this.btnshow"
     ) 開始測驗
-  .exam(v-if="show")
-    h1 {{this.section.title}}－課堂小考
-    .questionDiv(v-for="(item,index) in section" :key="index")
-      h3 第{{index+1}}題
-      radio.ques(v-if="item.type==0" :question='item.question' )
-      multipleChoice.ques(v-if="item.type==1")
-      shortAnswer.ques(v-if="item.type==2")
-
-
-    //- CheckboxGroup.ques(
-    //-   v-for="(item,index) in section.question",
-    //-   :key="index",
-    //-   v-model="userAns[item.sort]",
-    //-   vertical
-    //- ) {{ item.content }}
-      //- Checkbox(label="A") {{ item.select[0] }}
-      //- Checkbox(label="B") {{ item.select[1] }}
-      //- Checkbox(label="C") {{ item.select[2] }}
-      //- Checkbox(label="D") {{ item.select[3] }}
-      //- br
-    
+  .exam(v-if="this.show")
+    h1 {{ this.section.title }}－課堂小考
+    .questionDiv(v-for="(item, index) in section.question", :key="index")
+      h3 第{{ index + 1 }}題
+      radio.ques(v-if="item.type == 0", :question="item", v-on:emitAns="ans")
+      multipleChoice.ques(
+        v-if="item.type == 1",
+        :question="item",
+        v-on:emitAns="ans"
+      )
+      shortAnswer.ques(
+        v-if="item.type == 2",
+        :question="item",
+        v-on:emitAns="ans"
+      )
     Button(type="primary", shape="circle", v-if="check", @click="submit") 送出答案
 </template>
 <style lang="scss" scoped>
@@ -152,6 +170,8 @@ div {
     .ques {
       width: 100%;
       margin: 20px 0px;
+      padding: 3%;
+      background-color: #fff;
     }
   }
 }
