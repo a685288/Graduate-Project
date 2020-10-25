@@ -20,7 +20,6 @@ export default {
     getSectionTitle(this.theClassId).then(res => {
       if (res.data.status.code === 0) {
         this.section = res.data.data;
-        console.log(res.data.data)
       } else {
         this.$Message.error(`err:${res.data.status.code}`);
       }
