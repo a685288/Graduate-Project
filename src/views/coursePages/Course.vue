@@ -37,7 +37,7 @@ export default {
       topic,
       teacher,
       status:{
-        isAdd: false
+        isAdd: true
       },
       theClassId: "",
       classInfo: {
@@ -104,8 +104,8 @@ export default {
       padding: 20px 50px;
       flex: 3;
       .classImg{
-        min-width: 60%;
-        max-width: 70%;
+        max-width: 600px;
+        max-height: 400px;
       }
       .detail{
         font-size: 20px;
@@ -127,18 +127,22 @@ export default {
     }
     .right {
       flex: 3;
+      display: flex;
+      flex-direction: column;
       padding: 20px 50px;
       .title{
         font-size: 25px;
       }
       .intro{
+        flex: 10;
         font-size: 18px;
         margin: 10px auto;
         text-align: left;
       }
       .button{
+        flex: 1;
+        flex-basis:80px;
         .btn {
-          // width: 80px;
           height: 70px;
           color: #494949 !important;
           text-transform: uppercase;
