@@ -86,7 +86,7 @@ export default {
           default:
             console.log("未知錯誤");
             break;
-        }
+        }      
       }
       this.answer.forEach(item => {
         delete item.type;
@@ -98,8 +98,12 @@ export default {
         records: this.answer,
         step: 1
       });
+      this.$router.push(
+        "/dashboard/course/" + this.theClassId + "/lesson/exam/" + this.nextTheSectionId
+      );
     },
     exam() {
+      console.log(this.nextTheSectionId)
       this.show = true;
       this.btnshow = false;
       this.check = true;
