@@ -20,16 +20,15 @@ export default {
   },
   methods: {
     toSection(id) {
-      console.log("toSection");
-      this.$router.push(
-        "/dashboard/course/" + this.theClassId + "/lesson/exam/" + id);
+      console.log(id);
+      this.$router.push("/dashboard/course/" + this.theClassId + "/lesson/exam/" + id);
     }
   }
 };
 </script>
 <template lang="pug">
 .lesson
-  Menu.leftBar(active-name="1", @on-select="toSection")
+  Menu.leftBar(active-name="1",@on-select="toSection")
     MenuItem(
       :name="item.sectionId",
       v-for="(item, index) in section",
