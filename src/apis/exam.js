@@ -1,12 +1,24 @@
 import req from './https.js';
+
+/**取得課程的所有章節名稱
+ * GET
+ * /section/${id}/titlelist
+ * @param {*} classId
+ * @returns {Array} data
+ * @returns {string} sectionId
+ * @returns {string} title
+ */
+export const getSectionTitle = (sectionId) => req('get',`/section/${sectionId}/titlelist`)
+
+
 /**取得測驗內容(不含答案)
  * GET
  * /section/${sectionId}/exam
  * @returns {String} sectionId
- * @returns {String} title        單元標題
+ * @returns {String} title
  * @returns {String} url
  * @returns {Number} type
- * @returns {Array } question
+ * @returns {Array} question
  *   @returns {String} questionId
  *   @returns {Array} content
  *   @returns {Array} select

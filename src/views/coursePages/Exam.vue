@@ -86,7 +86,7 @@ export default {
           default:
             console.log("未知錯誤");
             break;
-        }
+        }      
       }
       this.answer.forEach(item => {
         delete item.type;
