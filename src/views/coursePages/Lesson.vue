@@ -5,11 +5,13 @@ export default {
   data() {
     return {
       theClassId: "",
+      theSectionId:'',
       section: []
     };
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
+    this.theSectionId = this.$route.params.sectionId;
     getCourseInfo(this.theClassId).then(res => {
       if (res.data.status.code === 0) {
         this.section = res.data.data.sections;
@@ -28,7 +30,7 @@ export default {
 </script>
 <template lang="pug">
 .lesson
-  Menu.leftBar(active-name="1",@on-select="toSection")
+  Menu.leftBar(:active-name="this.theSectionId",@on-select="toSection")
     MenuItem(
       :name="item.sectionId",
       v-for="(item, index) in section",
@@ -45,6 +47,8 @@ export default {
     flex: 1;
   }
   .content {
+    margin: 0px;
+    padding: 0px;
     flex: 4;
   }
 }

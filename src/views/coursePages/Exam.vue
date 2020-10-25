@@ -143,6 +143,8 @@ div
 <style lang="scss" scoped>
 div {
   background-color: #f5f5f5;
+  margin: 0px;
+  padding: 0px;
   h1 {
     line-height: 250%;
     text-align: center;
