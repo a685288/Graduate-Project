@@ -1,3 +1,26 @@
+<template lang="pug">
+.content
+  .info
+    .left
+      img.classImg(:src="classInfo.imgUrl")
+      .detail
+        img(:src="topic")
+        | 章節數：{{ classInfo.sectionNum }}
+        br
+        img(:src="teacher") 
+        | 授課老師：{{ classInfo.teacherName }} 老師
+    hr.middle
+    .right
+      .title
+        h1 {{ classInfo.topic }}
+      .intro
+        h3 {{ classInfo.intro }}
+      .button
+        Button.btn(v-if="!status.isAdd" @click="addClass()") 加入課程
+        Button.btn(v-else @click="start()") 開始上課
+  .sectionsArea
+    lessonTopic(:section="this.classInfo.sections" @toExam="toSection")
+</template>
 <script>
 import lessonTopic from "@/components/content/lessonTopic.vue";
 import topic from "@/assets/topic.png";
@@ -13,6 +36,9 @@ export default {
     return {
       topic,
       teacher,
+      status:{
+        isAdd: false
+      },
       theClassId: "",
       classInfo: {
         classId: "",
@@ -38,111 +64,175 @@ export default {
   },
   methods: {
     addClass() {
-      this.$Message["success"]({
-        background: true,
-        content: "加選課程成功"
-      });
-      putAddClass(
-      {classId: this.theClassId}
-      ).then(res => {
-          console.log(res);
+      putAddClass({
+        classId: this.theClassId
+        }).then(res => {
+          if(res.data.status.code === 0){
+            this.$Message.success("加選課程成功");
+          }else if (res.data.status.code === 21107){
+            this.$Message.success("重複加選成功");
+            this.status.isAdd = true
+          }
         })
         .catch(err => {
+          this.$Message.error;(`err: ${err}`);
           console.log(err);
         });
     },
     start() {
       this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + this.classInfo.sections[0].sectionId);
+    },
+    toSection(sectionId){
+      if(this.status.isAdd){
+        this.$router.push("/dashboard/course/" + this.theClassId+"/lesson/exam/" + sectionId);
+      }else{
+        this.$Message.error("請先加入課程喔！");
+      }
     }
   }
 };
 </script>
-<template lang="pug">
-.content
-  .info
-    .left
-      h1 {{ classInfo.topic }}
-      h3 {{ classInfo.intro }}
-      .button(align="center")
-        Button.btn(@click="addClass()") 加入課程
-        Button.btn(@click="start()") 開始上課
-    .right
-      .box
-        h3 課程進度
-        i-circle.circle(:percent="50")
-          span.demo-Circle-inner 50%
-      .box
-        h3 課程資訊
-        .news
-          img(:src="topic")
-          | 主題數：{{ classInfo.sectionNum }}
-          br
-          img(:src="teacher") 
-          | 授課老師：{{ classInfo.teacherName }} 老師
-  lessonTopic(:section="this.classInfo.sections")
-</template>
 <style lang="scss" scoped>
 .content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .info {
+    flex: 1;
     display: flex;
-    text-align: left;
-    margin: 5% 15%;
     .left {
+      padding: 20px 50px;
       flex: 3;
-      padding: 30px;
-      h1 {
-        font-size: 400%;
+      .classImg{
+        min-width: 60%;
+        max-width: 70%;
       }
-      h3 {
-        font-size: 150%;
-      }
-      .btn {
-        color: #494949 !important;
-        text-transform: uppercase;
-        text-decoration: none;
-        background: #ffffff;
-        padding: 5%;
-        border: 5px solid #bac94a !important;
-        display: inline-block;
-        transition: all 0.4s ease 0s;
-        font-weight: bold;
+      .detail{
         font-size: 20px;
-        margin: 10% 10% 0% 10%;
-        line-height: -0px;
-      }
-      .btn:hover {
-        color: #ffffff !important;
-        background: #f6b93b;
-        border-color: #f6b93b !important;
-        transition: all 0.4s ease 0s;
+        text-align: left;
+        max-width: 70%;
+        margin: 0px auto;
+        padding: 0px 10px;
+        img{
+          width: 25px;
+          margin: 5px;
+        }
       }
     }
+    .middle{
+      flex: 0 0;
+      flex-basis: 1px;
+      background-color: black;
+      height: auto;
+    }
     .right {
-      flex: 2;
-      display: flex;
-      padding: 30px;
-      border-left: 2px solid #d9d9d9;
-      .box {
-        flex: 1;
-        .demo-Circle-inner {
-          font-size: 24px;
+      flex: 3;
+      padding: 20px 50px;
+      .title{
+        font-size: 25px;
+      }
+      .intro{
+        font-size: 18px;
+        margin: 10px auto;
+        text-align: left;
+      }
+      .button{
+        .btn {
+          // width: 80px;
+          height: 70px;
+          color: #494949 !important;
+          text-transform: uppercase;
+          text-decoration: none;
+          background: #ffffff;
+          padding: 5%;
+          border: 5px solid #bac94a !important;
+          display: inline-block;
+          transition: all 0.4s ease 0s;
+          font-weight: bold;
+          font-size: 20px;
+          margin: 10% 10% 0% 10%;
+          line-height: -0px;
         }
-        .circle {
-          margin: 10%;
-        }
-        h3 {
-          line-height: 150%;
-        }
-        .news {
-          margin: 0%;
-          img {
-            width: 18px;
-            vertical-align: middle;
-            margin: 10px 5px;
-          }
+        .btn:hover {
+          color: #ffffff !important;
+          background: #f6b93b;
+          border-color: #f6b93b !important;
+          transition: all 0.4s ease 0s;
         }
       }
     }
   }
+  .sectionsArea{
+    flex: 1;
+    background-color: lightgray;
+  }
 }
+// .content {
+//   .info {
+//     display: flex;
+//     text-align: left;
+//     margin: 5% 15%;
+//     align-items: stretch;
+//     .right {
+//       flex: 3;
+//       // padding: 30px;
+//       h1 {
+//         font-size: 400%;
+//       }
+//       h3 {
+//         font-size: 150%;
+//       }
+//       .btn {
+//         color: #494949 !important;
+//         text-transform: uppercase;
+//         text-decoration: none;
+//         background: #ffffff;
+//         padding: 5%;
+//         border: 5px solid #bac94a !important;
+//         display: inline-block;
+//         transition: all 0.4s ease 0s;
+//         font-weight: bold;
+//         font-size: 20px;
+//         margin: 10% 10% 0% 10%;
+//         line-height: -0px;
+//       }
+//       .btn:hover {
+//         color: #ffffff !important;
+//         background: #f6b93b;
+//         border-color: #f6b93b !important;
+//         transition: all 0.4s ease 0s;
+//       }
+//     }
+//     .middle{
+//       flex: 1;
+//       height: 100%;
+//     }
+//     .left {
+//       flex: 2;
+//       display: flex;
+//       padding: 30px;
+//       .box {
+//         flex: 1;
+//         .demo-Circle-inner {
+//           font-size: 24px;
+//         }
+//         .circle {
+//           margin: 10%;
+//         }
+//         h3 {
+//           line-height: 150%;
+//         }
+//         .news {
+//           margin: 0%;
+//           img {
+//             width: 18px;
+//             vertical-align: middle;
+//             margin: 10px 5px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
 </style>

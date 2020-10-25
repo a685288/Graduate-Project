@@ -7,6 +7,9 @@ import req from './https.js';
  */
 export const postSignIn = (params) => req('post', '/auth/signin', params);
 
+// 登出
+export const postSignOut = () => req('post', "/auth/signout");
+
 /**
  * 更新 user name
  * PUT

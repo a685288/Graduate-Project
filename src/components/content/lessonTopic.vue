@@ -2,7 +2,6 @@
 // components
 export default {
   name: "lessonTopic",
-  components: {},
   props: {
     section: {
       sectionId: String,
@@ -11,44 +10,48 @@ export default {
   },
   data(){
     return{
-      theClassId:'',
     }
   },
   methods:{
     toExam(id){
-      this.theClassId = this.$route.params.classId;
-      console.log("course-this.classId---" + this.theClassId);
-      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + id);
+      // this.theClassId = this.$route.params.classId;
+      // console.log("course-this.classId---" + this.theClassId);
+      // this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + id);
+      this.$emit("toExam", id);
     }
   }
 };
 </script>
 <template lang="pug">
+.lessonTopic
+  h1 課程內容
   .div
-    h1 包含的課程
     .lessons(v-for="(item, index) in section",:key="index")
-      Card.card(@click.native="toExam(item.sectionId)") 第{{index+1}}課－{{item.title}}
-        Icon.icon(type="md-arrow-dropright-circle") 
+      Card.card(@click.native="toExam(item.sectionId)") {{index+1}}. {{item.title}}
+        //- Icon.icon(type="md-arrow-dropright-circle") 
         
 </template>
 <style lang='scss' scoped>
-.div {
-  background-color: lightgray;
-  padding: 2% 15%;
+.lessonTopic{
+  padding: 1%;
+  height: 100%;
   h1 {
-    line-height: 120%;
-  }
-  .card {
-    font-size: 20px;
-    text-align: left;
-    margin: 1%;
-    padding: 0% 25%;
-    font-weight: bold;
-    .img {
-      height: 20px;
+      line-height: 120%;
     }
-    .icon {
-      float: right;
+  .div {
+    height: 80%;
+    padding: 1% 15%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;  
+    .card {
+      flex: 1;
+      font-size: 20px;
+      text-align: left;
+      padding: 0% 25%;
+      font-weight: bold;
+      margin: 10px 0px;
     }
   }
 }
