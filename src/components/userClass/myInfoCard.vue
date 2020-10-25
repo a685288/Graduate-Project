@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       photo,
-      value: ""
+      newName: ""
     };
   },
   methods: {
@@ -22,45 +22,50 @@ export default {
         render: h => {
           return h("Input", {
             props: {
-              value: this.value,
+              value: this.newName,
               autofocus: true,
               placeholder: "請輸入你的姓名"
             },
             on: {
               input: val => {
-                this.user.name = val;
-                this.value = val;
+                this.newName = val;
               }
             }
           });
         },
         onOk: () => {
-          if (this.value !== "") {
-            this.newName();
+          if (this.newName !== "") {
+            this.updName();
           } else {
             console.log("未輸入內容");
           }
         }
       });
     },
-    newName() {
-      updateName({ name: this.value })
+    updName() {
+      updateName({ name: this.newName })
         .then(res => {
-          console.log(res);
+          if (res.data.status.code === 0){
+            this.$Message.success("修改成功");
+            this.user.name = this.newName;
+            this.newName = "";
+          }else{
+            this.$Message.error("error");
+            this.newName = "";
+          }
         })
         .catch(err => {
           console.log(err);
         });
-      console.log("update name fun");
-      console.log(this.user.name);
     }
   }
 };
 </script>
 <template lang="pug">
 div
-  img(:src="photo")
-  h2 {{ user.name }}
+  //- img(:src="photo")
+  .name
+    h2 {{ user.name }}
   p {{ user.email }}
   br
   Button.btn(
@@ -72,9 +77,16 @@ div
   )
 </template>
 <style lang="scss" scoped>
-img {
-  height: 50%;
-  width: 100%;
-  border-radius: 50%;
+.name{
+  width: 80%;
+  margin: 0px auto;
+  word-wrap: break-word;
+  word-break: break-all;
+
 }
+// img {
+//   height: 50%;
+//   width: 100%;
+//   border-radius: 50%;
+// }
 </style>

@@ -12,5 +12,8 @@ export default {
   HeaderBar
   router-view
 </template>
-<style scoped>
+<style lang="scss" scoped>
+.dashboard{
+  height: 100%;
+}
 </style>

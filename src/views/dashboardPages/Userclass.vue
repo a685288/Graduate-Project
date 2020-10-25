@@ -1,12 +1,17 @@
 <template lang="pug">
-.div
-  myInfoCard.info(:user="this.user")
-  Tabs.tabs
-    TabPane.box(label="全部")
-      div
-        ClassCard(v-for="(item, index) in classInfo" :key="index" :classInfo="item")
-    TabPane.box(label="進行中") 進行中的課程
-    TabPane.box(label="已完成") 已完成的課程
+//- .div
+//-   myInfoCard.info(:user="this.user")
+//-   Tabs.tabs
+//-     TabPane.box(label="全部")
+//-       div
+//-         ClassCard(v-for="(item, index) in classInfo" :key="index" :classInfo="item")
+//-     TabPane.box(label="進行中") 進行中的課程
+//-     TabPane.box(label="已完成") 已完成的課程
+.userClass
+  .userInfo
+    myInfoCard(:user="this.user")
+  .classInfo
+    ClassCard(v-for="(item, index) in classInfo" :key="index" :classInfo="item" @click.native="toCourse(item.ClassID)")
 </template>
 <script>
 import myInfoCard from "@/components/userClass/myInfoCard.vue";
@@ -32,14 +37,15 @@ export default {
     this.userCalss()
   },
   methods: {
+    toCourse(id){
+      this.$router.push(`course/${id}`);
+    },
     userCalss() {
       getMyClass()
         .then(res => {
             if(res.data.status.code === 0){
               this.user = res.data.data;
               this.classInfo = res.data.data.classinfo;
-              // console.log("this.user---" + this.user);
-              // console.log("this.classInfo---" + this.classInfo);
             }else{
               this.$Message.error(`err: ${res.data.status.code}`);
             }
@@ -52,19 +58,35 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.div {
+.userClass{
   display: flex;
-  margin: 5%;
-  .info {
+  align-items: flex-start;
+  .userInfo{
+    margin-top: 50px;
     flex: 1;
-    margin: 20px;
+    min-width: 100px;
   }
-  .tabs {
-    flex: 5;
-    margin: 0% 5%;
-    .box{
-      height: 100%;;
-    }
+  .classInfo{
+    flex: 4;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+
   }
 }
+// .div {
+//   display: flex;
+//   margin: 5%;
+//   .info {
+//     flex: 1;
+//     margin: 20px;
+//   }
+//   .tabs {
+//     flex: 5;
+//     margin: 0% 5%;
+//     .box{
+//       height: 100%;;
+//     }
+//   }
+// }
 </style>>

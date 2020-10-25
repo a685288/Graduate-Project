@@ -13,7 +13,7 @@
     Radio.box(label="20", border)
       span 20章以上
   .right
-    ClassCard(v-for="(item, index) in classInfo" v-if="first <= item.sectionNum && item.sectionNum <= last" :classInfo="item" @click.native="getClassId(item.ClassID)")
+    ClassCard(v-for="(item, index) in classInfo" :key="index" v-if="first <= item.sectionNum && item.sectionNum <= last" :classInfo="item" @click.native="getClassId(item.ClassID)")
 </template>
 <script>
 import defaultClass from "@/assets/defaultClass.png";

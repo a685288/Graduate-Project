@@ -26,15 +26,10 @@ export default {
   //   sectionNum: "",
   //   teacherName: "",
   //   topic: ""
-  methods: {
-    toCourse(id) {
-      this.$router.push("course/" + id);
-    }
-  }
 };
 </script>
 <template lang="pug">
-Card.card(@click.native="toCourse(item.ClassID)")
+Card.card
   .topcon
     .img
       img(v-if="classInfo.imgUrl != ''", :src="classInfo.imgUrl")

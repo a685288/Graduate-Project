@@ -86,7 +86,7 @@ export default {
   justify-items: center;
   flex-direction: column;
   .logo {
-    color: white;
+    color: #0C4A60;
     font-size: 35px;
     img {
       max-height: 200px;
@@ -126,7 +126,7 @@ body {
   // background: #4e54c8;
   z-index: -1;
   position: absolute;
-  background: rgb(25, 150, 180);
+  background: #ABDFF1;
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
   height: 100vh;

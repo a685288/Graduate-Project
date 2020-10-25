@@ -29,6 +29,7 @@
 <script>
 import logo from "@/assets/logo.png";
 import { getNotOpenClass } from "@/apis/course.js";
+import { postSignOut } from "@/apis/member.js"
 
 export default {
   name: "TitleBar",
@@ -53,6 +54,9 @@ export default {
         case `2`:
           this.$router.push("/dashboard/allclass");
           break;
+        case `3`:
+          this.signOut();
+        break;
         default:
           localStorage.clear();
           this.$router.push("/");
@@ -65,6 +69,17 @@ export default {
         console.log("ClassID" + res.data);
         this.$router.push("course/" + res.data.data.classId);
       });
+    },
+    signOut(){
+    postSignOut().then(res => {
+      if (res.data.status.code === 0){
+        localStorage.removeItem("accessToken");
+        this.$Message.success("登出成功");
+        this.$router.push('/');
+      }else{
+        this.$Message.error(`err: ${res.data.status.code}`);
+      }
+    })
     }
   }
 };
