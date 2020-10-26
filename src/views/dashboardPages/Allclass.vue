@@ -1,7 +1,7 @@
 <template lang="pug">
 .allclass
   RadioGroup.CheckboxGroup(v-model="radioNum" @on-change="radioBoxGroup")
-    h2 課程主題數
+    h2 課程章節數
     Radio.box(label="0", border)
       span 全部
     Radio.box(label="1", border)
