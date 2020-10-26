@@ -13,9 +13,9 @@ export default {
   },
   data() {
     return {
-      show: false, 
+      show: false,
       btnshow: true,
-      check: false, 
+      check: false,
       theClassId: "",
       theSectionId: "",
       answer: [{}, {}, {}, {}, {}],
@@ -24,17 +24,19 @@ export default {
       array: []
     };
   },
-  mounted() {
-    this.theClassId = this.$route.params.classId;
-    this.theSectionId = this.$route.params.sectionId;
-    getExamContent(this.theSectionId).then(res => {
-      if (res.data.status.code === 0) {
-        this.section = res.data.data;
-      } else {
-        this.$Message.error(`err:${res.data.status.code}`);
-      }
-    });
-  },
+  // created() {
+  //   this.getData();
+  // },
+  activated() {
+  this.theClassId = this.$route.params.classId;
+      this.theSectionId = this.$route.params.sectionId;
+      getExamContent(this.theSectionId).then(res => {
+        if (res.data.status.code === 0) {
+          this.section = res.data.data;
+        } else {
+          this.$Message.error(`err:${res.data.status.code}`);
+        }
+      });},
   methods: {
     ans(userAns) {
       this.answer[userAns.sort].questionId = userAns.questionId;
@@ -86,7 +88,7 @@ export default {
           default:
             console.log("未知錯誤");
             break;
-        }      
+        }
       }
       this.answer.forEach(item => {
         delete item.type;
@@ -98,12 +100,8 @@ export default {
         records: this.answer,
         step: 1
       });
-      this.$router.push(
-        "/dashboard/course/" + this.theClassId + "/lesson/exam/" + this.nextTheSectionId
-      );
     },
     exam() {
-      console.log(this.nextTheSectionId)
       this.show = true;
       this.btnshow = false;
       this.check = true;
