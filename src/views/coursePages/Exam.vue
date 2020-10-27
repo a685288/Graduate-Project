@@ -16,28 +16,33 @@ export default {
       show: false,
       btnshow: true,
       check: false,
-      theClassId: "",
-      theSectionId: "",
+      theClassId: this.$route.params.classId,
+      theSectionId: this.$route.params.sectionId,
       answer: [{}, {}, {}, {}, {}],
       section: {},
       correctAns: [],
       array: []
     };
   },
-  // created() {
-  //   this.getData();
-  // },
-  activated() {
-  this.theClassId = this.$route.params.classId;
-      this.theSectionId = this.$route.params.sectionId;
+  beforeRouteUpdate(to, from, next) {
+    this.theSectionId = to.params.sectionId;
+    next(this.getData());
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
       getExamContent(this.theSectionId).then(res => {
         if (res.data.status.code === 0) {
           this.section = res.data.data;
+          console.log("this.section---" + this.section.title);
         } else {
           this.$Message.error(`err:${res.data.status.code}`);
         }
-      });},
-  methods: {
+        this.$forceUpdate();
+      });
+    },
     ans(userAns) {
       this.answer[userAns.sort].questionId = userAns.questionId;
       this.answer[userAns.sort].selects = userAns.selects;
