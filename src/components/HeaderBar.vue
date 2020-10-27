@@ -11,7 +11,7 @@
       )
       
         //- MenuItem
-        MenuItem
+        MenuItem(name="1")
           img(:src="logo")
         MenuItem(name="1")
           | {{ barItems.userClass }}
@@ -44,7 +44,7 @@ export default {
   name: "TitleBar",
   data() {
     return {
-      theme: "light",
+      theme: "primary",
       logo,
       // theme: "light",
       value: "",

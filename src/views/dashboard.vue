@@ -1,9 +1,11 @@
 <script>
 import HeaderBar from "@/components/HeaderBar.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "Dashboard",
   components: {
-    HeaderBar
+    HeaderBar,
+    Footer
   }
 };
 </script>
@@ -11,6 +13,7 @@ export default {
 .dashboard
   HeaderBar
   router-view
+  Footer
 </template>
 <style lang="scss" scoped>
 .dashboard{
