@@ -1,12 +1,12 @@
 <script>
 import { getSectionTitle } from "@/apis/exam.js";
 
-import Exam from "../coursePages/Exam.vue";
+// import Exam from "../coursePages/Exam.vue";
 export default {
   name: "lesson",
-  components: {
-    Exam
-  },
+  // components: {
+  //   Exam
+  // },
   data() {
     return {
       theClassId: "",
@@ -38,13 +38,11 @@ export default {
 <template lang="pug">
 .lesson
   Menu.leftBar(:active-name="this.theSectionId", @on-select="toSection")
-    MenuItem(
-      :name="item.sectionId",
-      v-for="(item, index) in section",
-      :key="index"
-    )
-      | {{ index + 1 }}.{{ item.title }}
-  Exam.content
+    .MenuIteGroup(v-for="(item, index) in section", :key="index")
+      MenuItem(:name="item.sectionId")
+        | {{ index + 1 }}.{{ item.title }}
+
+  router-view.content
 </template>
 <style lang="scss" scoped>
 .lesson {
