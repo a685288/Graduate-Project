@@ -5,7 +5,7 @@ import req from './https.js';
  * @returns {string} accesstoken
  * @returns {string} id
  */
-export const postSignIn = (params) => req('post', '/auth/signin', params);
+export const postSignIn = (params) => req('post', '/auth/user/signin', params);
 
 // 登出
 export const postSignOut = () => req('post', "/auth/signout");

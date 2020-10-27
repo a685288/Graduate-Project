@@ -2,7 +2,6 @@
 .Header
   .Menu
     .TitleBar
-    
       Menu.left(
         mode="horizontal",
         :theme="theme",

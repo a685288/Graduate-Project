@@ -20,7 +20,7 @@ import defaultClass from "@/assets/defaultClass.png";
 import topic from "@/assets/topic.png";
 import teacher from "@/assets/teacher.png";
 import ClassCard from "@/components/classCard.vue";
-import { getAllClass } from "@/apis/course.js";
+// import { getAllClass } from "@/apis/course.js";
 
 export default {
   name: "allclass",
@@ -40,13 +40,13 @@ export default {
     };
   },
   mounted() {
-    getAllClass().then(res => {
-      if(res.data.status.code === 0 ){
-        this.classInfo = res.data.data;
-      }else{
-        this.$Message.error(`err: ${res.data.status.code}`);
-      }
-    });
+    // getAllClass().then(res => {
+    //   if(res.data.status.code === 0 ){
+    //     this.classInfo = res.data.data;
+    //   }else{
+    //     this.$Message.error(`err: ${res.data.status.code}`);
+    //   }
+    // });
   },
   methods: {
     radioBoxGroup() {
