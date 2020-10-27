@@ -1,37 +1,35 @@
 <template lang="pug">
 .Header
   .Menu
-    .TitleBar
-      Menu.left(
-        mode="horizontal",
-        :theme="theme",
-        active-name="2",
-        @on-select="route"
-      )
-      
-        //- MenuItem
-        MenuItem(name="1")
-          img(:src="logo")
-        MenuItem(name="1")
-          | {{ barItems.userClass }}
-        MenuItem(name="2")
-          Icon(type="ios-paper")
-          | {{ barItems.onlineClass }}
-        MenuItem(name="3")
-          | {{ barItems.setting }}
-        Submenu(name="4")
-          MenuGroup(title="主題")
-            MenuItem(name="4-1") 客家白
-            MenuItem(name="4-2") 尼哥黑
-            MenuItem(name="4-3") 尼多藍
-        .right
-          Input.right(
-            search,
-            enter-button,
-            @on-search="search()",
-            v-model="value",
-            placeholder="請輸入課程邀請碼"
-          )
+    Menu.left(
+      mode="horizontal",
+      :theme="theme",
+      active-name="2",
+      @on-select="route"
+    )
+      //- MenuItem
+      MenuItem(name="1")
+        img(:src="logo")
+      MenuItem(name="1")
+        | {{ barItems.userClass }}
+      MenuItem(name="2")
+        Icon(type="ios-paper")
+        | {{ barItems.onlineClass }}
+      MenuItem(name="3")
+        | {{ barItems.setting }}
+      Submenu(name="4")
+        MenuGroup(title="主題")
+          MenuItem(name="4-1") 客家白
+          MenuItem(name="4-2") 尼哥黑
+          MenuItem(name="4-3") 尼多藍
+      .right
+        Input.right(
+          search,
+          enter-button,
+          @on-search="search()",
+          v-model="value",
+          placeholder="請輸入課程邀請碼"
+        )
 </template>
 
 <script>
@@ -111,6 +109,7 @@ export default {
   }
   .Menu {
     flex: 1;
+    height: 60px;
     .right {
       float: right;
       padding: 8px;

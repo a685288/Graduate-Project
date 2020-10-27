@@ -36,7 +36,6 @@ export default {
       teacher,
       classInfo: [],
       radioNum: "0"
-
     };
   },
   mounted() {
