@@ -74,7 +74,4 @@ export default {
     float: right;
     text-align: left;
 }
-.email{
-  
-}
 </style>
