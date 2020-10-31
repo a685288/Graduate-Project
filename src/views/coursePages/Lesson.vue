@@ -1,12 +1,7 @@
 <script>
 import { getSectionTitle } from "@/apis/exam.js";
-
-// import Exam from "../coursePages/Exam.vue";
 export default {
   name: "lesson",
-  // components: {
-  //   Exam
-  // },
   data() {
     return {
       theClassId: "",

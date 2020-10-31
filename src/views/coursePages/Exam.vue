@@ -119,11 +119,14 @@ export default {
 div
   .video
     h1 {{ this.section.title }}
-    iframe.youtube(
-      :src="'https://www.youtube.com/embed/' + this.section.url",
-      frameborder="0",
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    )
+    .txtDiv(v-if='this.section.type===0')
+      p {{this.section.url}}
+    .youtubeDiv(v-if='this.section.type===1')
+      iframe.youtube(
+        :src="'https://www.youtube.com/embed/' + this.section.url",
+        frameborder="0",
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      )
     br
     Button.startbtn(
       type="primary",
