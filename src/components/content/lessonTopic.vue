@@ -24,12 +24,11 @@ export default {
 </script>
 <template lang="pug">
 .lessonTopic
-  h1 課程內容
+  h1 章節內容
   .div
     .lessons(v-for="(item, index) in section",:key="index")
       Card.card(@click.native="toExam(item.sectionId)") {{index+1}}. {{item.title}}
         //- Icon.icon(type="md-arrow-dropright-circle") 
-        
 </template>
 <style lang='scss' scoped>
 .lessonTopic{

@@ -94,6 +94,7 @@ export default {
             console.log("未知錯誤");
             break;
         }
+        this.$emit()
       }
       this.answer.forEach(item => {
         delete item.type;

@@ -39,9 +39,8 @@ export default {
 .lesson
   Menu.leftBar(:active-name="this.theSectionId", @on-select="toSection")
     .MenuIteGroup(v-for="(item, index) in section", :key="index")
-      MenuItem(:name="item.sectionId")
-        | {{ index + 1 }}.{{ item.title }}
-
+      MenuItem(:name="item.sectionId" )
+        | {{ index + 1 }}. {{ item.title }}
   router-view.content
 </template>
 <style lang="scss" scoped>
