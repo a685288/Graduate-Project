@@ -73,7 +73,7 @@ export default {
       this.$router.push(
         "/dashboard/course/" +
           this.theClassId +
-          "/lesson/exam/" +
+          "/lesson/exam0/" +
           this.classInfo.sections[0].sectionId
       );
     },

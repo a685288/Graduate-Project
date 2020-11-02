@@ -80,11 +80,19 @@ export default {
       }
     },
     search() {
-      console.log("search() this.value---" + this.value);
-      getNotOpenClass(this.value).then(res => {
-        console.log("ClassID" + res.data);
-        this.$router.push("course/" + res.data.data.classId);
-      });
+      getNotOpenClass(this.value)
+        .then(res => {
+          this.$router.push("/dashboard/course/" + res.data.data.classId);
+          if (res.data.status.code === 0) {
+            this.$Message.success("搜尋課程成功");
+          } else {
+            this.$Message.error("查詢不到此課程");
+          }
+        })
+        .catch(err => {
+          this.$Message.error(`err: ${err}`);
+          console.log(err);
+        });
     },
     signOut() {
       postSignOut().then(res => {
