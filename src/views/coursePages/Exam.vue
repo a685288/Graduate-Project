@@ -18,14 +18,20 @@ export default {
       check: false,
       theClassId: this.$route.params.classId,
       theSectionId: this.$route.params.sectionId,
-      answer: [{}, {}, {}, {}, {}],
+      theSectionIndex: this.$route.params.sectionIndex,
       section: {},
-      correctAns: [],
-      array: []
+      answer: [{}, {}, {}, {}, {}], //學生答案
+      correctAns: [], //正確答案
+      array: [],
+      countScore:Number,
+      userScore: Number,
+      isModalShow: false,
+      isCorrectAnsShow:false
     };
   },
   beforeRouteUpdate(to, from, next) {
     this.theSectionId = to.params.sectionId;
+    this.theSectionIndex = to.params.sectionIndex;
     next(this.getData());
   },
   mounted() {
@@ -59,32 +65,32 @@ export default {
       });
     },
     score() {
+      console.log('學生答案'+this.answer)
+      this.countScore = 0;
       for (let x = 0; x < 5; x++) {
         let check = 1;
         switch (this.answer[x].type) {
           case 0: //單選
             if (this.correctAns[x].answer[0] === this.answer[x].selects[0]) {
               this.answer[x].isTrue = 1;
+              this.countScore++;
             } else {
               this.answer[x].isTrue = 0;
             }
             break;
           case 1: //多選
-            if (
-              this.correctAns[x].answer.length === this.answer[x].selects.length
-            ) {
+            if (this.correctAns[x].answer.length === this.answer[x].selects.length) {
               for (let i = 0; i < this.correctAns[x].answer.length; i++) {
-                if (
-                  !this.correctAns[x].answer.includes(this.answer[x].selects[i])
-                ) {
-                  check = 0;
+                if (!this.correctAns[x].answer.includes(this.answer[x].selects[i])) {
+                  check = 0;//錯
                   break;
                 }
               }
             } else {
-              check = 0;
+              check = 0;//錯
             }
             this.answer[x].isTrue = check;
+            if (check === 1) {this.countScore++;}
             check = 1;
             break;
           case 2: //簡答
@@ -98,18 +104,23 @@ export default {
       this.answer.forEach(item => {
         delete item.type;
       });
-      console.log("this.answer---" + this.answer);
+      this.userScore=this.countScore;
+      this.countScore=0
       postExamRecord({
         classId: this.theClassId,
         sectionId: this.theSectionId,
         records: this.answer,
-        step: 1
+        step: this.theSectionIndex
       });
+      this.isModalShow = true;
+      this.isCorrectAnsShow=true;
     },
     exam() {
       this.show = true;
       this.btnshow = false;
       this.check = true;
+      this.isModalShow = false;
+      this.isCorrectAnsShow=false;
     }
   }
 };
@@ -118,11 +129,14 @@ export default {
 div
   .video
     h1 {{ this.section.title }}
-    iframe.youtube(
-      :src="'https://www.youtube.com/embed/' + this.section.url",
-      frameborder="0",
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    )
+    .txtDiv(v-if="this.section.type === 0")
+      p {{ this.section.url }}
+    .youtubeDiv(v-if="this.section.type === 1")
+      iframe.youtube(
+        :src="'https://www.youtube.com/embed/' + this.section.url",
+        frameborder="0",
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      )
     br
     Button.startbtn(
       type="primary",
@@ -146,6 +160,10 @@ div
         v-on:emitAns="ans"
       )
     Button(type="primary", shape="circle", v-if="check", @click="submit") 送出答案
+    Modal(v-model="isModalShow", title="你的作答")
+      h1 答對{{ this.userScore }}題
+      Divider 
+      p 簡答題不計分
 </template>
 <style lang="scss" scoped>
 div {
@@ -176,6 +194,7 @@ div {
     button {
       margin: 10px;
     }
+    .correctAns{color: #C00000;}
     .ques {
       width: 100%;
       margin: 20px 0px;

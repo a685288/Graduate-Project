@@ -1,17 +1,12 @@
 <script>
 import { getSectionTitle } from "@/apis/exam.js";
-
-// import Exam from "../coursePages/Exam.vue";
 export default {
   name: "lesson",
-  // components: {
-  //   Exam
-  // },
   data() {
     return {
       theClassId: "",
       theSectionId: "",
-      section: []
+      section: [],
     };
   },
   mounted() {
@@ -26,10 +21,9 @@ export default {
     });
   },
   methods: {
-    toSection(id) {
-      console.log(id);
+    toSection(n) {
       this.$router.push(
-        "/dashboard/course/" + this.theClassId + "/lesson/exam/" + id
+        "/dashboard/course/" + this.theClassId + "/lesson/exam"+(n+1) +"/"+ this.section[n].sectionId
       );
     }
   }
@@ -39,9 +33,8 @@ export default {
 .lesson
   Menu.leftBar(:active-name="this.theSectionId", @on-select="toSection")
     .MenuIteGroup(v-for="(item, index) in section", :key="index")
-      MenuItem(:name="item.sectionId")
-        | {{ index + 1 }}.{{ item.title }}
-
+      MenuItem(:name="index")
+        | {{ index + 1 }}. {{ item.title }}
   router-view.content
 </template>
 <style lang="scss" scoped>

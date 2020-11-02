@@ -8,15 +8,8 @@ export default {
       title: String
     }
   },
-  data(){
-    return{
-    }
-  },
-  methods:{
-    toExam(id){
-      // this.theClassId = this.$route.params.classId;
-      // console.log("course-this.classId---" + this.theClassId);
-      // this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + id);
+  methods: {
+    toExam(id) {
       this.$emit("toExam", id);
     }
   }
@@ -24,27 +17,29 @@ export default {
 </script>
 <template lang="pug">
 .lessonTopic
-  h1 課程內容
-  .div
-    .lessons(v-for="(item, index) in section",:key="index")
-      Card.card(@click.native="toExam(item.sectionId)") {{index+1}}. {{item.title}}
+  .div(v-if="this.section == ''")
+    Alert.alert(type="warning", show-icon="")
+      | 老師還未新增課程喔~~
+      p.p(slot="desc") 快去提醒老師吧
+  .div(v-else) 
+    h1 章節內容
+    .section(v-for="(item, index) in section", :key="index")
+      Card.card(@click.native="toExam(item.sectionId)") {{ index + 1 }}. {{ item.title }}
         //- Icon.icon(type="md-arrow-dropright-circle") 
-        
 </template>
 <style lang='scss' scoped>
-.lessonTopic{
+.lessonTopic {
   padding: 1%;
-  height: 100%;
-  h1 {
-      line-height: 120%;
-    }
   .div {
     height: 80%;
     padding: 1% 15%;
     margin: auto;
     display: flex;
     justify-content: center;
-    flex-direction: column;  
+    flex-direction: column;
+    h1 {
+      line-height: 120%;
+    }
     .card {
       flex: 1;
       font-size: 20px;
@@ -52,6 +47,15 @@ export default {
       padding: 0% 25%;
       font-weight: bold;
       margin: 10px 0px;
+    }
+    .alert{
+      width: 50%;
+      margin: 0px auto;
+      font-size: 20px;
+      height: 50%;
+    }
+    .p{
+      text-align: center;
     }
   }
 }

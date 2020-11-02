@@ -16,10 +16,10 @@
       .intro
         h3 {{ classInfo.intro }}
       .button
-        Button.btn(v-if="!status.isAdd" @click="addClass()") 加入課程
-        Button.btn(v-else @click="start()") 開始上課
+        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加入課程
+        Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
-    lessonTopic(:section="this.classInfo.sections" @toExam="toSection")
+    lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
 </template>
 <script>
 import lessonTopic from "@/components/content/lessonTopic.vue";
@@ -36,24 +36,11 @@ export default {
     return {
       topic,
       teacher,
-      status:{
-        isAdd: true
+      status: {
+        isAdd: false
       },
       theClassId: "",
-      classInfo: {
-        classId: "",
-        createAt: "",
-        imgUrl: "",
-        intro: "",
-        isOpen: "",
-        isPublic: "",
-        sectionNum:'',
-        sections: [
-          { sectionId: "", title: "" },
-        ],
-        teacherName: "",
-        topic: ""
-      }
+      classInfo: {}
     };
   },
   mounted() {
@@ -66,26 +53,36 @@ export default {
     addClass() {
       putAddClass({
         classId: this.theClassId
-        }).then(res => {
-          if(res.data.status.code === 0){
+      })
+        .then(res => {
+          if (res.data.status.code === 0) {
             this.$Message.success("加選課程成功");
-          }else if (res.data.status.code === 21107){
+            this.classInfo.isAdd=1
+          } else if (res.data.status.code === 21107) {
             this.$Message.success("重複加選成功");
-            this.status.isAdd = true
+            this.classInfo.isAdd=1
           }
         })
         .catch(err => {
-          this.$Message.error;(`err: ${err}`);
+          this.$Message.error;
+          `err: ${err}`;
           console.log(err);
         });
     },
     start() {
-      this.$router.push("/dashboard/course/"+this.theClassId+"/lesson/exam/" + this.classInfo.sections[0].sectionId);
+      this.$router.push(
+        "/dashboard/course/" +
+          this.theClassId +
+          "/lesson/exam0/" +
+          this.classInfo.sections[0].sectionId
+      );
     },
-    toSection(sectionId){
-      if(this.status.isAdd){
-        this.$router.push("/dashboard/course/" + this.theClassId+"/lesson/exam/" + sectionId);
-      }else{
+    toSection(sectionId) {
+      if (this.classInfo.isAdd===1) {
+        this.$router.push(
+          "/dashboard/course/" + this.theClassId + "/lesson/exam/" + sectionId
+        );
+      } else {
         this.$Message.error("請先加入課程喔！");
       }
     }
@@ -103,23 +100,23 @@ export default {
     .left {
       padding: 20px 50px;
       flex: 3;
-      .classImg{
+      .classImg {
         max-width: 600px;
         max-height: 400px;
       }
-      .detail{
+      .detail {
         font-size: 20px;
         text-align: left;
         max-width: 70%;
         margin: 0px auto;
         padding: 0px 10px;
-        img{
+        img {
           width: 25px;
           margin: 5px;
         }
       }
     }
-    .middle{
+    .middle {
       flex: 0 0;
       flex-basis: 1px;
       background-color: black;
@@ -130,18 +127,18 @@ export default {
       display: flex;
       flex-direction: column;
       padding: 20px 50px;
-      .title{
+      .title {
         font-size: 25px;
       }
-      .intro{
+      .intro {
         flex: 10;
         font-size: 18px;
         margin: 10px auto;
         text-align: left;
       }
-      .button{
+      .button {
         flex: 1;
-        flex-basis:80px;
+        flex-basis: 80px;
         .btn {
           height: 70px;
           color: #494949 !important;
@@ -166,7 +163,7 @@ export default {
       }
     }
   }
-  .sectionsArea{
+  .sectionsArea {
     flex: 1;
     background-color: lightgray;
   }
@@ -238,5 +235,4 @@ export default {
 //     }
 //   }
 // }
-
 </style>

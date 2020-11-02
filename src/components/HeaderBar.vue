@@ -1,37 +1,35 @@
 <template lang="pug">
 .Header
   .Menu
-    .TitleBar
-      Menu.left(
-        mode="horizontal",
-        :theme="theme",
-        active-name="2",
-        @on-select="route"
-      )
-      
-        //- MenuItem
-        MenuItem(name="1")
-          img(:src="logo")
-        MenuItem(name="1")
-          | {{ barItems.userClass }}
-        MenuItem(name="2")
-          Icon(type="ios-paper")
-          | {{ barItems.onlineClass }}
-        MenuItem(name="3")
-          | {{ barItems.setting }}
-        Submenu(name="4")
-          MenuGroup(title="主題")
-            MenuItem(name="4-1") 客家白
-            MenuItem(name="4-2") 尼哥黑
-            MenuItem(name="4-3") 尼多藍
-        .right
-          Input.right(
-            search,
-            enter-button,
-            @on-search="search()",
-            v-model="value",
-            placeholder="請輸入課程邀請碼"
-          )
+    Menu.left(
+      mode="horizontal",
+      :theme="theme",
+      active-name="2",
+      @on-select="route"
+    )
+      //- MenuItem
+      MenuItem(name="1")
+        img(:src="logo")
+      MenuItem(name="1")
+        | {{ barItems.userClass }}
+      MenuItem(name="2")
+        Icon(type="ios-paper")
+        | {{ barItems.onlineClass }}
+      MenuItem(name="3")
+        | {{ barItems.setting }}
+      Submenu(name="4")
+        MenuGroup(title="主題")
+          MenuItem(name="4-1") 客家白
+          MenuItem(name="4-2") 尼哥黑
+          MenuItem(name="4-3") 尼多藍
+      .right
+        Input.right(
+          search,
+          enter-button,
+          @on-search="search()",
+          v-model="value",
+          placeholder="請輸入課程邀請碼"
+        )
 </template>
 
 <script>
@@ -82,11 +80,19 @@ export default {
       }
     },
     search() {
-      console.log("search() this.value---" + this.value);
-      getNotOpenClass(this.value).then(res => {
-        console.log("ClassID" + res.data);
-        this.$router.push("course/" + res.data.data.classId);
-      });
+      getNotOpenClass(this.value)
+        .then(res => {
+          this.$router.push("/dashboard/course/" + res.data.data.classId);
+          if (res.data.status.code === 0) {
+            this.$Message.success("搜尋課程成功");
+          } else {
+            this.$Message.error("查詢不到此課程");
+          }
+        })
+        .catch(err => {
+          this.$Message.error(`err: ${err}`);
+          console.log(err);
+        });
     },
     signOut() {
       postSignOut().then(res => {
@@ -111,6 +117,7 @@ export default {
   }
   .Menu {
     flex: 1;
+    height: 60px;
     .right {
       float: right;
       padding: 8px;
