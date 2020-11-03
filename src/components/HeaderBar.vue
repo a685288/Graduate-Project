@@ -8,7 +8,7 @@
       @on-select="route"
     )
       //- MenuItem
-      MenuItem(name="1")
+      MenuItem(name="0")
         img(:src="logo")
       MenuItem(name="1")
         | {{ barItems.userClass }}
@@ -17,7 +17,7 @@
         | {{ barItems.onlineClass }}
       MenuItem(name="3")
         | {{ barItems.setting }}
-      Submenu(name="4")
+      Submenu(name="4" v-if="false")
         MenuGroup(title="主題")
           MenuItem(name="4-1") 客家白
           MenuItem(name="4-2") 尼哥黑
@@ -41,7 +41,7 @@ export default {
   name: "TitleBar",
   data() {
     return {
-      theme: "primary",
+      theme: "light",
       logo,
       // theme: "light",
       value: "",
@@ -55,6 +55,9 @@ export default {
   methods: {
     route(n) {
       switch (n) {
+        case `0`:
+          this.$router.push("/dashboard/myclass");
+          break;
         case `1`:
           this.$router.push("/dashboard/myclass");
           break;
@@ -118,6 +121,10 @@ export default {
   .Menu {
     flex: 1;
     height: 60px;
+    .left {
+      color: white;
+      background-color: #e6f7ff;
+    }
     .right {
       float: right;
       padding: 8px;
