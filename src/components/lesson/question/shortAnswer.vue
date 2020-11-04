@@ -16,6 +16,8 @@ export default {
       },
       
     };
+  },mounted(){
+    console.log('this.question'+this.question)
   },
   methods: {
     ans() {

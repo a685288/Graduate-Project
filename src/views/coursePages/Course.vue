@@ -14,9 +14,9 @@
       .title
         h1 {{ classInfo.topic }}
       .intro
-        h3 {{ classInfo.intro }}
+        p {{ classInfo.intro }}
       .button
-        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加入課程
+        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
         Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
     lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
@@ -73,7 +73,7 @@ export default {
       this.$router.push(
         "/dashboard/course/" +
           this.theClassId +
-          "/lesson/exam0/" +
+          "/lesson/exam1/" +
           this.classInfo.sections[0].sectionId
       );
     },

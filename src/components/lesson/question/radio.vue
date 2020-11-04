@@ -3,8 +3,7 @@
 export default {
   name: "radio",
   props: {
-    question: {
-    }
+    question: {type: Object}
   },
   data() {
     return {
@@ -25,11 +24,9 @@ export default {
 </script>
 <template lang="pug">
 .div
-  RadioGroup(vertical, v-model="userAns.selects[0]", @on-change="ans()") {{ question.content }}
-    Radio(label="0") {{ question.select[0] }}
-    Radio(label="1") {{ question.select[1] }}
-    Radio(label="2") {{ question.select[2] }}
-    Radio(label="3") {{ question.select[3] }}
+  RadioGroup(vertical, v-model="userAns.selects[0]", @on-change="ans()") 
+    h3 {{ question.content }}
+    Radio(v-for='(item,index) in question.select' :key='index' :label="index") {{item}}
 </template>
 <style lang="scss" scoped>
-</style> 
+</style>

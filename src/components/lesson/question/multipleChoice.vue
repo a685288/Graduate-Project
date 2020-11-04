@@ -3,13 +3,14 @@
 export default {
   props: {
     question: {
+      questionId:String,
       type: Object
     }
   },
   data() {
     return {
       userAns: {
-        questionId: this.question.questionId,
+        questionId: String,
         type: this.question.type,
         sort: this.question.sort,
         selects: []
@@ -18,19 +19,16 @@ export default {
   },
   methods: {
     ans() {
+      this.userAns.questionId=this.question.questionId
       this.$emit("emitAns", this.userAns);
     }
   }
 };
 </script>
 <template lang="pug">
-.div 
-  CheckboxGroup(v-model="userAns.selects", @on-change="ans()") {{ question.content }}
-    br
-    Checkbox.Checkbox(label="0") {{ question.select[0] }}
-    Checkbox.Checkbox(label="1") {{ question.select[1] }}
-    Checkbox.Checkbox(label="2") {{ question.select[2] }}
-    Checkbox.Checkbox(label="3") {{ question.select[3] }}
+div
+  CheckboxGroup(v-model="userAns.selects", @on-change="ans()" ) {{ question.content }}
+    Checkbox.Checkbox(v-for='(item,index) in question.select' :key='index' :label="index") {{item}}
 </template>
 <style lang="scss" scoped>
 .Checkbox {

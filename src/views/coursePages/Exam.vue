@@ -20,13 +20,13 @@ export default {
       theSectionId: this.$route.params.sectionId,
       theSectionIndex: this.$route.params.sectionIndex,
       section: {},
-      answer: [{}, {}, {}, {}, {}], //學生答案
+      answer: [], //學生答案
       correctAns: [], //正確答案
       array: [],
-      countScore:Number,
+      countScore: Number,
       userScore: Number,
       isModalShow: false,
-      isCorrectAnsShow:false
+      isCorrectAnsShow: false
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -42,85 +42,135 @@ export default {
       getExamContent(this.theSectionId).then(res => {
         if (res.data.status.code === 0) {
           this.section = res.data.data;
-          console.log("this.section---" + this.section.title);
         } else {
           this.$Message.error(`err:${res.data.status.code}`);
         }
         this.$forceUpdate();
       });
     },
+    //拿到學生答案，比對sort
     ans(userAns) {
-      this.answer[userAns.sort].questionId = userAns.questionId;
-      this.answer[userAns.sort].selects = userAns.selects;
-      this.answer[userAns.sort].type = userAns.type;
-    },
-    submit() {
-      submitExamAns(this.theSectionId).then(res => {
-        if (res.data.status.code === 0) {
-          this.correctAns = res.data.data;
-        } else {
-          this.$Message.error(`err:${res.data.status.code}`);
+      const rule = element => element.sort === userAns.sort;
+      let index = this.answer.findIndex(rule);
+      for(let n=0; n < userAns.selects.length; n++)
+        {
+          let str=userAns.selects[n].toString()
+          userAns.selects[n]=str
         }
-        this.score();
-      });
+      if (index === -1) {
+        
+        console.log(userAns)
+        this.answer.push(userAns);
+        console.log(this.answer);
+      } else {
+        this.answer[index] = {};
+        this.answer[index] = userAns;
+      }
     },
-    score() {
-      console.log('學生答案'+this.answer)
-      this.countScore = 0;
-      for (let x = 0; x < 5; x++) {
-        let check = 1;
-        switch (this.answer[x].type) {
-          case 0: //單選
-            if (this.correctAns[x].answer[0] === this.answer[x].selects[0]) {
-              this.answer[x].isTrue = 1;
-              this.countScore++;
-            } else {
-              this.answer[x].isTrue = 0;
-            }
-            break;
-          case 1: //多選
-            if (this.correctAns[x].answer.length === this.answer[x].selects.length) {
-              for (let i = 0; i < this.correctAns[x].answer.length; i++) {
-                if (!this.correctAns[x].answer.includes(this.answer[x].selects[i])) {
-                  check = 0;//錯
-                  break;
-                }
+    //拿正確答案
+    submit() {
+      submitExamAns(this.theSectionId)
+        .then(res => {
+          if (res.data.status.code === 0) {
+            this.correctAns = res.data.data;
+          } else {
+            this.$Message.error(`err:${res.data.status.code}`);
+          }
+          this.score();
+        })
+        .catch(err => {
+          this.$Message.error(`err: ${err}`);
+          console.log(err);
+        });
+    },
+    //對答案
+    async score() {
+      console.log(this.answer);
+      console.log(this.correctAns);
+      this.countScore = 0;//學生分數
+      for (let n = 0; n < this.answer.length; n++) {
+        let check = 1; //多選對答使用的參數
+        const rule = element => element.sort === this.answer[n].sort;
+        let x = this.correctAns.findIndex(rule);
+        console.log("x：" + x);
+        if (x != -1) {
+          //有資料
+          this.answer[x].isTrue = 0;
+          // console.log(this.answer[x]);
+          switch (this.answer[x].type) {
+            case 0: //單選
+              if (this.correctAns[x].answer[0] === this.answer[x].selects[0]) {
+                this.answer[x].isTrue = 1;
+                this.countScore++;
+              } else {
+                this.answer[x].isTrue = 0;
               }
-            } else {
-              check = 0;//錯
-            }
-            this.answer[x].isTrue = check;
-            if (check === 1) {this.countScore++;}
-            check = 1;
-            break;
-          case 2: //簡答
-            this.answer[x].isTrue = 1;
-            break;
-          default:
-            console.log("未知錯誤");
-            break;
+              break;
+            case 1: //多選
+              if (
+                this.correctAns[x].answer.length ===this.answer[x].selects.length
+              ) {
+                for (let i = 0; i < this.correctAns[x].answer.length; i++) {
+                  if (
+                    !this.correctAns[x].answer.includes(
+                      this.answer[x].selects[i]
+                    )
+                  ) {
+                    check = 0; //錯
+                    break;
+                  }
+                }
+              } else {
+                check = 0; //錯
+              }
+              this.answer[x].isTrue = check;
+              if (check === 1) {
+                this.countScore++;
+              }
+              check = 1;
+              break;
+            case 2: //簡答
+              this.answer[x].isTrue = 1;
+              break;
+            default:
+              console.log("未知錯誤");
+              break;
+              
+          }
         }
       }
+      await this.del();
+      await this.post();
+    },
+    del() {
+      console.log("del()");
       this.answer.forEach(item => {
         delete item.type;
       });
-      this.userScore=this.countScore;
-      this.countScore=0
+      this.answer.forEach(item => {
+        delete item.sort;
+      });
+    },
+    post() {
+      console.log("post()");
+      this.userScore = this.countScore;
+      console.log("學生分數" + this.userScore);
+      this.countScore = 0;
       postExamRecord({
         classId: this.theClassId,
         sectionId: this.theSectionId,
         records: this.answer,
-        step: this.theSectionIndex
+        step: parseInt(this.theSectionIndex)
       });
       this.isModalShow = true;
-      this.isCorrectAnsShow=true;
+      this.isCorrectAnsShow = true;
     },
     exam() {
       this.show = true;
       this.btnshow = false;
       this.check = true;
       this.isModalShow = false;
-      this.isCorrectAnsShow=false;
+      this.isCorrectAnsShow = false;
     }
   }
 };
@@ -194,7 +244,9 @@ div {
     button {
       margin: 10px;
     }
-    .correctAns{color: #C00000;}
+    .correctAns {
+      color: #c00000;
+    }
     .ques {
       width: 100%;
       margin: 20px 0px;
