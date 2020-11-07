@@ -150,9 +150,7 @@ export default {
       });
     },
     post() {
-      console.log("post()");
       this.userScore = this.countScore;
-      console.log("學生分數" + this.userScore);
       this.countScore = 0;
       postExamRecord({
         classId: this.theClassId,
