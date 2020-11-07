@@ -32,7 +32,7 @@ export const getExamContent = (sectionId) =>
  * GET
  * /question/answer/:sectionId
  */
-export const submitExamAns = (sectionId) =>
+export const getExamAns = (sectionId) =>
   req('get', `/question/answer/${sectionId}`);
 
 /**建立考試進度&課程進度

@@ -3,7 +3,6 @@
 export default {
   props: {
     question: {
-      questionId:String,
       type: Object
     }
   },
@@ -19,7 +18,7 @@ export default {
   },
   methods: {
     ans() {
-      this.userAns.questionId=this.question.questionId
+      this.userAns.questionId = this.question.questionId;
       this.$emit("emitAns", this.userAns);
     }
   }

@@ -3,7 +3,9 @@
 export default {
   name: "radio",
   props: {
-    question: {type: Object}
+    question: { 
+      type: Object 
+    }
   },
   data() {
     return {

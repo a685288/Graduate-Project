@@ -83,7 +83,7 @@ export default {
           "/dashboard/course/" + this.theClassId + "/lesson/exam/" + sectionId
         );
       } else {
-        this.$Message.error("請先加入課程喔！");
+        this.$Message.error("請先加選課程喔！");
       }
     }
   }

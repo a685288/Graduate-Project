@@ -3,7 +3,7 @@
 import radio from "@/components/lesson/question/radio.vue";
 import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
 import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
-import { getExamContent, submitExamAns, postExamRecord } from "@/apis/exam.js";
+import { getExamContent, getExamAns, postExamRecord } from "@/apis/exam.js";
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
       theSectionId: this.$route.params.sectionId,
       theSectionIndex: this.$route.params.sectionIndex,
       section: {},
-      answer: [], //學生答案
+      studentAns: [], //學生答案
       correctAns: [], //正確答案
       array: [],
       countScore: Number,
@@ -48,28 +48,20 @@ export default {
         this.$forceUpdate();
       });
     },
-    //拿到學生答案，比對sort
+    //拿到emit學生答案，比對sort
     ans(userAns) {
       const rule = element => element.sort === userAns.sort;
-      let index = this.answer.findIndex(rule);
-      for(let n=0; n < userAns.selects.length; n++)
-        {
-          let str=userAns.selects[n].toString()
-          userAns.selects[n]=str
-        }
+      let index = this.studentAns.findIndex(rule);
       if (index === -1) {
-        
-        console.log(userAns)
-        this.answer.push(userAns);
-        console.log(this.answer);
+        this.studentAns.push(userAns);
       } else {
-        this.answer[index] = {};
-        this.answer[index] = userAns;
+        this.studentAns[index] = {};
+        this.studentAns[index] = userAns;
       }
     },
     //拿正確答案
     submit() {
-      submitExamAns(this.theSectionId)
+      getExamAns(this.theSectionId)
         .then(res => {
           if (res.data.status.code === 0) {
             this.correctAns = res.data.data;
@@ -85,57 +77,64 @@ export default {
     },
     //對答案
     async score() {
-      console.log(this.answer);
-      console.log(this.correctAns);
-      this.countScore = 0;//學生分數
-      for (let n = 0; n < this.answer.length; n++) {
-        let check = 1; //多選對答使用的參數
-        const rule = element => element.sort === this.answer[n].sort;
+      // 將select ans to string
+      for (let n = 0; n < this.studentAns.length; n++) {
+        for (let m = 0; m < this.studentAns[n].selects.length; m++) {
+          let str = this.studentAns[n].selects[m].toString();
+          this.studentAns[n].selects[m] = str;
+        }
+        this.studentAns[n].selects = Array.from(this.studentAns[n].selects);
+      }
+      this.countScore = 0; //學生分數
+      for (let n = 0; n < this.studentAns.length; n++) {
+        let type2Ans = 1; //多選對答使用的參數
+        const rule = element => element.sort === this.studentAns[n].sort;
         let x = this.correctAns.findIndex(rule);
-        console.log("x：" + x);
         if (x != -1) {
           //有資料
-          this.answer[x].isTrue = 0;
-          // console.log(this.answer[x]);
-          switch (this.answer[x].type) {
+          this.studentAns[x].isTrue = 0;
+          // console.log(this.studentAns[x]);
+          switch (this.studentAns[x].type) {
             case 0: //單選
-              if (this.correctAns[x].answer[0] === this.answer[x].selects[0]) {
-                this.answer[x].isTrue = 1;
+              if (
+                this.correctAns[x].answer[0] === this.studentAns[x].selects[0]
+              ) {
+                this.studentAns[x].isTrue = 1;
                 this.countScore++;
               } else {
-                this.answer[x].isTrue = 0;
+                this.studentAns[x].isTrue = 0;
               }
               break;
             case 1: //多選
               if (
-                this.correctAns[x].answer.length ===this.answer[x].selects.length
+                this.correctAns[x].answer.length ===
+                this.studentAns[x].selects.length
               ) {
                 for (let i = 0; i < this.correctAns[x].answer.length; i++) {
                   if (
                     !this.correctAns[x].answer.includes(
-                      this.answer[x].selects[i]
+                      this.studentAns[x].selects[i]
                     )
                   ) {
-                    check = 0; //錯
+                    type2Ans = 0; //錯
                     break;
                   }
                 }
               } else {
-                check = 0; //錯
+                type2Ans = 0; //錯
               }
-              this.answer[x].isTrue = check;
-              if (check === 1) {
+              this.studentAns[x].isTrue = type2Ans;
+              if (type2Ans === 1) {
                 this.countScore++;
               }
-              check = 1;
+              type2Ans = 1;
               break;
             case 2: //簡答
-              this.answer[x].isTrue = 1;
+              this.studentAns[x].isTrue = 1;
               break;
             default:
               console.log("未知錯誤");
               break;
-              
           }
         }
       }
@@ -143,11 +142,10 @@ export default {
       await this.post();
     },
     del() {
-      console.log("del()");
-      this.answer.forEach(item => {
+      this.studentAns.forEach(item => {
         delete item.type;
       });
-      this.answer.forEach(item => {
+      this.studentAns.forEach(item => {
         delete item.sort;
       });
     },
@@ -159,13 +157,13 @@ export default {
       postExamRecord({
         classId: this.theClassId,
         sectionId: this.theSectionId,
-        records: this.answer,
+        records: this.studentAns,
         step: parseInt(this.theSectionIndex)
       });
       this.isModalShow = true;
       this.isCorrectAnsShow = true;
     },
-    exam() {
+    showExam() {
       this.show = true;
       this.btnshow = false;
       this.check = true;
@@ -191,7 +189,7 @@ div
     Button.startbtn(
       type="primary",
       shape="circle",
-      @click="exam()",
+      @click="showExam()",
       v-if="this.btnshow"
     ) 開始測驗
   .exam(v-if="this.show")
