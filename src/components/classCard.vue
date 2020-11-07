@@ -16,16 +16,7 @@ export default {
       topic,
       teacher
     };
-  },
-  //   ClassID: "",
-  //   createAt: "",
-  //   imgUrl: "",
-  //   intro: "",
-  //   isOpen: "",
-  //   isPublic: "",
-  //   sectionNum: "",
-  //   teacherName: "",
-  //   topic: ""
+  }
 };
 </script>
 <template lang="pug">
@@ -41,7 +32,7 @@ Card.card
     .teacher
       img(:src="teacher") 
       | 老師：{{ classInfo.teacherName }} 
-  hr
+  hr(noshade)
   .content {{ classInfo.intro }}
 </template>
 <style lang="scss" scoped>
@@ -52,7 +43,7 @@ Card.card
   height: 350px;
   flex-wrap: wrap;
   margin: 10px;
-  .topcon{
+  .topcon {
     flex: 3;
     display: flex;
     flex-direction: column;
@@ -72,12 +63,21 @@ Card.card
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 5px;
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .topics, .teacher {
+    .topics,
+    .teacher {
       flex: 1;
       line-height: 18px;
       font-size: 14px;
       text-align: left;
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       img {
         width: 18px;
         vertical-align: middle;
@@ -86,19 +86,24 @@ Card.card
     }
   }
   hr {
-    size: 1px;
-    color: #e8eaec;
+    margin: 1%;
+    height: 0px;
+    border-top: 1px solid #cfd1d3;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
   }
-  .content{
+  .content {
     flex: 1;
     width: 200px;
-    height: 100px;
+    height: 110px;
     margin: auto;
     padding: 5px;
     display: -webkit-box;
     -webkit-line-clamp: 5; //行數
     -webkit-box-orient: vertical;
     white-space: normal;
+    overflow: hidden;
   }
 }
 </style>
