@@ -129,6 +129,11 @@ export default {
       padding: 20px 50px;
       .title {
         font-size: 25px;
+        display: -webkit-box;
+    -webkit-line-clamp: 2; //行數
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
       }
       .intro {
         flex: 10;

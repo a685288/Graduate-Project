@@ -3,7 +3,12 @@
 import radio from "@/components/lesson/question/radio.vue";
 import multipleChoice from "@/components/lesson/question/multipleChoice.vue";
 import shortAnswer from "@/components/lesson/question/shortAnswer.vue";
-import { getExamContent, getExamAns, postExamRecord } from "@/apis/exam.js";
+import {
+  getExamContent,
+  getExamAns,
+  postExamRecord,
+  getSectionRecord
+} from "@/apis/exam.js";
 
 export default {
   components: {
@@ -19,14 +24,15 @@ export default {
       theClassId: this.$route.params.classId,
       theSectionId: this.$route.params.sectionId,
       theSectionIndex: this.$route.params.sectionIndex,
-      section: {},
+      section: {}, //課程資料
+      records: {}, //紀錄資料
+      storage: {}, //暫存
       studentAns: [], //學生答案
       correctAns: [], //正確答案
-      array: [],
       countScore: Number,
       userScore: Number,
-      isModalShow: false,
-      isCorrectAnsShow: false
+      // isModalShow: false,
+      recordsData: false
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -38,15 +44,111 @@ export default {
     this.getData();
   },
   methods: {
+    init() {
+      this.studentAns = [];
+      this.correctAns = [];
+      this.countScore = 0;
+      this.userScore = 0;
+      this.storage = {};
+      this.section = {};
+      this.records = {};
+      this.show = false;
+      this.btnshow = true;
+      this.check = false;
+    },
     getData() {
+      this.init();
+      getSectionRecord(this.theSectionId).then(res => {
+        if (res.data.status.code === 0) {
+          this.recordsData = true;
+          this.records = res.data.data.records;
+          this.getExamContentFun();
+          this.writtenExam();
+        } else {
+          this.recordsData = false;
+          console.log("未做過此章節");
+          this.getExamContentFun();
+        }
+        this.$forceUpdate();
+      });
+    },
+    //Exam 畫面內容
+    getExamContentFun() {
       getExamContent(this.theSectionId).then(res => {
         if (res.data.status.code === 0) {
-          this.section = res.data.data;
+          this.storage = res.data.data;
+          //將records資料放進 this.storage 中
+          if (this.recordsData) {
+            this.submit();
+            for (let n = 0; n < this.storage.question.length; n++) {
+              for (let m = 0; m < this.records.length; m++) {
+                if (
+                  this.records[m].questionId ===
+                  this.storage.question[n].questionId
+                ) {
+                  this.storage.question[n].records = this.records[m];
+                }
+              }
+            }
+          } else {
+            this.section = this.storage;
+            console.log("未做過此章節");
+          }
         } else {
           this.$Message.error(`err:${res.data.status.code}`);
         }
         this.$forceUpdate();
       });
+    },
+    checkPush() {
+      this.$Modal.confirm({
+        title: "送出後，答案無法更改",
+        content: "<p>直接送出，請按送出</p><p>如要更改，請按取消送出</p>",
+        okText: "送出",
+        cancelText: "取消送出",
+        onOk: () => {
+          this.submit();
+        },
+        onCancel: () => {
+          console.log(this.studentAns);
+        }
+      });
+    },
+    //拿正確答案
+    submit() {
+      console.log("拿正確答案");
+      getExamAns(this.theSectionId)
+        .then(res => {
+          if (res.data.status.code === 0) {
+            this.correctAns = res.data.data;
+            if (this.recordsData) {
+              for (let n = 0; n < this.storage.question.length; n++) {
+                for (let m = 0; m < this.correctAns.length; m++) {
+                  if (
+                    this.correctAns[m].sort === this.storage.question[n].sort
+                  ) {
+                    this.storage.question[n].answer = this.correctAns[m].answer;
+                  }
+                }
+              }
+              this.Unify();
+            } else {
+      console.log('else')
+
+              this.score();
+            }
+          } else {
+            this.$Message.error(`err:${res.data.status.code}`);
+          }
+        })
+        .catch(err => {
+          this.$Message.error(`err: ${err}`);
+          console.log(err);
+        });
+    },
+    //統整渲染畫面資料
+    Unify() {
+      this.section = this.storage;
     },
     //拿到emit學生答案，比對sort
     ans(userAns) {
@@ -59,24 +161,9 @@ export default {
         this.studentAns[index] = userAns;
       }
     },
-    //拿正確答案
-    submit() {
-      getExamAns(this.theSectionId)
-        .then(res => {
-          if (res.data.status.code === 0) {
-            this.correctAns = res.data.data;
-          } else {
-            this.$Message.error(`err:${res.data.status.code}`);
-          }
-          this.score();
-        })
-        .catch(err => {
-          this.$Message.error(`err: ${err}`);
-          console.log(err);
-        });
-    },
     //對答案
     async score() {
+      console.log('score()')
       // 將select ans to string
       for (let n = 0; n < this.studentAns.length; n++) {
         for (let m = 0; m < this.studentAns[n].selects.length; m++) {
@@ -89,11 +176,11 @@ export default {
       for (let n = 0; n < this.studentAns.length; n++) {
         let type2Ans = 1; //多選對答使用的參數
         const rule = element => element.sort === this.studentAns[n].sort;
+        console.log(this.studentAns)
         let x = this.correctAns.findIndex(rule);
         if (x != -1) {
           //有資料
           this.studentAns[x].isTrue = 0;
-          // console.log(this.studentAns[x]);
           switch (this.studentAns[x].type) {
             case 0: //單選
               if (
@@ -106,6 +193,7 @@ export default {
               }
               break;
             case 1: //多選
+            console.log('多選')
               if (
                 this.correctAns[x].answer.length ===
                 this.studentAns[x].selects.length
@@ -138,6 +226,7 @@ export default {
           }
         }
       }
+      console.log('進入打包')
       await this.del();
       await this.post();
     },
@@ -158,15 +247,18 @@ export default {
         records: this.studentAns,
         step: parseInt(this.theSectionIndex)
       });
-      this.isModalShow = true;
-      this.isCorrectAnsShow = true;
+      // this.isModalShow = true;
+      this.$router.go(0)
     },
     showExam() {
       this.show = true;
       this.btnshow = false;
       this.check = true;
-      this.isModalShow = false;
-      this.isCorrectAnsShow = false;
+    },
+    writtenExam() {
+      this.show = true;
+      this.btnshow = false;
+      this.check = false;
     }
   }
 };
@@ -205,11 +297,11 @@ div
         :question="item",
         v-on:emitAns="ans"
       )
-    Button(type="primary", shape="circle", v-if="check", @click="submit") 送出答案
-    Modal(v-model="isModalShow", title="你的作答")
-      h1 答對{{ this.userScore }}題
-      Divider 
-      p 簡答題不計分
+    Button(type="primary", shape="circle", v-if="check", @click="checkPush") 送出答案
+    //- Modal(v-model="isModalShow", title="你的作答")
+    //-   h1 答對{{ this.userScore }}題
+    //-   Divider 
+    //-   p 簡答題不計分
 </template>
 <style lang="scss" scoped>
 div {

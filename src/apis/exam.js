@@ -43,3 +43,9 @@ export const getExamAns = (sectionId) =>
  */
 export const postExamRecord = (params) =>
   req('post', `/record`,params);
+
+/**取得考試紀錄(章節紀錄)
+ * 
+ */
+export const getSectionRecord = (sectionId) =>
+req('get', `/record/one/${sectionId}`);  
