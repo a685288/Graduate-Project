@@ -14,8 +14,14 @@ export default {
         sort: this.question.sort,
         selects: []
       },
-      
+      isAnswerData: false
     };
+  },
+  mounted() {
+    if (this.question.records != undefined) {
+      console.log(this.question.records.selects[0])
+      this.isAnswerData = true;
+    }
   },
   methods: {
     ans() {
@@ -26,8 +32,9 @@ export default {
 </script>
 <template lang="pug">
 div
-  p {{ question.content }}
-  Input.input(
+  h3 {{ question.content }}
+  p(v-if='this.isAnswerData') {{question.records.selects[0]}}
+  Input.input(v-else 
     v-model="userAns.selects[0]",
     @on-change="ans()",
     size="large",

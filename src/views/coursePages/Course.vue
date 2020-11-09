@@ -14,9 +14,9 @@
       .title
         h1 {{ classInfo.topic }}
       .intro
-        h3 {{ classInfo.intro }}
+        p {{ classInfo.intro }}
       .button
-        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加入課程
+        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
         Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
     lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
@@ -73,7 +73,7 @@ export default {
       this.$router.push(
         "/dashboard/course/" +
           this.theClassId +
-          "/lesson/exam0/" +
+          "/lesson/exam1/" +
           this.classInfo.sections[0].sectionId
       );
     },
@@ -83,7 +83,7 @@ export default {
           "/dashboard/course/" + this.theClassId + "/lesson/exam/" + sectionId
         );
       } else {
-        this.$Message.error("請先加入課程喔！");
+        this.$Message.error("請先加選課程喔！");
       }
     }
   }
@@ -129,6 +129,11 @@ export default {
       padding: 20px 50px;
       .title {
         font-size: 25px;
+        display: -webkit-box;
+    -webkit-line-clamp: 2; //行數
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
       }
       .intro {
         flex: 10;

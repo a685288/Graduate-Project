@@ -46,7 +46,7 @@ export default {
       // theme: "light",
       value: "",
       barItems: {
-        onlineClass: `線上課程`,
+        onlineClass: `公開課程`,
         userClass: `我的課程`,
         setting: `登出`
       }

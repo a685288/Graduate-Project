@@ -1,4 +1,5 @@
 module.exports = {
+	// publicPath: "stuMode/",
 	devServer: {
 		proxy: {
 			'/api':{
