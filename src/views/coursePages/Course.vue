@@ -12,9 +12,9 @@
     hr.middle
     .right
       .title
-        h1 {{ classInfo.topic }}
+        h3 {{ classInfo.topic }}
       .intro
-        p {{ classInfo.intro }}
+        span {{ classInfo.intro }}
       .button
         Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
         Button.btn(v-else, @click="start()") 開始上課
@@ -57,10 +57,10 @@ export default {
         .then(res => {
           if (res.data.status.code === 0) {
             this.$Message.success("加選課程成功");
-            this.classInfo.isAdd=1
+            this.classInfo.isAdd = 1;
           } else if (res.data.status.code === 21107) {
             this.$Message.success("重複加選成功");
-            this.classInfo.isAdd=1
+            this.classInfo.isAdd = 1;
           }
         })
         .catch(err => {
@@ -77,10 +77,11 @@ export default {
           this.classInfo.sections[0].sectionId
       );
     },
-    toSection(sectionId) {
-      if (this.classInfo.isAdd===1) {
+    toSection(sectionId,index) {
+      console.log(index)
+      if (this.classInfo.isAdd === 1) {
         this.$router.push(
-          "/dashboard/course/" + this.theClassId + "/lesson/exam/" + sectionId
+          "/dashboard/course/" + this.theClassId + "/lesson/exam"+index+"/" + sectionId
         );
       } else {
         this.$Message.error("請先加選課程喔！");
@@ -120,7 +121,7 @@ export default {
       flex: 0 0;
       flex-basis: 1px;
       background-color: black;
-      height: auto;
+      height: 20px;
     }
     .right {
       flex: 3;
@@ -130,10 +131,10 @@ export default {
       .title {
         font-size: 25px;
         display: -webkit-box;
-    -webkit-line-clamp: 2; //行數
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow: hidden;
+        -webkit-line-clamp: 2; //行數
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        overflow: hidden;
       }
       .intro {
         flex: 10;

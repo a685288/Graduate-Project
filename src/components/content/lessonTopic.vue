@@ -9,8 +9,8 @@ export default {
     }
   },
   methods: {
-    toExam(id) {
-      this.$emit("toExam", id);
+    toExam(id,n) {
+      this.$emit("toExam", id,n);
     }
   }
 };
@@ -24,7 +24,7 @@ export default {
   .div(v-else) 
     h1 章節內容
     .section(v-for="(item, index) in section", :key="index")
-      Card.card(@click.native="toExam(item.sectionId)") {{ index + 1 }}. {{ item.title }}
+      Card.card(@click.native="toExam(item.sectionId,index)") {{ index + 1 }}. {{ item.title }}
         //- Icon.icon(type="md-arrow-dropright-circle") 
 </template>
 <style lang='scss' scoped>
