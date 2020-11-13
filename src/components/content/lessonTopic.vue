@@ -9,8 +9,8 @@ export default {
     }
   },
   methods: {
-    toExam(id) {
-      this.$emit("toExam", id);
+    toExam(id, n) {
+      this.$emit("toExam", id, n);
     }
   }
 };
@@ -24,7 +24,7 @@ export default {
   .div(v-else) 
     h1 章節內容
     .section(v-for="(item, index) in section", :key="index")
-      Card.card(@click.native="toExam(item.sectionId)") {{ index + 1 }}. {{ item.title }}
+      Card.card(@click.native="toExam(item.sectionId,index)") {{ index + 1 }}. {{ item.title }}
         //- Icon.icon(type="md-arrow-dropright-circle") 
 </template>
 <style lang='scss' scoped>
@@ -40,6 +40,7 @@ export default {
     h1 {
       line-height: 120%;
     }
+    
     .card {
       flex: 1;
       font-size: 20px;
@@ -47,14 +48,17 @@ export default {
       padding: 0% 25%;
       font-weight: bold;
       margin: 10px 0px;
+      // overflow: hidden;
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
     }
-    .alert{
+    .alert {
       width: 50%;
       margin: 0px auto;
       font-size: 20px;
       height: 50%;
     }
-    .p{
+    .p {
       text-align: center;
     }
   }

@@ -5,16 +5,16 @@
       img.classImg(:src="classInfo.imgUrl")
       .detail
         img(:src="topic")
-        | 章節數：{{ classInfo.sectionNum }}
+        | 章節：{{ classInfo.sectionNum }} 章
         br
         img(:src="teacher") 
         | 授課老師：{{ classInfo.teacherName }} 老師
     hr.middle
     .right
       .title
-        h1 {{ classInfo.topic }}
+        h3 {{ classInfo.topic }}
       .intro
-        p {{ classInfo.intro }}
+        span {{ classInfo.intro }}
       .button
         Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
         Button.btn(v-else, @click="start()") 開始上課
@@ -57,10 +57,10 @@ export default {
         .then(res => {
           if (res.data.status.code === 0) {
             this.$Message.success("加選課程成功");
-            this.classInfo.isAdd=1
+            this.classInfo.isAdd = 1;
           } else if (res.data.status.code === 21107) {
             this.$Message.success("重複加選成功");
-            this.classInfo.isAdd=1
+            this.classInfo.isAdd = 1;
           }
         })
         .catch(err => {
@@ -77,10 +77,16 @@ export default {
           this.classInfo.sections[0].sectionId
       );
     },
-    toSection(sectionId) {
-      if (this.classInfo.isAdd===1) {
+    toSection(sectionId, index) {
+      console.log(index);
+      if (this.classInfo.isAdd === 1) {
         this.$router.push(
-          "/dashboard/course/" + this.theClassId + "/lesson/exam/" + sectionId
+          "/dashboard/course/" +
+            this.theClassId +
+            "/lesson/exam" +
+            index +
+            "/" +
+            sectionId
         );
       } else {
         this.$Message.error("請先加選課程喔！");
@@ -91,18 +97,22 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content {
-  height: 100%;
   display: flex;
   flex-direction: column;
   .info {
     flex: 1;
     display: flex;
+    height: 100%;
     .left {
       padding: 20px 50px;
-      flex: 3;
+      flex: 1;
       .classImg {
-        max-width: 600px;
-        max-height: 400px;
+        max-width: 70%;
+        height: auto;
+        // min-width: 100px;
+        // max-width: 600px;
+        // min-height: 150px;
+        // max-height: 400px;
       }
       .detail {
         font-size: 20px;
@@ -117,23 +127,25 @@ export default {
       }
     }
     .middle {
-      flex: 0 0;
-      flex-basis: 1px;
-      background-color: black;
-      height: auto;
+      background-color: #e8eaec;
+      width: 1px;
+      border: 0px;
+      float: left;
+      height: 80%;
+      margin: auto 0px;
     }
     .right {
-      flex: 3;
+      flex: 1;
       display: flex;
       flex-direction: column;
       padding: 20px 50px;
       .title {
         font-size: 25px;
         display: -webkit-box;
-    -webkit-line-clamp: 2; //行數
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow: hidden;
+        -webkit-line-clamp: 2; //行數
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        overflow: hidden;
       }
       .intro {
         flex: 10;
@@ -169,75 +181,8 @@ export default {
     }
   }
   .sectionsArea {
-    flex: 1;
     background-color: lightgray;
+    height: 100%;
   }
 }
-// .content {
-//   .info {
-//     display: flex;
-//     text-align: left;
-//     margin: 5% 15%;
-//     align-items: stretch;
-//     .right {
-//       flex: 3;
-//       // padding: 30px;
-//       h1 {
-//         font-size: 400%;
-//       }
-//       h3 {
-//         font-size: 150%;
-//       }
-//       .btn {
-//         color: #494949 !important;
-//         text-transform: uppercase;
-//         text-decoration: none;
-//         background: #ffffff;
-//         padding: 5%;
-//         border: 5px solid #bac94a !important;
-//         display: inline-block;
-//         transition: all 0.4s ease 0s;
-//         font-weight: bold;
-//         font-size: 20px;
-//         margin: 10% 10% 0% 10%;
-//         line-height: -0px;
-//       }
-//       .btn:hover {
-//         color: #ffffff !important;
-//         background: #f6b93b;
-//         border-color: #f6b93b !important;
-//         transition: all 0.4s ease 0s;
-//       }
-//     }
-//     .middle{
-//       flex: 1;
-//       height: 100%;
-//     }
-//     .left {
-//       flex: 2;
-//       display: flex;
-//       padding: 30px;
-//       .box {
-//         flex: 1;
-//         .demo-Circle-inner {
-//           font-size: 24px;
-//         }
-//         .circle {
-//           margin: 10%;
-//         }
-//         h3 {
-//           line-height: 150%;
-//         }
-//         .news {
-//           margin: 0%;
-//           img {
-//             width: 18px;
-//             vertical-align: middle;
-//             margin: 10px 5px;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
 </style>

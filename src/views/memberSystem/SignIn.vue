@@ -62,13 +62,13 @@ export default {
   },
   methods: {
     async googleSignin() {
-      await localStorage.removeItem("accessToken");
+      await localStorage.removeItem("studentToken");
       try {
         await firebase.auth().signInWithPopup(provider);
         let idToken = await firebase.auth().currentUser.getIdToken(true);
         let res = await postSignIn({ token: idToken });
         if (res.data.status.code === 0) {
-          localStorage.setItem("accessToken", res.data.data.accessToken);
+          localStorage.setItem("studentToken", res.data.data.accessToken);
           this.$router.push("dashboard");
         }
       } catch (err) {
@@ -127,7 +127,7 @@ body {
   z-index: -1;
   position: absolute;
   background: #ABDFF1;
-  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+  // background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
   height: 100vh;
 }

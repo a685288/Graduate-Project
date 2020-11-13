@@ -28,7 +28,7 @@ export default {
 <style lang='scss' scoped>
 .layout-footer-center {
   color: #f0f5ff;
-  height: 20%;
+  height: 200px;
   text-align: center;
   padding: 20px 200px 20px 200px;
   background-color: #003a8c;

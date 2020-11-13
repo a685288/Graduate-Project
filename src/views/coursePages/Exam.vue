@@ -100,6 +100,8 @@ export default {
         this.$forceUpdate();
       });
     },
+    test(){this.checkPush()},
+
     checkPush() {
       this.$Modal.confirm({
         title: "送出後，答案無法更改",
@@ -133,8 +135,6 @@ export default {
               }
               this.Unify();
             } else {
-      console.log('else')
-
               this.score();
             }
           } else {
@@ -226,7 +226,6 @@ export default {
           }
         }
       }
-      console.log('進入打包')
       await this.del();
       await this.post();
     },
@@ -266,6 +265,7 @@ export default {
 <template lang="pug">
 div
   .video
+    button(@click="test()")
     h1 {{ this.section.title }}
     .txtDiv(v-if="this.section.type === 0")
       p {{ this.section.url }}

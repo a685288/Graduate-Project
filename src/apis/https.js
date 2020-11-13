@@ -29,7 +29,7 @@ let instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
-      'accessToken'
+      'studentToken'
     )}`;
     return config;
   },

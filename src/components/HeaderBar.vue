@@ -100,7 +100,7 @@ export default {
     signOut() {
       postSignOut().then(res => {
         if (res.data.status.code === 0) {
-          localStorage.removeItem("accessToken");
+          localStorage.removeItem("studentToken");
           this.$Message.success("登出成功");
           this.$router.push("/");
         } else {
