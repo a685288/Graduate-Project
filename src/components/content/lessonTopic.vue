@@ -9,8 +9,8 @@ export default {
     }
   },
   methods: {
-    toExam(id,n) {
-      this.$emit("toExam", id,n);
+    toExam(id, n) {
+      this.$emit("toExam", id, n);
     }
   }
 };
@@ -40,6 +40,7 @@ export default {
     h1 {
       line-height: 120%;
     }
+    
     .card {
       flex: 1;
       font-size: 20px;
@@ -47,14 +48,17 @@ export default {
       padding: 0% 25%;
       font-weight: bold;
       margin: 10px 0px;
+      // overflow: hidden;
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
     }
-    .alert{
+    .alert {
       width: 50%;
       margin: 0px auto;
       font-size: 20px;
       height: 50%;
     }
-    .p{
+    .p {
       text-align: center;
     }
   }

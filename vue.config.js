@@ -1,9 +1,7 @@
 // const { turn } = require("core-js/fn/array");
 
 module.exports = {
-	publicPath: process.env.NODE_ENV ==='production'
-	? '/student/'
-	: './',
+	// publicPath: process.env.NODE_ENV ==='production' ? '/student/' : './',
 	devServer: {
 		disableHostCheck:true,
 		https: true,

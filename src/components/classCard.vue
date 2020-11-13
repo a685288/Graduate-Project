@@ -28,7 +28,7 @@ Card.card
     .title {{ classInfo.topic }}
     .topics
       img(:src="topic")
-      | 章節：{{ classInfo.sectionNum }}
+      | 章節：{{ classInfo.sectionNum }} 章
     .teacher
       img(:src="teacher") 
       | 老師：{{ classInfo.teacherName }} 
