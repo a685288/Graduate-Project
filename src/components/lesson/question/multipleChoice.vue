@@ -70,7 +70,7 @@ export default {
       h3 {{ question.content }}
       .asngroup(v-for='(item, index) in question.select')
         Checkbox.checkbox(:key='index' :label="index") {{ item }}
-        icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
+          icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
         //- .coverbox(v-if="answercheck(index)")
     //- 作答中
     CheckboxGroup.CheckboxGroup(v-else vertical, v-model="userAns.selects", @on-change="ans()") 
@@ -99,21 +99,21 @@ export default {
   .right {
     // display: inline-block;
     flex: 12;
-
     .CheckboxGroup {
       display: block;
-      .checkbox {
-        float: left;
-        width: 95%;
-        margin: 10px 0px;
-        border-bottom: 1px solid;;
-        display: block;
-      }
-      .coverbox {
-        float: right;
-        color: rgb(91, 150, 2);
-        size:50px;
-        margin: 10px 0px;
+      .asngroup {
+        .checkbox {
+          border-bottom: 1px solid;;
+          float: left;
+          width: 95%;
+          margin: 10px 0px;
+          display: block;
+        }
+        .coverbox {
+          float: right;
+          color: rgb(91, 150, 2);
+          // margin: 10px 0px;
+        }
       }
     }
   }

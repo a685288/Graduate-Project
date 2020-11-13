@@ -19,6 +19,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.question.answer[0]);
     if (this.question.records != undefined) {
       this.question.records.selects[0] = parseInt(
         this.question.records.selects[0]
@@ -30,6 +31,15 @@ export default {
   methods: {
     ans() {
       this.$emit("emitAns", this.userAns);
+    },
+    // 判斷回傳是否該渲染打勾
+    answercheck(index) {
+      let ans = this.question.answer;
+      let search = ans.indexOf(index);
+      if (search === -1) {
+        return false;
+      }
+      return true;
     }
   }
 };
@@ -38,21 +48,41 @@ export default {
 .div
   .left(v-if='isAnswerData')
     RadioGroup(vertical, v-model="this.question.answer[0]") 
-      h3 正確答案 
-      Radio.radio(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
+      //- h3 正確答案 
+      //- Radio.radio(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
   .right
-    RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]", @on-change="ans()") 
+    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
-      Radio(v-for='(item,index) in question.select' :key='index' :label="index") {{item}}
+      .asngroup(v-for='(item, index) in question.select')
+        Radio.Radio(:key='index' :label="index") {{item}}
+          icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
     RadioGroup(v-else vertical, v-model="userAns.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
       Radio(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}
 </template>
 <style lang="scss" scoped>
 .div {
-  .left,
+  width: 100%;
   .right {
+    width: 100%;
     display: inline-flex;
+      .RadioGroup{
+        width: 100%;
+        .asngroup{
+          width: 100%;
+          .Radio {
+            float: left;
+            width: 95%;
+            border-bottom: 1px solid;;
+            display: block;
+          }
+          .coverbox {
+            float: right;
+            color: rgb(91, 150, 2);
+            margin-top: 4px;
+          }
+        }
+      }
   }
   .left {
     margin-right: 7px;
