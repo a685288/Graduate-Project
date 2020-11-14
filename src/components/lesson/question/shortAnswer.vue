@@ -18,7 +18,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.question)
     if (this.question.records != undefined) {
       console.log(this.question.records.selects[0])
       this.isAnswerData = true;

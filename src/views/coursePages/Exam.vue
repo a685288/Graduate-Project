@@ -35,6 +35,7 @@ export default {
     };
   },
   beforeRouteUpdate(to, from, next) {
+    this.theClassId = to.params.classId;
     this.theSectionId = to.params.sectionId;
     this.theSectionIndex = to.params.sectionIndex;
     next(this.getData());
@@ -55,16 +56,15 @@ export default {
       this.btnshow = true;
       this.check = false;
     },
-    handleSpinShow() {
+    loadingShow() {
       this.$Spin.show();
       setTimeout(() => {
         this.$Spin.hide();
       }, 2000);
     },
     getData() {
-      this.handleSpinShow();
+      this.loadingShow();
       this.init();
-      this.loadingShow = true;
       getSectionRecord(this.theSectionId).then((res) => {
         if (res.data.status.code === 0) {
           this.recordsData = true;
@@ -73,7 +73,7 @@ export default {
           this.writtenExam();
         } else {
           this.recordsData = false;
-          console.log("未做過此章節");
+          console.log("沒有作答紀錄");
           this.getExamContentFun();
         }
         this.$forceUpdate();
@@ -99,7 +99,6 @@ export default {
             }
           } else {
             this.section = this.storage;
-            console.log("未做過此章節");
           }
         } else {
           this.$Message.error(`err:${res.data.status.code}`);
@@ -151,7 +150,7 @@ export default {
           console.log(err);
         });
     },
-    //統整渲染畫面資料
+    //有紀錄，統整渲染畫面資料
     Unify() {
       this.section = this.storage;
     },
@@ -165,6 +164,7 @@ export default {
         this.studentAns[index] = {};
         this.studentAns[index] = userAns;
       }
+      console.log(this.studentAns);
     },
     //對答案
     async score() {
@@ -245,14 +245,17 @@ export default {
     post() {
       this.userScore = this.countScore;
       this.countScore = 0;
+      console.log('post');
       postExamRecord({
         classId: this.theClassId,
         sectionId: this.theSectionId,
         records: this.studentAns,
         step: parseInt(this.theSectionIndex),
-      });
-      setTimeout(function(){this.$router.go(0);}, 1000);
-      
+      }).then((res) => {
+        if(res.data.status.code===0){
+          this.$router.go(0)
+        }
+      })
     },
     showExam() {
       this.show = true;
@@ -281,12 +284,7 @@ div
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       )
     br
-    Button.startbtn(
-      type="primary",
-      shape="circle",
-      @click="showExam()",
-      v-if="this.btnshow"
-    ) 開始測驗
+    Button.startbtn(@click="showExam()", v-if="this.btnshow") 開始測驗
   .exam(v-if="this.show")
     span.h1 {{ this.section.title }}－課堂小考
     .questionDiv(v-for="(item, index) in section.question", :key="index")
@@ -302,7 +300,12 @@ div
         :question="item",
         v-on:emitAns="ans"
       )
-    Button(type="primary", shape="circle", v-if="check", @click="checkPush") 送出答案
+    Button.btn(
+      type="primary",
+      shape="circle",
+      v-if="check",
+      @click="checkPush"
+    ) 送出答案
 </template>
 <style lang="scss" scoped>
 div {
@@ -341,9 +344,16 @@ div {
     }
     .startbtn {
       margin: 10px;
-      height: 70px;
+      height: 60px;
       width: 120px;
       font-size: 20px;
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+    .startbtn:hover {
+      background-color: #008CBA;
+      color: white;
     }
   }
   .exam {

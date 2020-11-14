@@ -19,7 +19,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.question.answer[0]);
     if (this.question.records != undefined) {
       this.question.records.selects[0] = parseInt(
         this.question.records.selects[0]
@@ -46,16 +45,18 @@ export default {
 </script>
 <template lang="pug">
 .div
-  .left(v-if='isAnswerData')
-    RadioGroup(vertical, v-model="this.question.answer[0]") 
+  //- .left(v-if='isAnswerData')
+  //-   RadioGroup(vertical, v-model="this.question.answer[0]") 
       //- h3 正確答案 
       //- Radio.radio(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
   .right
-    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]", @on-change="ans()") 
+    //- 做完畫面 
+    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]") 
       h3 {{ question.content }}
       .asngroup(v-for='(item, index) in question.select')
         Radio.Radio(:key='index' :label="index") {{item}}
           icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
+    //- 作答中
     RadioGroup(v-else vertical, v-model="userAns.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
       Radio(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}

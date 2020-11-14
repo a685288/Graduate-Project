@@ -36,10 +36,9 @@ export default {
         this.question.records.selects.push(e);
       });
     }
-
     // console.log(this.question.records.selects)
     // console.log(this.question.select)
-    console.log(this.question.answer);
+    // console.log(this.question.answer);
   },
   methods: {
     ans() {
@@ -66,7 +65,7 @@ export default {
   //-     Checkbox.checkbox(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
   .right
     //-做完畫面 
-    CheckboxGroup.CheckboxGroup(v-if='question.records != undefined' vertical, v-model="question.records.selects")
+    CheckboxGroup.CheckboxGroup(v-if='question.records != undefined' , v-model="question.records.selects")
       h3 {{ question.content }}
       .asngroup(v-for='(item, index) in question.select')
         Checkbox.checkbox(:key='index' :label="index") {{ item }}
@@ -75,7 +74,9 @@ export default {
     //- 作答中
     CheckboxGroup.CheckboxGroup(v-else vertical, v-model="userAns.selects", @on-change="ans()") 
       h3 {{ question.content }}
-      Checkbox.checkbox(v-for='(item,index) in question.select' :key='index' :label="index") {{item}}
+      .usergroup(v-for='(item,index) in question.select')
+        Checkbox.checkbox( :key='index' :label="index") {{item}} 
+        br
 </template>
 <style lang="scss" scoped>
 .div {
@@ -99,7 +100,9 @@ export default {
   .right {
     // display: inline-block;
     // flex: 12;
+    // height: 100%;
     .CheckboxGroup {
+      // background: #000;
       display: block;
       .asngroup {
         .checkbox {
@@ -113,6 +116,13 @@ export default {
           float: right;
           color: rgb(91, 150, 2);
           // margin: 10px 0px;
+        }
+      }
+
+      .usergroup{
+        .checkbox{
+          margin: 10px 0px;
+
         }
       }
     }
