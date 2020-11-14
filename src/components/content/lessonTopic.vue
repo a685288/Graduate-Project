@@ -31,6 +31,8 @@ export default {
 <style lang='scss' scoped>
 .lessonTopic {
   padding: 1%;
+  background-color: #f0f0f0;
+  height: 100%;
   .div {
     height: 80%;
     padding: 1% 15%;
@@ -48,7 +50,6 @@ export default {
       padding: 0% 15%;
       font-weight: bold;
       margin: 10px 0px;
-
       .cardContent {
         white-space: nowrap;
         text-overflow: ellipsis;
