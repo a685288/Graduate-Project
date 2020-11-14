@@ -11,7 +11,12 @@
   .userInfo
     myInfoCard(:user="this.user")
   .classInfo
-    ClassCard(v-for="(item, index) in classInfo" :key="index" :classInfo="item" @click.native="toCourse(item.ClassID)")
+    ClassCard(
+      v-for="(item, index) in classInfo",
+      :key="index",
+      :classInfo="item",
+      @click.native="toCourse(item.ClassID)"
+    )
 </template>
 <script>
 import myInfoCard from "@/components/userClass/myInfoCard.vue";
@@ -21,57 +26,57 @@ export default {
   name: "myclass",
   components: {
     myInfoCard,
-    ClassCard
+    ClassCard,
   },
   data() {
     return {
       user: {
         id: "",
         email: "",
-        name: ""
+        name: "",
       },
-      classInfo: []
+      classInfo: [],
     };
   },
   mounted() {
-    this.userCalss()
+    this.userCalss();
   },
   methods: {
-    toCourse(id){
+    toCourse(id) {
       this.$router.push(`course/${id}`);
     },
     userCalss() {
       getMyClass()
-        .then(res => {
-            if(res.data.status.code === 0){
-              this.user = res.data.data;
-              this.classInfo = res.data.data.classinfo;
-            }else{
-              this.$Message.error(`err: ${res.data.status.code}`);
-            }
+        .then((res) => {
+          if (res.data.status.code === 0) {
+            this.user = res.data.data;
+            this.classInfo = res.data.data.classinfo;
+          } else {
+            this.$Message.error(`err: ${res.data.status.code}`);
+          }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-.userClass{
+.userClass {
   display: flex;
   align-items: flex-start;
-  .userInfo{
+  .userInfo {
     margin-top: 50px;
     flex: 1;
     min-width: 100px;
   }
-  .classInfo{
+  .classInfo {
+    padding: 3% 0%;
     flex: 4;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-
   }
 }
 // .div {
