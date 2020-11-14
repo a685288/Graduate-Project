@@ -19,6 +19,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.question.answer[0]);
     if (this.question.records != undefined) {
       this.question.records.selects[0] = parseInt(
         this.question.records.selects[0]
@@ -45,21 +46,19 @@ export default {
 </script>
 <template lang="pug">
 .div
-  //- .left(v-if='isAnswerData')
-  //-   RadioGroup(vertical, v-model="this.question.answer[0]") 
+  .left(v-if='isAnswerData')
+    RadioGroup(vertical, v-model="this.question.answer[0]") 
       //- h3 正確答案 
       //- Radio.radio(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
   .right
-    //- 做完畫面 
-    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]") 
+    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
       .asngroup(v-for='(item, index) in question.select')
-        Radio.Radio(:key='index' :label="index") {{item}}
+        Radio.Radio.mh6(:key='index' :label="index") {{item}}
           icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
-    //- 作答中
     RadioGroup(v-else vertical, v-model="userAns.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
-      Radio(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}
+      Radio.Radio.mh6(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}
 </template>
 <style lang="scss" scoped>
 .div {
@@ -71,6 +70,36 @@ export default {
         width: 100%;
         .asngroup{
           width: 100%;
+          hover 效果
+          .mh6{
+            transition: all 0.5s;
+            border: 1px solid rgba(0,0,0,0.5);
+            position: relative; 
+          }
+          .mh6 span{
+            z-index: 2; 
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;   
+          }
+          .mh6:before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            background-color: rgba(124, 255, 124, 0.185);
+            transition: all 0.4s;
+            transform: scale(1, 0.5);
+          }
+          .mh6:hover::before{
+            opacity: 1;
+            transform: scale(1, 1);
+          }
           .Radio {
             float: left;
             width: 95%;
@@ -85,15 +114,15 @@ export default {
         }
       }
   }
-  .left {
-    margin-right: 7px;
-    .radio {
-      width: 20px;
-      margin: 0px auto;
-    }
-    h3 {
-      color: #c00000;
-    }
-  }
+  // .left {
+  //   margin-right: 7px;
+  //   .radio {
+  //     width: 20px;
+  //     margin: 0px auto;
+  //   }
+  //   h3 {
+  //     color: #c00000;
+  //   }
+  // }
 }
 </style>

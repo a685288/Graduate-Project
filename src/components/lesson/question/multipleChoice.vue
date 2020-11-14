@@ -98,13 +98,18 @@ export default {
   //   }
   // }
   .right {
-    // display: inline-block;
-    // flex: 12;
-    // height: 100%;
+    display: block;
+    flex: 12;
+    height: 100%;
     .CheckboxGroup {
       // background: #000;
-      display: block;
+      display: inline-block;
+      width: 100%;
       .asngroup {
+      display: inline;
+
+        background-color: #000;
+        height: 100%;
         .checkbox {
           border-bottom: 1px solid;;
           float: left;
