@@ -104,7 +104,7 @@ export default {
   flex-direction: column;
   // height: 100%;
   .info {
-    // height: 100%;
+    max-height: 600px;
     display: flex;
     .left {
       padding: 20px 50px;
@@ -160,11 +160,8 @@ export default {
         margin-bottom: 30px;
         text-align: left;
         width: 100%;
-        height: 30%;
+        height: 50%;
         overflow-y: auto;
-        p{
-          
-        }
       }
       .button {
         flex-basis: 80px;
