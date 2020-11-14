@@ -40,7 +40,6 @@ export default {
     h1 {
       line-height: 120%;
     }
-    
     .card {
       flex: 1;
       font-size: 20px;
@@ -48,9 +47,6 @@ export default {
       padding: 0% 25%;
       font-weight: bold;
       margin: 10px 0px;
-      // overflow: hidden;
-      // white-space: nowrap;
-      // text-overflow: ellipsis;
     }
     .alert {
       width: 50%;

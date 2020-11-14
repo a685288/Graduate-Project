@@ -79,26 +79,26 @@ export default {
 </template>
 <style lang="scss" scoped>
 .div {
-  display: flex;
-  .left {
-    margin-right: 7px;
-    // display: inline-block;
-    flex: 1;
-    .CheckboxGroup {
-      background-color: #e6f7ff;
-      .checkbox {
-        display: block;
-        width: 20px;
-        margin: 10px auto;
-      }
-      h3 {
-        color: #003a8c;
-      }
-    }
-  }
+  // display: flex;
+  // .left {
+  //   margin-right: 7px;
+  //   // display: inline-block;
+  //   flex: 1;
+  //   .CheckboxGroup {
+  //     background-color: #e6f7ff;
+  //     .checkbox {
+  //       display: block;
+  //       width: 20px;
+  //       margin: 10px auto;
+  //     }
+  //     h3 {
+  //       color: #003a8c;
+  //     }
+  //   }
+  // }
   .right {
     // display: inline-block;
-    flex: 12;
+    // flex: 12;
     .CheckboxGroup {
       display: block;
       .asngroup {

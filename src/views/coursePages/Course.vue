@@ -16,7 +16,7 @@
       .intro
         span {{ classInfo.intro }}
       .button
-        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
+        Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
         Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
     lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
@@ -30,31 +30,31 @@ import { getCourseInfo, putAddClass } from "@/apis/course.js";
 export default {
   name: "courseinfo",
   components: {
-    lessonTopic
+    lessonTopic,
   },
   data() {
     return {
       topic,
       teacher,
       status: {
-        isAdd: false
+        isAdd: false,
       },
       theClassId: "",
-      classInfo: {}
+      classInfo: {},
     };
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
-    getCourseInfo(this.theClassId).then(res => {
+    getCourseInfo(this.theClassId).then((res) => {
       this.classInfo = res.data.data;
     });
   },
   methods: {
     addClass() {
       putAddClass({
-        classId: this.theClassId
+        classId: this.theClassId,
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.status.code === 0) {
             this.$Message.success("加選課程成功");
             this.classInfo.isAdd = 1;
@@ -63,7 +63,7 @@ export default {
             this.classInfo.isAdd = 1;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$Message.error;
           `err: ${err}`;
           console.log(err);
@@ -91,14 +91,15 @@ export default {
       } else {
         this.$Message.error("請先加選課程喔！");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .content {
   display: flex;
   flex-direction: column;
+  height: 100%;
   .info {
     flex: 1;
     display: flex;
@@ -152,6 +153,16 @@ export default {
         font-size: 18px;
         margin: 10px auto;
         text-align: left;
+        overflow: overflow-x;
+        height: 40px;
+        background: #000;
+        span{
+          //
+        //   overflow-x: hidden;
+        // overflow-y: auto;
+        overflow: auto;
+        }
+        
       }
       .button {
         flex: 1;
@@ -181,7 +192,7 @@ export default {
     }
   }
   .sectionsArea {
-    background-color: lightgray;
+    background-color: #f0f0f0;
     height: 100%;
   }
 }

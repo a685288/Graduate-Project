@@ -7,14 +7,14 @@ import {
   getExamContent,
   getExamAns,
   postExamRecord,
-  getSectionRecord
+  getSectionRecord,
 } from "@/apis/exam.js";
 
 export default {
   components: {
     radio,
     multipleChoice,
-    shortAnswer
+    shortAnswer,
   },
   data() {
     return {
@@ -31,8 +31,7 @@ export default {
       correctAns: [], //正確答案
       countScore: Number,
       userScore: Number,
-      // isModalShow: false,
-      recordsData: false
+      recordsData: false,
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -56,9 +55,17 @@ export default {
       this.btnshow = true;
       this.check = false;
     },
+    handleSpinShow() {
+      this.$Spin.show();
+      setTimeout(() => {
+        this.$Spin.hide();
+      }, 2000);
+    },
     getData() {
+      this.handleSpinShow();
       this.init();
-      getSectionRecord(this.theSectionId).then(res => {
+      this.loadingShow = true;
+      getSectionRecord(this.theSectionId).then((res) => {
         if (res.data.status.code === 0) {
           this.recordsData = true;
           this.records = res.data.data.records;
@@ -74,7 +81,7 @@ export default {
     },
     //Exam 畫面內容
     getExamContentFun() {
-      getExamContent(this.theSectionId).then(res => {
+      getExamContent(this.theSectionId).then((res) => {
         if (res.data.status.code === 0) {
           this.storage = res.data.data;
           //將records資料放進 this.storage 中
@@ -100,12 +107,10 @@ export default {
         this.$forceUpdate();
       });
     },
-    test(){this.checkPush()},
-
     checkPush() {
       this.$Modal.confirm({
-        title: "送出後，答案無法更改",
-        content: "<p>直接送出，請按送出</p><p>如要更改，請按取消送出</p>",
+        title: "送出後，答案將無法更改",
+        content: "<p>如要更改，請按取消送出</p>",
         okText: "送出",
         cancelText: "取消送出",
         onOk: () => {
@@ -113,14 +118,14 @@ export default {
         },
         onCancel: () => {
           console.log(this.studentAns);
-        }
+        },
       });
     },
     //拿正確答案
     submit() {
       console.log("拿正確答案");
       getExamAns(this.theSectionId)
-        .then(res => {
+        .then((res) => {
           if (res.data.status.code === 0) {
             this.correctAns = res.data.data;
             if (this.recordsData) {
@@ -141,7 +146,7 @@ export default {
             this.$Message.error(`err:${res.data.status.code}`);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$Message.error(`err: ${err}`);
           console.log(err);
         });
@@ -152,7 +157,7 @@ export default {
     },
     //拿到emit學生答案，比對sort
     ans(userAns) {
-      const rule = element => element.sort === userAns.sort;
+      const rule = (element) => element.sort === userAns.sort;
       let index = this.studentAns.findIndex(rule);
       if (index === -1) {
         this.studentAns.push(userAns);
@@ -163,7 +168,7 @@ export default {
     },
     //對答案
     async score() {
-      console.log('score()')
+      console.log("score()");
       // 將select ans to string
       for (let n = 0; n < this.studentAns.length; n++) {
         for (let m = 0; m < this.studentAns[n].selects.length; m++) {
@@ -175,8 +180,8 @@ export default {
       this.countScore = 0; //學生分數
       for (let n = 0; n < this.studentAns.length; n++) {
         let type2Ans = 1; //多選對答使用的參數
-        const rule = element => element.sort === this.studentAns[n].sort;
-        console.log(this.studentAns)
+        const rule = (element) => element.sort === this.studentAns[n].sort;
+        console.log(this.studentAns);
         let x = this.correctAns.findIndex(rule);
         if (x != -1) {
           //有資料
@@ -193,7 +198,7 @@ export default {
               }
               break;
             case 1: //多選
-            console.log('多選')
+              console.log("多選");
               if (
                 this.correctAns[x].answer.length ===
                 this.studentAns[x].selects.length
@@ -230,10 +235,10 @@ export default {
       await this.post();
     },
     del() {
-      this.studentAns.forEach(item => {
+      this.studentAns.forEach((item) => {
         delete item.type;
       });
-      this.studentAns.forEach(item => {
+      this.studentAns.forEach((item) => {
         delete item.sort;
       });
     },
@@ -244,10 +249,10 @@ export default {
         classId: this.theClassId,
         sectionId: this.theSectionId,
         records: this.studentAns,
-        step: parseInt(this.theSectionIndex)
+        step: parseInt(this.theSectionIndex),
       });
-      // this.isModalShow = true;
-      this.$router.go(0)
+      setTimeout(function(){this.$router.go(0);}, 1000);
+      
     },
     showExam() {
       this.show = true;
@@ -258,16 +263,16 @@ export default {
       this.show = true;
       this.btnshow = false;
       this.check = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <template lang="pug">
 div
   .video
-    button(@click="test()")
-    h1 {{ this.section.title }}
+    span.h1 {{ this.section.title }}
     .txtDiv(v-if="this.section.type === 0")
+      span 請閱讀完以下文章，再開始測驗
       p {{ this.section.url }}
     .youtubeDiv(v-if="this.section.type === 1")
       iframe.youtube(
@@ -283,7 +288,7 @@ div
       v-if="this.btnshow"
     ) 開始測驗
   .exam(v-if="this.show")
-    h1 {{ this.section.title }}－課堂小考
+    span.h1 {{ this.section.title }}－課堂小考
     .questionDiv(v-for="(item, index) in section.question", :key="index")
       h3 第{{ index + 1 }}題
       radio.ques(v-if="item.type == 0", :question="item", v-on:emitAns="ans")
@@ -298,19 +303,35 @@ div
         v-on:emitAns="ans"
       )
     Button(type="primary", shape="circle", v-if="check", @click="checkPush") 送出答案
-    //- Modal(v-model="isModalShow", title="你的作答")
-    //-   h1 答對{{ this.userScore }}題
-    //-   Divider 
-    //-   p 簡答題不計分
 </template>
 <style lang="scss" scoped>
 div {
-  background-color: #f5f5f5;
+  background-color: #fafafa;
   margin: 0px;
   padding: 0px;
-  h1 {
+  .h1 {
+    font-size: 30px;
     line-height: 250%;
     text-align: center;
+    background-image: linear-gradient(transparent 60%, #ffe7ba 42%);
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: #000;
+  }
+  .txtDiv {
+    p {
+      // overflow-wrap: break-word;
+      // word-break: normal;
+      white-space: pre;
+    }
+    span {
+      font-size: 15px;
+      // background-image: linear-gradient(transparent 60%, #bac1ff 42%);
+      font-weight: bold;
+      line-height: 140%;
+      // letter-spacing: 6px;
+      color: #000;
+    }
   }
   .video {
     padding: 50px;
@@ -327,13 +348,10 @@ div {
   }
   .exam {
     width: 80%;
-    margin: 10px auto;
+    margin: 0px auto;
     text-align: left;
     button {
       margin: 10px;
-    }
-    .correctAns {
-      color: #c00000;
     }
     .ques {
       width: 100%;
