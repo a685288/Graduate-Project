@@ -50,6 +50,7 @@ export default {
       padding: 0% 15%;
       font-weight: bold;
       margin: 10px 0px;
+      transition-duration: 0.6s;
       .cardContent {
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -59,6 +60,10 @@ export default {
         white-space: normal;
         overflow: hidden;
       }
+    }
+    .card:hover {
+      background-color: #7cb305;
+      color: white;
     }
     .alert {
       width: 50%;
