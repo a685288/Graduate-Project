@@ -21,8 +21,8 @@ div
         .button
           Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
           Button.btn(v-else, @click="start()") 開始上課
-    .sectionsArea
-      lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
+  .sectionsArea
+    lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
 </template>
 <script>
 import lessonTopic from "@/components/content/lessonTopic.vue";
@@ -101,8 +101,6 @@ export default {
 <style lang="scss" scoped>
 .content {
   display: flex;
-  flex-direction: column;
-  // height: 100%;
   .info {
     max-height: 600px;
     display: flex;
