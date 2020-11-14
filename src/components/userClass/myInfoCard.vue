@@ -1,6 +1,5 @@
 <script>
 // 我的課程左邊 個人資訊卡
-import photo from "@/assets/photo.jpg";
 import { updateName } from "@/apis/member.js";
 export default {
   name: "myinfo",
@@ -12,7 +11,6 @@ export default {
   },
   data() {
     return {
-      photo,
       newName: ""
     };
   },
@@ -62,28 +60,28 @@ export default {
 };
 </script>
 <template lang="pug">
-div
-  //- img(:src="photo")
+.div
   .name
     h2 {{ user.name }}
-  p {{ user.email }}
-  br
+    p {{ user.email }}
   Button.btn(
     type="primary",
     ghost,
     shape="circle",
     icon="md-brush",
     @click="inputFun"
-  )
+  ) 修改姓名
 </template>
 <style lang="scss" scoped>
-.name{
-  width: 80%;
-  margin: 0px auto;
-  word-wrap: break-word;
+.div{word-wrap: break-word;
   word-break: break-all;
-
+  .name{
+  width: 80%;
+  margin: 20px auto;
+  
 }
+}
+
 // img {
 //   height: 50%;
 //   width: 100%;
