@@ -153,9 +153,16 @@ export default {
         font-size: 18px;
         margin: 10px auto;
         text-align: left;
-        overflow: overflow-x;
-        height: 40px;
-        background: #000;
+        // overflow: overflow-x;
+        // height: 40px;
+        // background: #000;
+ white-space: nowrap;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+      overflow: hidden;
+
         span{
           //
         //   overflow-x: hidden;

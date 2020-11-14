@@ -5,14 +5,14 @@ export default {
   props: {
     section: {
       sectionId: String,
-      title: String
-    }
+      title: String,
+    },
   },
   methods: {
     toExam(id, n) {
       this.$emit("toExam", id, n);
-    }
-  }
+    },
+  },
 };
 </script>
 <template lang="pug">
@@ -24,7 +24,8 @@ export default {
   .div(v-else) 
     h1 章節內容
     .section(v-for="(item, index) in section", :key="index")
-      Card.card(@click.native="toExam(item.sectionId,index)") {{ index + 1 }}. {{ item.title }}
+      Card.card(@click.native="toExam(item.sectionId, index)") 
+        p.cardContent {{ index + 1 }}. {{ item.title }}
         //- Icon.icon(type="md-arrow-dropright-circle") 
 </template>
 <style lang='scss' scoped>
@@ -44,9 +45,19 @@ export default {
       flex: 1;
       font-size: 20px;
       text-align: left;
-      padding: 0% 25%;
+      padding: 0% 15%;
       font-weight: bold;
       margin: 10px 0px;
+
+      .cardContent {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        overflow: hidden;
+      }
     }
     .alert {
       width: 50%;
