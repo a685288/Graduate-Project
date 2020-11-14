@@ -51,14 +51,16 @@ export default {
       //- h3 正確答案 
       //- Radio.radio(v-for='(item,index) in question.select' :key='index' :label="index") {{ }}
   .right
-    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' vertical, v-model="this.question.records.selects[0]", @on-change="ans()") 
+    RadioGroup.RadioGroup(v-if='this.question.records != undefined ' , v-model="this.question.records.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
       .asngroup(v-for='(item, index) in question.select')
         Radio.Radio.mh6(:key='index' :label="index") {{item}}
           icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
-    RadioGroup(v-else vertical, v-model="userAns.selects[0]", @on-change="ans()") 
+          br
+    RadioGroup(v-else , v-model="userAns.selects[0]", @on-change="ans()") 
       h3 {{ question.content }}
       Radio.Radio.mh6(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}
+      br
 </template>
 <style lang="scss" scoped>
 .div {
@@ -103,7 +105,7 @@ export default {
           .Radio {
             float: left;
             width: 95%;
-            border-bottom: 1px solid;;
+            border-bottom: 1px solid;
             display: block;
           }
           .coverbox {
@@ -124,5 +126,9 @@ export default {
   //     color: #c00000;
   //   }
   // }
+  .Radio{
+    white-space: pre-line;
+    margin: 5px;
+  }
 }
 </style>
