@@ -245,17 +245,17 @@ export default {
     post() {
       this.userScore = this.countScore;
       this.countScore = 0;
-      console.log('post');
+      console.log("post");
       postExamRecord({
         classId: this.theClassId,
         sectionId: this.theSectionId,
         records: this.studentAns,
         step: parseInt(this.theSectionIndex),
       }).then((res) => {
-        if(res.data.status.code===0){
-          this.$router.go(0)
+        if (res.data.status.code === 0) {
+          this.$router.go(0);
         }
-      })
+      });
     },
     showExam() {
       this.show = true;
@@ -312,29 +312,36 @@ div {
   background-color: #fafafa;
   margin: 0px;
   padding: 0px;
+  max-width: 100%;
   .h1 {
     font-size: 30px;
     line-height: 250%;
     text-align: center;
-    background-image: linear-gradient(transparent 60%, #ffe7ba 42%);
+    // background-image: linear-gradient(transparent 60%, #ffe7ba 42%);
     font-weight: bold;
     letter-spacing: 5px;
     color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
   }
   .txtDiv {
-    p {
-      // overflow-wrap: break-word;
-      // word-break: normal;
-      white-space: pre;
-    }
+    max-width: 80%;
+    margin: 0px auto;
     span {
       font-size: 15px;
-      // background-image: linear-gradient(transparent 60%, #bac1ff 42%);
       font-weight: bold;
       line-height: 140%;
-      // letter-spacing: 6px;
       color: #000;
     }
+    p {
+      margin-top: 20px;
+      white-space: pre-line;
+      max-width: 100%;
+    }
+    
   }
   .video {
     padding: 50px;
@@ -357,7 +364,7 @@ div {
     }
   }
   .exam {
-    width: 80%;
+    max-width: 80%;
     margin: 0px auto;
     text-align: left;
     button {
