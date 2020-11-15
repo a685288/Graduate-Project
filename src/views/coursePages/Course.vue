@@ -1,23 +1,26 @@
 <template lang="pug">
-.content
-  .info
-    .left
-      img.classImg(:src="classInfo.imgUrl")
-      .detail
-        img(:src="topic")
-        | 章節：{{ classInfo.sectionNum }} 章
-        br
-        img(:src="teacher") 
-        | 授課老師：{{ classInfo.teacherName }} 老師
-    hr.middle
-    .right
-      .title
-        h3 {{ classInfo.topic }}
-      .intro
-        span {{ classInfo.intro }}
-      .button
-        Button.btn(v-if="classInfo.isAdd===0", @click="addClass()") 加選課程
-        Button.btn(v-else, @click="start()") 開始上課
+div
+  .content
+    .info
+      .left
+        img.classImg(:src="classInfo.imgUrl")
+        .detail
+          img(:src="topic")
+          h4 章節：
+          p 共 {{ classInfo.sectionNum }} 章
+          br
+          img(:src="teacher") 
+          h4 授課老師：
+          p {{ classInfo.teacherName }} 老師
+      hr.middle
+      .right
+        .title
+          h3 {{ classInfo.topic }}
+        .intro 
+          p {{ classInfo.intro }}
+        .button
+          Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
+          Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
     lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
 </template>
@@ -30,31 +33,31 @@ import { getCourseInfo, putAddClass } from "@/apis/course.js";
 export default {
   name: "courseinfo",
   components: {
-    lessonTopic
+    lessonTopic,
   },
   data() {
     return {
       topic,
       teacher,
       status: {
-        isAdd: false
+        isAdd: false,
       },
       theClassId: "",
-      classInfo: {}
+      classInfo: {},
     };
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
-    getCourseInfo(this.theClassId).then(res => {
+    getCourseInfo(this.theClassId).then((res) => {
       this.classInfo = res.data.data;
     });
   },
   methods: {
     addClass() {
       putAddClass({
-        classId: this.theClassId
+        classId: this.theClassId,
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.status.code === 0) {
             this.$Message.success("加選課程成功");
             this.classInfo.isAdd = 1;
@@ -63,7 +66,7 @@ export default {
             this.classInfo.isAdd = 1;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$Message.error;
           `err: ${err}`;
           console.log(err);
@@ -91,28 +94,23 @@ export default {
       } else {
         this.$Message.error("請先加選課程喔！");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .content {
   display: flex;
-  flex-direction: column;
   .info {
-    flex: 1;
+    max-height: 600px;
     display: flex;
-    height: 100%;
     .left {
       padding: 20px 50px;
       flex: 1;
+      flex-direction: column;
       .classImg {
         max-width: 70%;
         height: auto;
-        // min-width: 100px;
-        // max-width: 600px;
-        // min-height: 150px;
-        // max-height: 400px;
       }
       .detail {
         font-size: 20px;
@@ -123,6 +121,12 @@ export default {
         img {
           width: 25px;
           margin: 5px;
+        }
+        h4 {
+          display: inline;
+        }
+        p {
+          display: inline;
         }
       }
     }
@@ -136,9 +140,9 @@ export default {
     }
     .right {
       flex: 1;
-      display: flex;
       flex-direction: column;
       padding: 20px 50px;
+      // height: 100%;
       .title {
         font-size: 25px;
         display: -webkit-box;
@@ -148,13 +152,16 @@ export default {
         overflow: hidden;
       }
       .intro {
-        flex: 10;
+        white-space: pre-line;
         font-size: 18px;
-        margin: 10px auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
         text-align: left;
+        width: 100%;
+        height: 50%;
+        overflow-y: auto;
       }
       .button {
-        flex: 1;
         flex-basis: 80px;
         .btn {
           height: 70px;
@@ -168,7 +175,6 @@ export default {
           transition: all 0.4s ease 0s;
           font-weight: bold;
           font-size: 20px;
-          margin: 10% 10% 0% 10%;
           line-height: -0px;
         }
         .btn:hover {
@@ -181,7 +187,7 @@ export default {
     }
   }
   .sectionsArea {
-    background-color: lightgray;
+    flex: 1;
     height: 100%;
   }
 }
