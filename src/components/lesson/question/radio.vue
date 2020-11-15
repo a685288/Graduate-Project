@@ -126,9 +126,11 @@ export default {
   //     color: #c00000;
   //   }
   // }
+
   .Radio{
     white-space: pre-line;
     margin: 5px;
   }
+
 }
 </style>

@@ -371,6 +371,7 @@ div {
       margin: 10px;
     }
     .ques {
+      height: 100%;
       width: 100%;
       margin: 20px 0px;
       padding: 3%;
