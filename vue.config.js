@@ -1,7 +1,7 @@
 // const { turn } = require("core-js/fn/array");
 
 module.exports = {
-	// publicPath: process.env.NODE_ENV ==='production' ? '/student/' : './',
+	publicPath: 'student/',
 	// devServer: {
 	// 	disableHostCheck:true,
 	// 	https: true,
@@ -21,7 +21,7 @@ module.exports = {
 	devServer: {
 		proxy: {
 			'/api':{
-				target: 'http://163.17.135.152:1314/',
+				target: 'http://127.0.0.1/',
 				changeOrigin: true,
 				pathRewrite: {
 					'^/api': '' 
