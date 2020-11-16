@@ -1,7 +1,7 @@
 // const { turn } = require("core-js/fn/array");
 
 module.exports = {
-	publicPath: 'student/',
+	publicPath: '/student/',
 	// devServer: {
 	// 	disableHostCheck:true,
 	// 	https: true,
