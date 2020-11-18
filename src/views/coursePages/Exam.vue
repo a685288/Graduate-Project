@@ -337,11 +337,11 @@ div {
       color: #000;
     }
     p {
+      text-align: left;
       margin-top: 20px;
       white-space: pre-line;
       max-width: 100%;
     }
-    
   }
   .video {
     padding: 50px;
@@ -356,10 +356,10 @@ div {
       font-size: 20px;
       background-color: white;
       color: black;
-      border: 2px solid #008CBA;
+      border: 2px solid #008cba;
     }
     .startbtn:hover {
-      background-color: #008CBA;
+      background-color: #008cba;
       color: white;
     }
   }

@@ -14,11 +14,14 @@ div
           p {{ classInfo.teacherName }} 老師
       hr.middle
       .right
+        
         .title
           h3 {{ classInfo.topic }}
         .intro 
-          p {{ classInfo.intro }}
+          p {{ classInfo.intro }} 
         .button
+          //- i-circle(:percent='80', stroke-linecap='square')
+          //-   span.demo-Circle-inner(style='font-size:24px') 80%
           Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
           Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
