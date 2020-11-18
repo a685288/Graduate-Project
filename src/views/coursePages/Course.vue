@@ -19,8 +19,20 @@ div
         .intro 
           p {{ classInfo.intro }}
         .button
-          //- i-circle(:percent='80', stroke-linecap='square')
-          //-   span.demo-Circle-inner(style='font-size:24px') 80%
+          .thermometer
+            .square(v-if="this.percent == 100") 上課進度
+            .square.green(v-else) 上課進度
+            i-circle.circle(
+              :percent="this.percent",
+              :stroke-color="circleColor()"
+            )
+              Icon(
+                v-if="this.percent == 100",
+                type="ios-checkmark",
+                size="60",
+                style="color:#5cb85c"
+              )
+              span(v-else) {{ percent }}%
           Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
           Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
@@ -46,12 +58,14 @@ export default {
       },
       theClassId: "",
       classInfo: {},
+      percent: 10,
     };
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
     getCourseInfo(this.theClassId).then((res) => {
       this.classInfo = res.data.data;
+      this.circle();
     });
   },
   methods: {
@@ -96,6 +110,23 @@ export default {
       } else {
         this.$Message.error("請先加選課程喔！");
       }
+    },
+    circle() {
+      if (this.classInfo.step === this.classInfo.sectionNum) {
+        this.percent = 100;
+      } else {
+        this.percent = Math.round(
+          (this.classInfo.step / this.classInfo.sectionNum) * 100
+        );
+      }
+      console.log(this.percent);
+    },
+    circleColor() {
+      let color = "#2db7f5";
+      if (this.percent == 100) {
+        color = "#5cb85c";
+      }
+      return color;
     },
   },
 };
@@ -163,7 +194,42 @@ export default {
       }
       .button {
         flex-basis: 80px;
+        display: inline;
+        position: relative;
+        .thermometer {
+          position: relative;
+          .square {
+            width: 140px;
+            height: 60px;
+            position: absolute;
+            top: 30px;
+            left: 60px;
+            border: 8px #5cb85c solid;
+            border-radius: 10px;
+            color: #000;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 20px;
+          }
+          .green {
+            border: 10px #2db7f5 solid;
+          }
+          .circle {
+            position: absolute;
+            top: 0px;
+            left: 180px;
+            size: 60px;
+            background-color: #fff;
+            border-radius: 45%;
+            span {
+              font-size: 24px;
+            }
+          }
+        }
         .btn {
+          position: absolute;
+          top: 30px;
+          left: 0px;
           height: 70px;
           color: #494949 !important;
           text-transform: uppercase;
