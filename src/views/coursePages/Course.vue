@@ -12,13 +12,12 @@ div
           img(:src="teacher") 
           h4 授課老師：
           p {{ classInfo.teacherName }} 老師
-      hr.middle
+      .middle
       .right
-        
         .title
           h3 {{ classInfo.topic }}
         .intro 
-          p {{ classInfo.intro }} 
+          p {{ classInfo.intro }}
         .button
           //- i-circle(:percent='80', stroke-linecap='square')
           //-   span.demo-Circle-inner(style='font-size:24px') 80%
@@ -103,8 +102,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content {
-  display: flex;
+  height: 100%;
+  position: relative;
   .info {
+    height: 100%;
     max-height: 600px;
     display: flex;
     .left {
@@ -112,7 +113,7 @@ export default {
       flex: 1;
       flex-direction: column;
       .classImg {
-        max-width: 70%;
+        max-width: 80%;
         height: auto;
       }
       .detail {
@@ -136,16 +137,12 @@ export default {
     .middle {
       background-color: #e8eaec;
       width: 1px;
-      border: 0px;
-      float: left;
-      height: 80%;
-      margin: auto 0px;
+      max-height: 80vh;
     }
     .right {
       flex: 1;
       flex-direction: column;
       padding: 20px 50px;
-      // height: 100%;
       .title {
         font-size: 25px;
         display: -webkit-box;
@@ -157,8 +154,8 @@ export default {
       .intro {
         white-space: pre-line;
         font-size: 18px;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        padding-top: 30px;
+        padding-bottom: 30px;
         text-align: left;
         width: 100%;
         height: 50%;
