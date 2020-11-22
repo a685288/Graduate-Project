@@ -22,19 +22,20 @@ div
           .thermometer
             .square(v-if="this.percent == 100") 上課進度
             .square.green(v-else) 上課進度
-            i-circle.circle(
-              :percent="this.percent",
-              :stroke-color="circleColor()"
-            )
-              Icon(
-                v-if="this.percent == 100",
-                type="ios-checkmark",
-                size="60",
-                style="color:#5cb85c"
+              i-circle.circle(
+                :percent="this.percent",
+                :stroke-color="circleColor()",size="100",
               )
-              span(v-else) {{ percent }}%
-          Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
-          Button.btn(v-else, @click="start()") 開始上課
+                Icon(
+                  v-if="this.percent == 100",
+                  type="ios-checkmark",
+                  
+                  style="color:#5cb85c"
+                )
+                span(v-else) {{ percent }}%
+          .btnDiv
+            Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
+            Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
     lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
 </template>
@@ -143,14 +144,15 @@ export default {
       padding: 20px 50px;
       flex: 1;
       flex-direction: column;
+      height: 100%;
       .classImg {
-        max-width: 80%;
-        height: auto;
+        max-width: 70%;
+        max-height: 450px;
       }
       .detail {
         font-size: 20px;
         text-align: left;
-        max-width: 70%;
+        height: 70%;
         margin: 0px auto;
         padding: 0px 10px;
         img {
@@ -168,7 +170,7 @@ export default {
     .middle {
       background-color: #e8eaec;
       width: 1px;
-      max-height: 80vh;
+      max-height: 80%;
     }
     .right {
       flex: 1;
@@ -185,69 +187,75 @@ export default {
       .intro {
         white-space: pre-line;
         font-size: 18px;
-        padding-top: 30px;
-        padding-bottom: 30px;
+        margin: 1% 0px;
         text-align: left;
         width: 100%;
         height: 50%;
         overflow-y: auto;
       }
       .button {
-        flex-basis: 80px;
-        display: inline;
+        // display: inline;
         position: relative;
+        display: flex;
+        flex-direction: row;
         .thermometer {
           position: relative;
+          flex: 1;
           .square {
-            width: 140px;
+            width: 120px;
             height: 60px;
             position: absolute;
             top: 30px;
-            left: 60px;
-            border: 8px #5cb85c solid;
+            left: 20%;
+            border: 6px #5cb85c solid;
             border-radius: 10px;
             color: #000;
-            line-height: 40px;
+            line-height: 50px;
             font-weight: bold;
             font-size: 20px;
-          }
-          .green {
-            border: 10px #2db7f5 solid;
-          }
-          .circle {
-            position: absolute;
-            top: 0px;
-            left: 180px;
-            size: 60px;
-            background-color: #fff;
-            border-radius: 45%;
-            span {
-              font-size: 24px;
+            .circle {
+              position: absolute;
+              top: -25px;
+              left: 100px;
+              background-color: #fff;
+              border-radius: 45%;
+              span {
+                font-size: 24px;
+              }
             }
           }
+          .green {
+            border: 6px #2db7f5 solid;
+          }
         }
-        .btn {
-          position: absolute;
-          top: 30px;
-          left: 0px;
-          height: 70px;
-          color: #494949 !important;
-          text-transform: uppercase;
-          text-decoration: none;
-          background: #ffffff;
-          padding: 5%;
-          border: 5px solid #bac94a !important;
-          display: inline-block;
-          transition: all 0.4s ease 0s;
-          font-weight: bold;
-          font-size: 20px;
-          line-height: -0px;
-        }
-        .btn:hover {
-          color: #ffffff !important;
-          background: #f6b93b;
-          border-color: #f6b93b !important;
-          transition: all 0.4s ease 0s;
+        .btnDiv {
+          padding: 20px 0px;
+          flex: 1;
+          width: 100%;
+          .btn {
+            // position: absolute;
+            // top: 30px;
+            // left: 0px;
+            height: 70px;
+            width: 50%;
+            color: #494949 !important;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #ffffff;
+            padding: 5%;
+            border: 5px solid #bac94a !important;
+            display: inline-block;
+            transition: all 0.4s ease 0s;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: -0px;
+          }
+          .btn:hover {
+            color: #ffffff !important;
+            background: #f6b93b;
+            border-color: #f6b93b !important;
+            transition: all 0.4s ease 0s;
+          }
         }
       }
     }

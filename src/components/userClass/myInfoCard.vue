@@ -6,29 +6,30 @@ export default {
   props: {
     user: {
       name: String,
-      email: String
-    }
+      email: String,
+    },
   },
   data() {
     return {
-      newName: ""
+      newName: "",
     };
   },
   methods: {
     inputFun() {
       this.$Modal.confirm({
-        render: h => {
+        render: (h) => {
           return h("Input", {
             props: {
               value: this.newName,
               autofocus: true,
-              placeholder: "請輸入你的姓名"
+              placeholder: "請輸入你的姓名",
+              maxlength: "20",
             },
             on: {
-              input: val => {
+              input: (val) => {
                 this.newName = val;
-              }
-            }
+              },
+            },
           });
         },
         onOk: () => {
@@ -37,26 +38,26 @@ export default {
           } else {
             console.log("未輸入內容");
           }
-        }
+        },
       });
     },
     updName() {
       updateName({ name: this.newName })
-        .then(res => {
-          if (res.data.status.code === 0){
+        .then((res) => {
+          if (res.data.status.code === 0) {
             this.$Message.success("修改成功");
             this.user.name = this.newName;
             this.newName = "";
-          }else{
+          } else {
             this.$Message.error("error");
             this.newName = "";
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <template lang="pug">
@@ -73,13 +74,13 @@ export default {
   ) 修改姓名
 </template>
 <style lang="scss" scoped>
-.div{word-wrap: break-word;
+.div {
+  word-wrap: break-word;
   word-break: break-all;
-  .name{
-  width: 80%;
-  margin: 20px auto;
-  
-}
+  .name {
+    width: 80%;
+    margin: 20px auto;
+  }
 }
 
 // img {

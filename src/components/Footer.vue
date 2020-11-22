@@ -30,7 +30,7 @@ export default {
   color: #f0f5ff;
   height: 200px;
   text-align: center;
-  padding: 20px 200px 20px 200px;
+  padding: 20px 200px;
   background-color: #003a8c;
 }
 .left {
