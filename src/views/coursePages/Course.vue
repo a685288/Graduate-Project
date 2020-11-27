@@ -20,24 +20,29 @@ div
           p {{ classInfo.intro }}
         .button
           .thermometer
-            .square(v-if="this.percent == 100") 上課進度
-            .square.green(v-else) 上課進度
+            .square(v-if="this.percent >= 100") 上課進度
               i-circle.circle(
                 :percent="this.percent",
-                :stroke-color="circleColor()",size="100",
+                :stroke-color="circleColor()",
+                :size="100"
               )
-                Icon(
-                  v-if="this.percent == 100",
+                Icon.icon(
                   type="ios-checkmark",
-                  
-                  style="color:#5cb85c"
+                  style="color: #5cb85c",
+                  size="80"
                 )
-                span(v-else) {{ percent }}%
+            .square.blue(v-else) 上課進度
+              i-circle.circle(
+                :percent="this.percent",
+                :stroke-color="circleColor()",
+                :size="100"
+              )
+                span {{ percent }}%
           .btnDiv
             Button.btn(v-if="classInfo.isAdd === 0", @click="addClass()") 加選課程
             Button.btn(v-else, @click="start()") 開始上課
   .sectionsArea
-    lessonTopic(:section="this.classInfo.sections", @toExam="toSection")
+    lessonTopic(:section="this.classInfo.sections" ,:step='this.step', @toExam="toSection")
 </template>
 <script>
 import lessonTopic from "@/components/content/lessonTopic.vue";
@@ -60,12 +65,14 @@ export default {
       theClassId: "",
       classInfo: {},
       percent: 10,
+      step:0,
     };
   },
   mounted() {
     this.theClassId = this.$route.params.classId;
     getCourseInfo(this.theClassId).then((res) => {
       this.classInfo = res.data.data;
+      this.step=this.classInfo.step;
       this.circle();
     });
   },
@@ -93,8 +100,8 @@ export default {
       this.$router.push(
         "/dashboard/course/" +
           this.theClassId +
-          "/lesson/exam1/" +
-          this.classInfo.sections[0].sectionId
+          "/lesson/exam"+(this.step+1)+"/" +
+          this.classInfo.sections[this.step].sectionId
       );
     },
     toSection(sectionId, index) {
@@ -224,7 +231,7 @@ export default {
               }
             }
           }
-          .green {
+          .blue {
             border: 6px #2db7f5 solid;
           }
         }

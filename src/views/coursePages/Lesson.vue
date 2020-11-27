@@ -7,6 +7,7 @@ export default {
       theClassId: "",
       theSectionId: "",
       section: [],
+      step:0
     };
   },
   mounted() {
@@ -14,7 +15,8 @@ export default {
     this.theSectionId = this.$route.params.sectionId;
     getSectionTitle(this.theClassId).then((res) => {
       if (res.data.status.code === 0) {
-        this.section = res.data.data;
+        this.section = res.data.data.data;
+        this.step=res.data.data.step;
       } else {
         this.$Message.error(`err:${res.data.status.code}`);
       }
@@ -22,14 +24,21 @@ export default {
   },
   methods: {
     toSection(n) {
-      this.$router.push(
-        "/dashboard/course/" +
-          this.theClassId +
-          "/lesson/exam" +
-          (n + 1) +
-          "/" +
-          this.section[n].sectionId
-      );
+      console.log(this.step)
+      if (n <= this.step) {
+        this.$router.push(
+          "/dashboard/course/" +
+            this.theClassId +
+            "/lesson/exam" +
+            (n + 1) +
+            "/" +
+            this.section[n].sectionId
+        );
+      } else {
+        this.$Modal.warning({
+          title: "請先完成前面章節呦！！",
+        });
+      }
     },
   },
 };
@@ -57,7 +66,6 @@ export default {
       white-space: normal;
       overflow: hidden;
     }
-    
   }
   .content {
     margin: 0px;

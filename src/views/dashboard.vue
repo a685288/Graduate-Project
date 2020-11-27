@@ -21,7 +21,7 @@ export default {
   // min-height: 900px;
 }
 .router-view{
-  min-height: 90%;
+  min-height: 80%;
 }
 header{
   height: 100%;

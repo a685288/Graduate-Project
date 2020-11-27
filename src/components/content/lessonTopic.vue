@@ -7,10 +7,18 @@ export default {
       sectionId: String,
       title: String,
     },
+    step: Number,
   },
   methods: {
     toExam(id, n) {
-      this.$emit("toExam", id, n);
+      console.log(this.step);
+      if (n <= this.step) {
+        this.$emit("toExam", id, n);
+      } else {
+        this.$Modal.warning({
+          title: "請先完成前面章節呦！！",
+        });
+      }
     },
   },
 };
@@ -26,13 +34,18 @@ export default {
     .section(v-for="(item, index) in section", :key="index")
       Card.card(@click.native="toExam(item.sectionId, index)") 
         p.cardContent {{ index + 1 }}. {{ item.title }}
-        //- Icon.icon(type="md-arrow-dropright-circle") 
-</template>
+        Icon.icon(
+          v-if="index <= step - 1",
+          type="md-checkmark-circle-outline",
+          size="25"
+        )
+</template> 
 <style lang='scss' scoped>
 .lessonTopic {
   padding: 1%;
   background-color: #f0f0f0;
   height: 100%;
+  min-height: 300px;
   .div {
     height: 80%;
     padding: 1% 15%;
@@ -50,7 +63,7 @@ export default {
       padding: 0% 15%;
       font-weight: bold;
       margin: 10px 0px;
-      transition-duration: 0.6s;
+      transition-duration: 0.4s;
       .cardContent {
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -60,19 +73,25 @@ export default {
         white-space: normal;
         overflow: hidden;
       }
+      .icon {
+        color: #389e0d;
+        position: absolute;
+        right: 13%;
+        top: 20px;
+        display: inline-block;
+      }
     }
     .card:hover {
-      background-color: #7cb305;
-      color: white;
+      background-color: #d6e4ff;
     }
     .alert {
       width: 50%;
       margin: 0px auto;
       font-size: 20px;
       height: 50%;
-    }
-    .p {
-      text-align: center;
+      .p {
+        text-align: center;
+      }
     }
   }
 }
