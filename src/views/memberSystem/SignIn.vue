@@ -8,13 +8,14 @@
       p 想要整理學校的所有課程嗎？
       p 想要提升自主學習的能力嗎？
       p 學海無涯 讓你的上課不再單調
-  Card.login(dis-hover)
-    h3(slot="title") 登入方式
-    .googleSignin
-      Button(
-        size="large"
-        icon="logo-google"
-        @click.native="googleSignin()") google
+    Card.login(dis-hover)
+      h3(slot="title") 登入方式
+      .googleSignin
+        Button(
+          size="large",
+          icon="logo-google",
+          @click.native="googleSignin()"
+        ) google
   .area
     ul.circles
       li 
@@ -38,7 +39,7 @@ let firebaseConfig = {
   storageBucket: "e-learning-4550b.appspot.com",
   messagingSenderId: "458064779443",
   appId: "1:458064779443:web:4f2a9cb4881b54f01df8c6",
-  measurementId: "G-HMC7V2W4V3"
+  measurementId: "G-HMC7V2W4V3",
 };
 // 初始化 Firebase
 firebase.initializeApp(firebaseConfig);
@@ -54,7 +55,7 @@ export default {
   data() {
     return {
       logo,
-      googleBtn
+      googleBtn,
     };
   },
   mounted() {
@@ -75,59 +76,56 @@ export default {
         this.$Message.error("登入失敗");
         console.log(err);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang='scss' scoped>
 .SignIn {
   height: 100%;
-  display: flex;
+  width: 100%;
   justify-items: center;
-  flex-direction: column;
+  position: relative;
   .logo {
-    color: #0C4A60;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    color: #0c4a60;
     font-size: 35px;
     img {
+      width: 200px;
+      margin: 0 auto;
       max-height: 200px;
     }
-    .content{
+    .content {
       font-size: 20px;
     }
-  }
-  .login {
-    margin: 10px auto 0px auto;
-    width: 20%;
-    .googleSignin {
-      margin: 5px;
+    .login {
+      margin: 10px auto;
+      width: 20%;
+      .googleSignin {
+        margin: 5px;
+      }
     }
   }
 }
 
 @import url("https://fonts.googleapis.com/css?family=Exo:400,700");
-* {
-  margin: 0px;
-  padding: 0px;
-}
-body {
-  font-family: "Exo", sans-serif;
-}
-.context {
-  width: 100%;
-  position: absolute;
-  top: 50vh;
-}
-.context h1 {
-  text-align: center;
-  color: #fff;
-  font-size: 50px;
-}
+// * {
+//   margin: 0px;
+//   padding: 0px;
+// }
+// body {
+//   font-family: "Exo", sans-serif;
+// }
 .area {
-  // background: #4e54c8;
   z-index: -1;
   position: absolute;
-  background: #ABDFF1;
+  top: 0;
+  left: 0;
   // background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+  background-color: #abdff1;
+
   width: 100%;
   height: 100vh;
 }
@@ -145,7 +143,7 @@ body {
   list-style: none;
   width: 20px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
