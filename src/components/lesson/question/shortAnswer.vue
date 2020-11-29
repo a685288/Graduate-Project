@@ -3,8 +3,8 @@
 export default {
   props: {
     question: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -12,29 +12,29 @@ export default {
         questionId: this.question.questionId,
         type: this.question.type,
         sort: this.question.sort,
-        selects: []
+        selects: [],
       },
-      isAnswerData: false
+      isAnswerData: false,
     };
   },
   mounted() {
     if (this.question.records != undefined) {
-      console.log(this.question.records.selects[0])
       this.isAnswerData = true;
     }
   },
   methods: {
     ans() {
       this.$emit("emitAns", this.userAns);
-    }
-  }
+    },
+  },
 };
 </script>
 <template lang="pug">
 div
   h3 {{ question.content }}
-  p(v-if='this.isAnswerData') {{question.records.selects[0]}}
-  Input.input(v-else 
+  p(v-if="this.isAnswerData") {{ question.records.selects[0] }}
+  Input.input(
+    v-else,
     v-model="userAns.selects[0]",
     @on-change="ans()",
     size="large",

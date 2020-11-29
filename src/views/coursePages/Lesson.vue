@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     toSection(n) {
-      console.log(this.step)
       if (n <= this.step) {
         this.$router.push(
           "/dashboard/course/" +

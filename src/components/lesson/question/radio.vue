@@ -19,7 +19,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.question.answer[0]);
     if (this.question.records != undefined) {
       this.question.records.selects[0] = parseInt(
         this.question.records.selects[0]
@@ -57,9 +56,9 @@ export default {
         Radio.Radio.mh6(:key='index' :label="index") {{item}}
           icon.coverbox(type='ios-checkmark-circle' v-if="answercheck(index)" size = "22")
           br
-    RadioGroup(v-else , v-model="userAns.selects[0]", @on-change="ans()") 
+    RadioGroup(v-else , v-model="userAns.selects[0]", @on-change="ans()" vertical) 
       h3 {{ question.content }}
-      Radio.Radio.mh6(v-for='(item,index) in question.select' :key='index' :label="index" ) {{item}}
+      Radio.Radio.mh6(v-for='(item,index) in question.select' :key='index' :label="index"  ) {{item}}
       br
 </template>
 <style lang="scss" scoped>

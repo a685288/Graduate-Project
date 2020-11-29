@@ -11,7 +11,6 @@ export default {
   },
   methods: {
     toExam(id, n) {
-      console.log(this.step);
       if (n <= this.step) {
         this.$emit("toExam", id, n);
       } else {
