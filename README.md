@@ -10,7 +10,7 @@
 2. CSS
 3. JavaScript
 4. Vue.js
-5. SCSS
+5. SASS
 6. axios
 
 ### 製作時間
